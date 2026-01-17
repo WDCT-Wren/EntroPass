@@ -13,7 +13,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.12.1</junit.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -108,12 +107,16 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.password_generator_gui/org.example.password_generator_gui.HelloApplication
+                                org.example.password_generator_gui/org.example.password_generator_gui.Application
                             </mainClass>
+                            <options>
+                                <option>--add-exports=java.base/sun.misc=ALL-UNNAMED</option>
+                                <option>--add-opens=java.base/sun.misc=ALL-UNNAMED</option>
+                                <option>-Dsun.misc.Unsafe.allowAccess=true</option>
+                            </options>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

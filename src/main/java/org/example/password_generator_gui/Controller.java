@@ -19,22 +19,35 @@ public class Controller {
     private CheckBox specialCharCheckBox;
     @FXML
     private CheckBox numberCheckBox;
+    @FXML
+    private void initialize() {
+        digitField.setText("8");
 
-    int passwordLength;
+        digitField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) { //if the new value does not match any possible digit through regex checking
+                digitField.setText(oldValue); //the digitField would be set back to the old value
+            }
+        });
+    }
 
     public int getPasswordLength() {
-        try {
-            passwordLength = Integer.parseInt(digitField.getText());
-        }
-        catch (NumberFormatException e) {
-            passwordText.setText("Invalid Input");
-        }
-        return passwordLength;
+        return Integer.parseInt(digitField.getText());
     }
 
     @FXML
     private void onButtonClick() {
-        passwordText.setText(passwordBuilder.passwordGenerator(getPasswordLength(), lowerCaseCheckBox.isSelected(),
-                upperCaseCheckBox.isSelected(), numberCheckBox.isSelected(), specialCharCheckBox.isSelected()));
+        try {
+            int passwordLength = getPasswordLength();
+
+            if (passwordLength < 8 || passwordLength > 128) {
+                passwordText.setText("Password length must be between 8 and 128");
+                return;
+            }
+            passwordText.setText(passwordBuilder.passwordGenerator(passwordLength, lowerCaseCheckBox.isSelected(),
+                    upperCaseCheckBox.isSelected(), numberCheckBox.isSelected(), specialCharCheckBox.isSelected()));
+        }
+        catch (NumberFormatException e) {
+            passwordText.setText("Please enter a valid number");
+        }
     }
 }

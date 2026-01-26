@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class Controller {
-    PasswordBuilder passwordBuilder = new PasswordBuilder();
+    Password password = new Password();
     @FXML
     private Label passwordText;
     @FXML
@@ -36,6 +36,12 @@ public class Controller {
 
     @FXML
     private void onButtonClick() {
+        boolean anySelected = lowerCaseCheckBox.isSelected()
+                || upperCaseCheckBox.isSelected()
+                || specialCharCheckBox.isSelected()
+                || numberCheckBox.isSelected();
+
+        Password password = new Password();
         try {
             int passwordLength = getPasswordLength();
 
@@ -43,8 +49,12 @@ public class Controller {
                 passwordText.setText("Password length must be between 8 and 128");
                 return;
             }
-            passwordText.setText(passwordBuilder.passwordGenerator(passwordLength, lowerCaseCheckBox.isSelected(),
-                    upperCaseCheckBox.isSelected(), numberCheckBox.isSelected(), specialCharCheckBox.isSelected()));
+            if (!anySelected) {
+                passwordText.setText("At least one character type must be selected");
+                return;
+            }
+            passwordText.setText(password.passwordBuilder(passwordLength, lowerCaseCheckBox.isSelected(), numberCheckBox.isSelected(),
+                    specialCharCheckBox.isSelected(), upperCaseCheckBox.isSelected()));
         }
         catch (NumberFormatException e) {
             passwordText.setText("Please enter a valid number");

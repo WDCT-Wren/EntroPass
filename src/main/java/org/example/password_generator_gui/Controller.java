@@ -6,15 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class Controller {
-    Password password = new Password();
     @FXML
     private Label passwordText;
     @FXML
     private TextField digitField;
     @FXML
-    private CheckBox lowerCaseCheckBox;
-    @FXML
-    private CheckBox upperCaseCheckBox;
+    private CheckBox mixedCaseCheckBox;
     @FXML
     private CheckBox specialCharCheckBox;
     @FXML
@@ -23,38 +20,35 @@ public class Controller {
     private void initialize() {
         digitField.setText("8");
 
-        digitField.textProperty().addListener((observable, oldValue, newValue) -> {
+        digitField.textProperty().addListener((_, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) { //if the new value does not match any possible digit through regex checking
                 digitField.setText(oldValue); //the digitField would be set back to the old value
             }
         });
     }
 
+    //Method that gets the Password length from the digit field of the GUI program
     public int getPasswordLength() {
         return Integer.parseInt(digitField.getText());
     }
 
     @FXML
     private void onButtonClick() {
-        boolean anySelected = lowerCaseCheckBox.isSelected()
-                || upperCaseCheckBox.isSelected()
+        boolean anySelected = mixedCaseCheckBox.isSelected()
                 || specialCharCheckBox.isSelected()
                 || numberCheckBox.isSelected();
 
-        Password password = new Password();
+        PasswordConfiguration password = new PasswordConfiguration(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
+
         try {
             int passwordLength = getPasswordLength();
+            PasswordBuilder builder = new PasswordBuilder(passwordLength, password);
 
             if (passwordLength < 8 || passwordLength > 128) {
                 passwordText.setText("Password length must be between 8 and 128");
                 return;
             }
-            if (!anySelected) {
-                passwordText.setText("At least one character type must be selected");
-                return;
-            }
-            passwordText.setText(password.passwordBuilder(passwordLength, lowerCaseCheckBox.isSelected(), numberCheckBox.isSelected(),
-                    specialCharCheckBox.isSelected(), upperCaseCheckBox.isSelected()));
+            passwordText.setText(builder.passwordBuilder(passwordLength, password));
         }
         catch (NumberFormatException e) {
             passwordText.setText("Please enter a valid number");

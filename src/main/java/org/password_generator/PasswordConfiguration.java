@@ -7,7 +7,7 @@ import org.passay.EnglishCharacterData;
 import org.passay.Rule;
 
 public class PasswordConfiguration {
-    ArrayList<Rule> rules;
+    private final ArrayList<Rule> rules;
 
     public PasswordConfiguration(boolean hasDigit, boolean hasSpecialChar, boolean mixedCase) {
         rules = new ArrayList<>();

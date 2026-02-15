@@ -1,18 +1,30 @@
 package org.password_generator;
 
 public class PasswordStrengthChecker {
-    PasswordConfiguration config;
-    PasswordBuilder builder;
-    private final static int DIGIT_CHARS = 10;
-    private final static int SPECIAL_CHARS = 32;
-    private final static int LOWERCASE_CHARS = 26;
-    private final static int MIXED_CASE_CHARS = 52;
+    private final static int DIGIT_POOL_SIZE = 10;
+    private final static int SPECIAL_CHAR_POOL_SIZE = 32;
+    private final static int MIXED_CASE_POOL_SIZE = 52;
+    private final static int LOWER_CASE_POOL_SIZE = 26;
 
-    public PasswordStrengthChecker(PasswordBuilder builder) {
-        this.builder = builder;
-        this.config = builder.config;
+    private final static int STRONG_THRESHOLD = 100;
+    private final static int MEDIUM_THRESHOLD = 72;
+    private final static int WEAK_THRESHOLD = 44;
 
+    public static String checkStrength(PasswordConfiguration config, int passwordLength) {
+        int bitSize = 0;
+        if (config.hasDigit()) bitSize += DIGIT_POOL_SIZE;
+        if (config.hasSpecialChar()) bitSize += SPECIAL_CHAR_POOL_SIZE;
+        if (config.hasMixedCase()) bitSize += MIXED_CASE_POOL_SIZE;
+        else bitSize += LOWER_CASE_POOL_SIZE;
+
+        int finalStrength = passwordLength * floorLog2(bitSize);
+
+        if (finalStrength >= STRONG_THRESHOLD) {return "Strong";}
+        else if (finalStrength >= MEDIUM_THRESHOLD) {return "Medium";}
+        else if (finalStrength >= WEAK_THRESHOLD) {return "Weak";}
+        else {return "Very Weak";}
     }
+
     /**
      * Calculates the floor of the base-2 logarithm for a positive integer.
      * Returns 0 for an input of 1. Undefined for n <= 0.
@@ -24,20 +36,4 @@ public class PasswordStrengthChecker {
         // 31 - number of leading zeros gives the position of the highest set bit
         return 31 - Integer.numberOfLeadingZeros(n);
     }
-
-    public String checkStrength(int passwordLength, boolean hasDigit, boolean hasSpecialChar, boolean mixedCase) {
-        int charPool = 0;
-        if (hasDigit) {charPool += DIGIT_CHARS;}
-        if (hasSpecialChar) {charPool += SPECIAL_CHARS;}
-        if (mixedCase) {charPool += MIXED_CASE_CHARS;}
-        else {charPool += LOWERCASE_CHARS;}
-
-        int finalStrength = passwordLength * floorLog2(charPool);
-
-        if (finalStrength >= 100) {return "Strong";}
-        else if (finalStrength >= 72) {return "Medium";}
-        else {return "Weak";}
-    }
-
-
 }

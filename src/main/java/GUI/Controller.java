@@ -34,28 +34,30 @@ public class Controller {
     }
 
     //Method that gets the Password length from the digit field of the GUI program
-    public int getPasswordLength() {
-        return Integer.parseInt(digitField.getText());
-    }
+    private int getPasswordLength() {return Integer.parseInt(digitField.getText());}
 
     @FXML
     private void onButtonClick() {
-        PasswordConfiguration password = new PasswordConfiguration(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
+        PasswordConfiguration configuration = new PasswordConfiguration(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
         try {
             int passwordLength = getPasswordLength();
-            PasswordBuilder builder = new PasswordBuilder(passwordLength, password);
-
-            if (passwordLength < 8 || passwordLength > 128) {
-                passwordText.setText("Password length must be between 8 and 128");
-                return;
-            }
-            passwordText.setText(builder.passwordBuilder(passwordLength, password));
-            PasswordStrengthChecker strength = new PasswordStrengthChecker(builder);
-            passwordStrength.setText(String.valueOf(strength.checkStrength(passwordLength, numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected())));
+            setPassword(passwordLength, configuration);
+            setPasswordStrength(passwordLength, configuration);
         }
         catch (NumberFormatException e) {
             passwordText.setText("Please enter a valid number");
         }
+    }
 
+    private void setPassword(int passwordLength, PasswordConfiguration configuration) {
+        PasswordBuilder builder = new PasswordBuilder(passwordLength);
+        passwordText.setText(builder.buildPassword(configuration));
+    }
+
+    private void setPasswordStrength(int passwordLength, PasswordConfiguration configuration) {
+        passwordStrength.setText(
+                PasswordStrengthChecker.
+                checkStrength(configuration, passwordLength)
+        );
     }
 }

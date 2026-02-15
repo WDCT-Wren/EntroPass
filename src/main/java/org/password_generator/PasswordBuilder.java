@@ -3,17 +3,17 @@ package org.password_generator;
 import org.passay.PasswordGenerator;
 
 public class PasswordBuilder {
-    PasswordConfiguration config;
-    PasswordGenerator generator;
-    int passwordLength;
+    private final PasswordGenerator generator;
+    private final int passwordLength;
 
-    public PasswordBuilder(int passwordLength, PasswordConfiguration config) {
-        this.config = config;
+    public PasswordBuilder(int passwordLength) {
         this.passwordLength = passwordLength;
         this.generator = new PasswordGenerator();
+
+        if (passwordLength < 8 || passwordLength > 128) throw new IllegalArgumentException("Password length must be between 8 and 128 characters!");
     }
 
-    public String passwordBuilder(int passwordLength, PasswordConfiguration config) {
-        return generator.generatePassword(passwordLength, config.getRules());
+    public String buildPassword(PasswordConfiguration config) {
+        return generator.generatePassword(this.passwordLength, config.getRules());
     }
 }

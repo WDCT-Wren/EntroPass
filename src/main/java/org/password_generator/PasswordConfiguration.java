@@ -8,12 +8,22 @@ import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.Rule;
 
+/**
+ * Class that evaluates the user's desired password configuration
+ */
 public class PasswordConfiguration {
     private final List<Rule> rules;
     private final boolean hasDigit;
     private final boolean hasSpecialChar;
     private final boolean hasMixedCase;
 
+    /**
+     * Makes the configuration of the password based on the user's preferences.
+     *
+     * @param hasDigit If the user wants numbers in their password
+     * @param hasSpecialChar If the user wants a special character in their password
+     * @param mixedCase If the user wants a mix of uppercase and lowercase letters in their password
+     */
     public PasswordConfiguration(boolean hasDigit, boolean hasSpecialChar, boolean mixedCase) {
         rules = new ArrayList<>();
         this.hasDigit = hasDigit;
@@ -26,7 +36,9 @@ public class PasswordConfiguration {
         else rules.add(new CharacterRule(EnglishCharacterData.LowerCase));
     }
 
-    //Getter method for a copy of the arraylist
+    /**
+     * @return A copy of the configuration list
+     */
     public List<Rule> getRules() {
         return Collections.unmodifiableList(rules);
     }

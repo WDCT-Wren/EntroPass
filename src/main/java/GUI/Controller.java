@@ -33,13 +33,15 @@ public class Controller {
         });
     }
 
-    //Method that gets the Password length from the digit field of the GUI program
+
     private int getPasswordLength() {return Integer.parseInt(digitField.getText());}
 
     @FXML
     private void onButtonClick() {
         PasswordConfiguration configuration = new PasswordConfiguration(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
         try {
+            if (getPasswordLength() < 8 || getPasswordLength() > 128) passwordText.setText("Length must be between 8 and 128 characters!");
+
             int passwordLength = getPasswordLength();
             setPassword(passwordLength, configuration);
             setPasswordStrength(passwordLength, configuration);

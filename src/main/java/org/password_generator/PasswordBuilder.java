@@ -2,6 +2,7 @@ package org.password_generator;
 
 import org.passay.PasswordGenerator;
 
+
 public class PasswordBuilder {
     private final PasswordGenerator generator;
     private final int passwordLength;

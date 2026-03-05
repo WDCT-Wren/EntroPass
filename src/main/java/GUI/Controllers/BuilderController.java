@@ -1,7 +1,8 @@
-package GUI;
+package GUI.Controllers;
 
 import Database.PasswordHasher;
 import Database.UserRepository;
+import GUI.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -12,14 +13,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.password_generator.PasswordBuilder;
-import org.password_generator.PasswordConfiguration;
-import org.password_generator.PasswordStrengthChecker;
+import org.password_generator.Builder;
+import org.password_generator.Configurator;
+import org.password_generator.StrengthChecker;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class BuilderController {
+    @FXML
+    private ProgressBar strengthIndicator;
     @FXML
     private Slider passwordLengthSlider;
     @FXML
@@ -62,6 +65,8 @@ public class BuilderController {
                 }
             }
         });
+
+        strengthIndicator.setStyle("-fx-accent: #64ED86;");
     }
 
     @FXML
@@ -77,21 +82,21 @@ public class BuilderController {
 
     @FXML
     private void generatePassword() {
-        PasswordConfiguration configuration = new PasswordConfiguration(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
+        Configurator configuration = new Configurator(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
         try {
             if (getPasswordLength() < 8 || getPasswordLength() > 128) passwordText.setText("Length must be between 8 and 128 characters!");
 
             int passwordLength = getPasswordLength();
             setPassword(passwordLength, configuration);
-            setPasswordStrength(passwordLength, configuration);
+            setPasswordStrength(configuration, passwordLength);
         }
         catch (NumberFormatException e) {
             passwordText.setText("Please enter a valid number");
         }
     }
 
-    private void setPassword(int passwordLength, PasswordConfiguration configuration) {
-        PasswordBuilder builder = new PasswordBuilder(passwordLength);
+    private void setPassword(int passwordLength, Configurator configuration) {
+        Builder builder = new Builder(passwordLength);
         String password = builder.buildPassword(configuration);
         passwordText.setText(password);
 
@@ -104,11 +109,17 @@ public class BuilderController {
         }
     }
 
-    private void setPasswordStrength(int passwordLength, PasswordConfiguration configuration) {
+    private void setPasswordStrength(Configurator configuration, int passwordLength) {
+        double strength = StrengthChecker.getStrength(configuration, passwordLength);
+
         passwordStrength.setText(
-                PasswordStrengthChecker.
-                checkStrength(configuration, passwordLength)
+                StrengthChecker.
+                checkStrength(strength)
         );
+
+        strengthIndicator.setProgress(StrengthChecker.getNormalStrength(strength));
+        System.out.println("initial Strength: " + strength);
+        System.out.println(StrengthChecker.getNormalStrength(strength));
     }
 
     @FXML

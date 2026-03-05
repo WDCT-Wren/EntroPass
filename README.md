@@ -227,10 +227,6 @@ This project follows clean code principles and object-oriented design patterns. 
 - **SQLite**: Lightweight embedded database
 - **JavaFX**: Modern UI framework
 
-## Contact
-
-[Add your contact information here]
-
 ---
 
 **Version**: 1.0-SNAPSHOT

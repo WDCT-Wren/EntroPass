@@ -11,7 +11,7 @@ import org.passay.Rule;
 /**
  * Class that evaluates the user's desired password configuration
  */
-public class PasswordConfiguration {
+public class Configurator {
     private final List<Rule> rules;
     private final boolean hasDigit;
     private final boolean hasSpecialChar;
@@ -24,7 +24,7 @@ public class PasswordConfiguration {
      * @param hasSpecialChar If the user wants a special character in their password
      * @param mixedCase If the user wants a mix of uppercase and lowercase letters in their password
      */
-    public PasswordConfiguration(boolean hasDigit, boolean hasSpecialChar, boolean mixedCase) {
+    public Configurator(boolean hasDigit, boolean hasSpecialChar, boolean mixedCase) {
         rules = new ArrayList<>();
         this.hasDigit = hasDigit;
         this.hasSpecialChar = hasSpecialChar;

@@ -60,19 +60,25 @@ Password_Generator_GUI/
 │       │   │   ├── Connector.java          # Database operations (insert/update/delete)
 │       │   │   └── PasswordHasher.java     # BCrypt password hashing utility
 │       │   ├── GUI/
+|       |   |   ├── Controllers/
+|       |   |   |   ├── Builder.java                # FXML controller for Password Builder UI logic
+|       |   |   |   ├── Menu.java                   # FXML controller for Main Menu UI logic
+|       |   |   |   └── Vault.java                  # FXML controller for Password Vault UI logic
 │       │   │   ├── Application.java        # Main application entry point
-│       │   │   ├── Controller.java         # FXML controller for UI logic
 │       │   │   └── Launcher.java           # Application launcher
 │       │   └── org/password_generator/
 │       │       ├── PasswordBuilder.java            # Password generation orchestrator
 │       │       ├── PasswordConfiguration.java      # Configuration for password rules
 │       │       └── PasswordStrengthChecker.java    # Entropy-based strength evaluation
-│       └── resources/
+│       └── resources/org
 │           ├── data/
-│           │   └── PasswordDataBase.sqlite  # SQLite database file
-│           └── org/password_generator_gui/Scenes/
-│               ├── StartingMenu.fxml        # Main menu UI
-│               └── PasswordBuilder.fxml     # Password generation UI
+│           │   └── PasswordDataBase.sqlite  # SQLite database file (hidden for obvious reasons)
+│           └── password_generator_gui/
+│               └── Scenes/
+│                   ├── StartingMenu.fxml        # Main menu UI
+│                   └── PasswordBuilder.fxml     # Password generation UI
+│               └── Stylesheets/
+│                   ├── SOON
 ├── pom.xml                                  # Maven configuration
 └── README.md                                # This file
 ```
@@ -189,12 +195,8 @@ CREATE TABLE passwords (
 ## Current Limitations & Roadmap
 
 ### In Development
-- [ ] Functional "Save Password" button integration
-- [ ] Password length slider synchronization with text field
 - [ ] Password retrieval/viewing interface
 - [ ] Password decryption for viewing saved passwords
-- [ ] Copy-to-clipboard functionality
-- [ ] Progress bar visualization of password strength
 - [ ] Input validation for username and service name fields
 
 ### Planned Features
@@ -229,6 +231,6 @@ This project follows clean code principles and object-oriented design patterns. 
 
 ---
 
-**Version**: 1.0-SNAPSHOT
-**Last Updated**: March 2026
+**Version**: 1.1-SNAPSHOT
+**Last Updated**: March 9 2026
 **Artifact Name**: EntroPass

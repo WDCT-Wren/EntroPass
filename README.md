@@ -5,7 +5,7 @@
 ## Features
 
 ### Password Generation
-- **Customizable Length**: Generate passwords between 8-128 characters
+- **Customizable Length**: Generate passwords between 8–128 characters
 - **Flexible Character Sets**:
   - Uppercase letters (A-Z)
   - Numbers (0-9)
@@ -111,11 +111,11 @@ Entropy (bits) = Password Length × log₂(Character Pool Size)
 
 ### Character Pool Sizes
 - Lowercase letters: 26 characters
-- Mixed case (upper + lower): 52 characters
+- Mixed case (upper and lower): 52 characters
 - Numbers: 10 characters
 - Special characters: 32 characters
 
-**Example**: A 12-character password with mixed case, numbers, and special characters has:
+**Example**: A 12-character password with a mixed case, numbers, and special characters has:
 - Pool size: 52 + 10 + 32 = 94 characters
 - Entropy: 12 × log₂(94) ≈ 78 bits → **Medium strength**
 
@@ -169,7 +169,7 @@ CREATE TABLE passwords (
 
 1. Launch the application
 2. Navigate to the **Password Builder** screen
-3. Set your desired password length (8-128 characters)
+3. Set your desired password length (8–128 characters)
 4. Select character type options:
    - ☑ Uppercase characters
    - ☑ Numbers
@@ -181,7 +181,7 @@ CREATE TABLE passwords (
 
 1. After generating a password:
    - Enter the **Username**
-   - Enter the **Service Name** (e.g., "Gmail", "GitHub")
+   - Enter the **Service Name** (e.g., "Gmail," "GitHub")
    - Add optional **Notes**
 2. Click **Save Password**
 3. The password is encrypted with BCrypt and stored in the database
@@ -190,7 +190,7 @@ CREATE TABLE passwords (
 
 ### In Development
 - [ ] Functional "Save Password" button integration
-- [ ] Password length slider synchronization with text field
+- [ ] Password length slider synchronization with the text field
 - [ ] Password retrieval/viewing interface
 - [ ] Password decryption for viewing saved passwords
 - [ ] Copy-to-clipboard functionality
@@ -212,7 +212,7 @@ This project follows clean code principles and object-oriented design patterns. 
 
 1. Maintain separation between GUI, business logic, and database layers
 2. Follow existing naming conventions
-3. Add JavaDoc comments for public methods
+3. Add Javadoc comments for public methods
 4. Write unit tests for new features
 5. Ensure BCrypt is used for all password storage
 

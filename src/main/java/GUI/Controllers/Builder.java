@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.password_generator.Builder;
 import org.password_generator.Configurator;
 import org.password_generator.StrengthChecker;
 
@@ -25,7 +24,7 @@ import javafx.scene.input.ClipboardContent;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class BuilderController {
+public class Builder {
     @FXML
     private Button copyButton;
     @FXML
@@ -102,7 +101,7 @@ public class BuilderController {
 
     @FXML
     private void setPassword(int passwordLength, Configurator configuration) {
-        Builder builder = new Builder(passwordLength);
+        org.password_generator.Builder builder = new org.password_generator.Builder(passwordLength);
         String password = builder.buildPassword(configuration);
         passwordText.setText(password);
 

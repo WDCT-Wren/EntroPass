@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MenuController {
+public class Menu {
     @FXML
     public void switchToPasswordBuilder(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/PasswordBuilder.fxml"));
@@ -22,7 +22,13 @@ public class MenuController {
         stage.show();
     }
 
+    @FXML
     public void switchToPasswordVault(ActionEvent event) throws IOException {
-
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/PasswordVault.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

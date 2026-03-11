@@ -1,7 +1,7 @@
 package GUI.Controllers;
 
+import Database.UserOperator;
 import Database.PasswordHasher;
-import Database.UserRepository;
 import GUI.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -128,7 +128,7 @@ public class Builder {
 
     @FXML
     private void savePassword() throws SQLException {
-        UserRepository newRepo = new UserRepository(getUsername(), getServiceName(), getHashedPassword(), getNote());
+        UserOperator newRepo = new UserOperator(getUsername(), getServiceName(), getHashedPassword(), getNote());
         newRepo.insertPassword();
 
         passwordText.setText("Password Saved Successfully!");

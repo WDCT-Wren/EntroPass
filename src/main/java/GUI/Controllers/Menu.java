@@ -7,11 +7,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class Menu {
+    @FXML
+    private Button GenerateNewPassword;
+    @FXML
+    private Button ViewSavedPassword;
+
     @FXML
     public void switchToPasswordBuilder(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/PasswordBuilder.fxml"));

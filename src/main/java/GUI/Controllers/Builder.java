@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.password_generator.Configurator;
 import org.password_generator.StrengthChecker;
@@ -128,10 +129,11 @@ public class Builder {
 
     @FXML
     private void savePassword() throws SQLException {
-        UserOperator newRepo = new UserOperator(getUsername(), getServiceName(), getHashedPassword(), getNote());
+        UserOperator newRepo = new UserOperator(getServiceName(), getUsername(), getHashedPassword(), getNote());
         newRepo.insertPassword();
 
         passwordText.setText("Password Saved Successfully!");
+        passwordText.setFont(Font.font(16));
     }
 
     @FXML

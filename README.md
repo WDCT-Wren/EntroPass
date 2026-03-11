@@ -57,22 +57,29 @@ Password_Generator_GUI/
 │       ├── java/
 │       │   ├── Database/
 │       │   │   ├── DatabaseManager.java    # Singleton database connection manager
-│       │   │   ├── Connector.java          # Database operations (insert/update/delete)
-│       │   │   └── PasswordHasher.java     # BCrypt password hashing utility
+│       │   │   ├── PasswordHasher.java     # BCrypt password hashing utility
+│       │   │   └── UserRepository.java     # Data Class with additional Database operations (insert/update/delete/retrieve)
 │       │   ├── GUI/
+│       │   │   ├── Controllers/
+│       │   │   │   ├── Builder.java        # Controller for the password generator section
+│       │   │   │   ├── Menu.java           # Controller for the main menu
+│       │   │   │   └── Vault.java          # Controller for the password vault
 │       │   │   ├── Application.java        # Main application entry point
-│       │   │   ├── Controller.java         # FXML controller for UI logic
-│       │   │   └── Launcher.java           # Application launcher
+│       │      └── Launcher.java           # Application launcher
 │       │   └── org/password_generator/
-│       │       ├── PasswordBuilder.java            # Password generation orchestrator
-│       │       ├── PasswordConfiguration.java      # Configuration for password rules
-│       │       └── PasswordStrengthChecker.java    # Entropy-based strength evaluation
-│       └── resources/
+│       │       ├── Builder.java            # Password generation orchestrator
+│       │       ├── Configuration.java      # Configuration for password rules
+│       │       └── StrengthChecker.java    # Entropy-based strength evaluation
+│       └── resources/org/
 │           ├── data/
-│           │   └── PasswordDataBase.sqlite  # SQLite database file
-│           └── org/password_generator_gui/Scenes/
-│               ├── StartingMenu.fxml        # Main menu UI
-│               └── PasswordBuilder.fxml     # Password generation UI
+│           │   └── PasswordDataBase.sqlite  # SQLite database file (Hidden for obvious reasons)
+│           └── password_generator_gui/
+│               ├── Scenes/
+│               │   ├── StartingMenu.fxml    # Main menu UI
+│               │   ├── PasswordBuilder.fxml # Password generation UI
+│               │   └── PasswordVault.fxml   # Password storage system UI
+│               └── StyleShseets
+│                   └── #SOON for cleaner code organization              
 ├── pom.xml                                  # Maven configuration
 └── README.md                                # This file
 ```

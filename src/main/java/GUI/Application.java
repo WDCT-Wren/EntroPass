@@ -3,7 +3,9 @@ package GUI;
 import Database.DatabaseManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -14,8 +16,9 @@ public class Application extends javafx.application.Application {
             DatabaseManager.getInstance();
 
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Password Generator 1.6");
+            Region root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            stage.setTitle("Password Generator 0.67");
             stage.setScene(scene);
             stage.show();
         }catch (Exception e) {

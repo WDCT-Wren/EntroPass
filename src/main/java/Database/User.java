@@ -2,6 +2,7 @@ package Database;
 
 import javafx.beans.property.SimpleStringProperty;
 
+//Data Model
 public class User {
     // Source - https://stackoverflow.com/q/34823563
     // Posted by Joseph, I modified it to fit my project.

@@ -1,18 +1,16 @@
 package Database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.*;
 
-public class UserOperator {
+public class UserOperations {
     private final String serviceName;
     private final String userName;
     private final String password;
     private final String notes;
     private final String createdDate;
 
-    public UserOperator(String serviceName, String userName, String password, String notes) {
+    public UserOperations(String serviceName, String userName, String password, String notes) {
         this.serviceName = serviceName;
         this.userName = userName;
         this.password = password;

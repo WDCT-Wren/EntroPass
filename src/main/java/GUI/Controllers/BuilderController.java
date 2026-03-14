@@ -1,6 +1,6 @@
 package GUI.Controllers;
 
-import Database.UserOperator;
+import Database.UserOperations;
 import Database.PasswordHasher;
 import GUI.Application;
 import javafx.event.ActionEvent;
@@ -25,7 +25,7 @@ import javafx.scene.input.ClipboardContent;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class Builder {
+public class BuilderController {
     @FXML
     private Button copyButton;
     @FXML
@@ -106,12 +106,14 @@ public class Builder {
         String password = builder.buildPassword(configuration);
         passwordText.setText(password);
 
-        if (password.length() > 28) {
-            double baseSize = 16.0;
-            double newSize = Math.max(7.0, baseSize * (28.0 / password.length()));
-            passwordText.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold; -fx-font-size: " + String.format("%.1f", newSize) + ";");
+        double maxLength = 40;
+        double baseSize = 18.0;
+        if (password.length() > maxLength) {
+            double minSize = 7.0;
+            double newSize = Math.max(minSize, baseSize * (maxLength / password.length()));
+            passwordText.setStyle("-fx-font-family: 'Monospaced Bold'; -fx-font-weight: bold; -fx-font-size: " + String.format("%.1f", newSize) + ";");
         } else {
-            passwordText.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-weight: bold; -fx-font-size: 16.0;");
+            passwordText.setStyle("-fx-font-family: 'Monospaced Bold'; -fx-font-weight: bold; -fx-font-size: baseSize;");
         }
     }
 
@@ -129,11 +131,11 @@ public class Builder {
 
     @FXML
     private void savePassword() throws SQLException {
-        UserOperator newRepo = new UserOperator(getServiceName(), getUsername(), getHashedPassword(), getNote());
+        UserOperations newRepo = new UserOperations(getServiceName(), getUsername(), getHashedPassword(), getNote());
         newRepo.insertPassword();
 
+        passwordText.setStyle("-fx-font-size: 18");
         passwordText.setText("Password Saved Successfully!");
-        passwordText.setFont(Font.font(16));
     }
 
     @FXML

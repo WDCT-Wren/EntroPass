@@ -3,11 +3,22 @@ package Database;
 import java.io.File;
 import java.sql.*;
 
+/**
+ * This class manages the connection between the application and the database.
+ * This is essentially the "JDBC" class where:
+ * <ul>
+ *     <li>The program establishes a connection with the database</li>
+ *     <li>Other classes use this to make queries in the database (such as <b>insertion, deletion, and selection</b>)</li>
+ * </ul>
+ */
 public class DatabaseManager {
     private static DatabaseManager instance;
     private Connection connection;
-    private static final String DB_PATH = "src/main/resources/org/data/PasswordDataBase.sqlite";
+    private static final String DB_PATH = "src/main/resources/org/data/PasswordDataBase.sqlite"; //follow this path structure when making your own database
 
+    /**
+     *
+     */
     public  DatabaseManager() {
         try {
             File dbFile = new File(DB_PATH);

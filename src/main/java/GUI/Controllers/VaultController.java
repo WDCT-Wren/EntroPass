@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import Database.*;
+import Encryption.PasswordEncrypt;
 import GUI.Application;
 import GUI.views.VaultEntryCell;
 
@@ -97,7 +98,7 @@ public class VaultController implements Initializable {
     private void populateDetail(User user) {
         serviceName.setText(user.getServiceName());
         userName.setText(user.getUserName());
-        password.setText(user.getPassword());
+        password.setText(PasswordEncrypt.decrypt(user.getPassword()));
         notes.setText(user.getNotes());
         createdDate.setText(user.getCreatedDate());
     }

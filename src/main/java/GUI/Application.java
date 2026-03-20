@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class Application extends javafx.application.Application {
@@ -19,7 +20,8 @@ public class Application extends javafx.application.Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
             Region root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            stage.setTitle("Password Generator 0.67");
+            //scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/AuthStyleSheet.css")).toExternalForm());
+            stage.setTitle("EntroPass 0.67");
             stage.setScene(scene);
             stage.show();
         }catch (Exception e) {

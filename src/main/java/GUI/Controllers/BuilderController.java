@@ -1,7 +1,7 @@
 package GUI.Controllers;
 
 import Database.UserOperations;
-import Database.PasswordHasher;
+import Encryption.PasswordEncrypt;
 import GUI.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -138,7 +138,7 @@ public class BuilderController {
 
     @FXML
     private void savePassword() throws SQLException {
-        UserOperations newRepo = new UserOperations(getServiceName(), getUsername(), getHashedPassword(), getNote());
+        UserOperations newRepo = new UserOperations(getServiceName(), getUsername(), getEncryptedPassword(), getNote());
         boolean invalidServiceName = serviceNameField.getText().isEmpty();
         boolean invalidUserName = usernameField.getText().isEmpty();
 
@@ -175,5 +175,5 @@ public class BuilderController {
         if (noteField.getText().isEmpty()) return "";
         return noteField.getText();
     }
-    private String getHashedPassword() {return PasswordHasher.hashPassword(passwordText.getText());}
+    private String getEncryptedPassword() {return PasswordEncrypt.encrypt(passwordText.getText());}
 }

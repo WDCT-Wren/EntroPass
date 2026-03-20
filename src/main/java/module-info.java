@@ -20,4 +20,6 @@ module org.example.password_generator_gui {
     opens Database to javafx.fxml;
     exports GUI.Controllers;
     opens GUI.Controllers to javafx.fxml;
+    exports Encryption;
+    opens Encryption to javafx.fxml;
 }

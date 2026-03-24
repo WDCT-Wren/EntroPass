@@ -20,10 +20,10 @@ public class UserDAO {
      * in the password creation process that was saved.
      *
      * @return <ul> A list of the following data:
-     *          <li>The password's service name (e.g. Spotify, Youtube, Netflix)</li>
+     *          <li>The password's service name (e.g., Spotify, YouTube, Netflix)</li>
      *          <li>The username</li>
      *          <li>The password (encrypted and is about to be decrypted)</li>
-     *          <li>Optional notes (e.g. answers for security questions)</li>
+     *          <li>Optional notes (e.g., answers for security questions)</li>
      *          <li>The creation date</li>
      *      </ul>
      */

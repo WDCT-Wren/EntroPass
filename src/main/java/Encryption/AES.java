@@ -10,30 +10,13 @@ import java.util.Base64;
 
 public class AES {
     private static SecretKey key;
-    private static final int KEY_LENGTH = 128;
     private static final int T_LEN = 128;
 
-    //Static initializer making user the key is made.
-    static {
-        init();
-    }
-
-    private static void init() {
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-            keyGenerator.init(KEY_LENGTH);
-            key = keyGenerator.generateKey();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+    public static void setKey(SecretKey key) {
+        AES.key = key;
     }
 
     public static String encrypt(String password) {
-        //Checks if the key exists in the first place.
-        if (key == null) {
-            init();
-        }
-        
         byte[] passwordInByte = password.getBytes();
         byte[] encryptionByte;
 
@@ -59,10 +42,6 @@ public class AES {
     }
 
     public static String decrypt(String encryptedPassword) {
-        //Check if the key exists in the first place
-        if (key == null) {
-            init();
-        }
         
         byte[] combined = decode(encryptedPassword); //encrypted password string to a byte array.
         byte[] decryptedBytes;

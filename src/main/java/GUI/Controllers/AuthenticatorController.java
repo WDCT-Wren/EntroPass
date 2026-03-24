@@ -1,9 +1,9 @@
 package GUI.Controllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
+import Encryption.AES;
+import Encryption.PDKF2;
 import Encryption.ValidatePassword;
 import GUI.Application;
 import javafx.event.ActionEvent;
@@ -15,8 +15,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import javax.crypto.SecretKey;
 
 public class AuthenticatorController {
 
@@ -29,6 +30,12 @@ public class AuthenticatorController {
     @FXML
     private Button UnlockButton;
 
+    private static final String HASHED_PASS = "$2a$12$yjGunLLYocir1U6fpY6tPOtJflUFG..wWVaLofXXMlDU8.81/USXW";
+    SecretKey key = PDKF2.deriveKey(HASHED_PASS.toCharArray());
+
+    public AuthenticatorController() throws Exception {
+    }
+
     @FXML
     void initialize() {
         validatorLabel.setVisible(false);
@@ -40,12 +47,11 @@ public class AuthenticatorController {
 
     @FXML
     private boolean validateLogIn() throws IOException {
-        String hashedPass = "$2a$12$yjGunLLYocir1U6fpY6tPOtJflUFG..wWVaLofXXMlDU8.81/USXW";
-        return ValidatePassword.checkPassword(AuthTextField.getText(), hashedPass);
+        return ValidatePassword.checkPassword(AuthTextField.getText(), HASHED_PASS);
     }
 
     @FXML
-    public void switchToMenuScene(ActionEvent event) throws IOException {
+    public void switchToMenuScene(ActionEvent event) throws Exception {
         if (validateLogIn()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
             Parent root = fxmlLoader.load();
@@ -53,6 +59,8 @@ public class AuthenticatorController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
+            AES.setKey(key); //inserts the key to the class.
         }
         else {
             validatorLabel.setVisible(true);

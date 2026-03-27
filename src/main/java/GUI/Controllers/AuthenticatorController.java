@@ -15,6 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import javax.crypto.SecretKey;
@@ -43,6 +45,16 @@ public class AuthenticatorController {
         AuthTextField.setOnMouseClicked(event -> {
             validatorLabel.setVisible(false);
         });
+
+        AuthTextField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    switchToMenuScene(event);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     @FXML
@@ -51,7 +63,24 @@ public class AuthenticatorController {
     }
 
     @FXML
-    public void switchToMenuScene(ActionEvent event) throws Exception {
+    private void switchToMenuScene(ActionEvent event) throws Exception {
+        if (validateLogIn()) {
+            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+            AES.setKey(key); //inserts the key to the class.
+        }
+        else {
+            validatorLabel.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void switchToMenuScene(KeyEvent event) throws Exception {
         if (validateLogIn()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
             Parent root = fxmlLoader.load();

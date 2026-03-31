@@ -31,7 +31,7 @@ public class UserDAO {
         List<User> dataVault = new ArrayList<>();
 
         //Prepares the query
-        String query = "SELECT service_name, username, encrypted_password, notes, created_date FROM passwordDB";
+        String query = "SELECT service_name, username, encrypted_password, notes, created_date FROM vault";
 
         //Establish a connection with the database
         Connection connection = DatabaseManager.getInstance().getConnection();
@@ -59,7 +59,7 @@ public class UserDAO {
      * @return a count of the row entries in the database
      */
     public int getRowCount() {
-        String query = "SELECT COUNT(*) FROM passwordDB";
+        String query = "SELECT COUNT(*) FROM vault";
         Connection connection = DatabaseManager.getInstance().getConnection();
         try (Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)){

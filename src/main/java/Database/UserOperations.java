@@ -40,7 +40,7 @@ public class UserOperations {
         Connection connection = DatabaseManager.getInstance().getConnection();
 
         //Declare the database query with placeholders
-        String insertSQL = "INSERT INTO passwordDB(service_name, username, encrypted_password, notes, created_date) VALUES(?,?,?,?,?)";
+        String insertSQL = "INSERT INTO vault(service_name, username, encrypted_password, notes, created_date) VALUES(?,?,?,?,?)";
 
         //Prepares the query execution with the necessary parameters.
         PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);

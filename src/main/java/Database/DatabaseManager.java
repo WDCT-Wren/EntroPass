@@ -17,6 +17,7 @@ public class DatabaseManager {
 
     //follow this path structure when making your own database
     private static final String DB_PATH = "src/main/resources/org/data/PasswordDataBase.sqlite";
+    private static final String url = "jdbc:sqlite:" + DB_PATH;
     /**
      * Simple constructor to connect a class to the database file
      */
@@ -24,10 +25,8 @@ public class DatabaseManager {
         try {
             File dbFile = new File(DB_PATH);
             if (!dbFile.exists()) {
-                System.out.println("Error: Database file not found at " + DB_PATH);
-                return;
+                System.out.println("Database Connection cannot be found!");
             }
-            String url = "jdbc:sqlite:" + DB_PATH;
             this.connection = DriverManager.getConnection(url);
             System.out.println("Opened database connection!");
 
@@ -44,6 +43,33 @@ public class DatabaseManager {
             instance = new DatabaseManager();
         }
         return instance;
+    }
+
+    public void initDatabase() throws SQLException {
+        connection = DriverManager.getConnection(url);
+        String createMasterKeyDBQuery = """
+                CREATE TABLE IF NOT EXISTS master (
+                                hash TEXT NOT NULL)
+                """;
+        String createVaultQuery = """
+                create table if not exists vault (
+                    id                 INTEGER not null
+                        constraint vault_pk
+                            primary key autoincrement,
+                    service_name       TEXT    not null,
+                    username           TEXT    not null,
+                    encrypted_password TEXT    not null,
+                    notes              TEXT,
+                    created_date       TEXT
+                )
+                """;
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute(createMasterKeyDBQuery);
+            stmt.execute(createVaultQuery);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

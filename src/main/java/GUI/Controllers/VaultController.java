@@ -99,7 +99,7 @@ public class VaultController implements Initializable {
         try {
             password.setText(AES.decrypt(user.getPassword()));
         } catch (RuntimeException e) {
-            password.setText("[Legacy Password - Bicrypt was used in this entry]");
+            password.setText("[Legacy Password - Please re-enter password]");
             password.setStyle("-fx-text-fill: #FF6B6B;");
         }
 

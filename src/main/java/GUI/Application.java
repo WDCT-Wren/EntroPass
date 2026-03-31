@@ -15,8 +15,7 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
-            DatabaseManager.getInstance();
-
+            DatabaseManager.getInstance().initDatabase();
             FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
             Region root = fxmlLoader.load();
             Scene scene = new Scene(root);

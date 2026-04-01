@@ -24,6 +24,8 @@ import javax.crypto.SecretKey;
 
 public class AuthenticatorController {
 
+    public Button signInButton;
+
     @FXML
     private PasswordField AuthTextField;
 
@@ -36,6 +38,8 @@ public class AuthenticatorController {
     @FXML
     private Button forgotPasswordButton;
 
+    @FXML
+    private Button signUpButton;
 
     private static final String HASHED_PASS = "$2a$12$yjGunLLYocir1U6fpY6tPOtJflUFG..wWVaLofXXMlDU8.81/USXW";
     SecretKey key = PDKF2.deriveKey(HASHED_PASS.toCharArray());
@@ -44,7 +48,7 @@ public class AuthenticatorController {
     }
 
     @FXML
-    void initialize() {
+    private void initialize() {
         validatorLabel.setVisible(false);
 
         AuthTextField.setOnMouseClicked(event -> {
@@ -68,12 +72,23 @@ public class AuthenticatorController {
     }
 
     @FXML
-    void switchToForgetPasswordScene(ActionEvent event) throws IOException {
+    private void switchToForgetPasswordScene(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/ForgotPassword.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/ForgotPasswordStyleSheet.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void switchToSignUpScene(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/SignUpScene.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/SignUpStyleSheet.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

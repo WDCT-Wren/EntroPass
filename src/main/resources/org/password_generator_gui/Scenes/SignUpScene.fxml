@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="901.0" prefWidth="1230.0" style="-fx-background-color: gray;" styleClass="root-pane" stylesheets="@../stylesheets/SignUpStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AuthenticatorController">
+<AnchorPane prefHeight="901.0" prefWidth="1230.0" style="-fx-background-color: gray;" styleClass="root-pane" stylesheets="@../stylesheets/SignUpStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.SignUpController">
    <children>
       <BorderPane layoutX="405.0" layoutY="332.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="431.0" styleClass="auth-box" stylesheets="@../stylesheets/AuthStyleSheet.css">
          <center>

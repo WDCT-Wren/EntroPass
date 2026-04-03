@@ -196,21 +196,13 @@ CREATE TABLE passwords (
 ## Current Limitations & Roadmap
 
 ### In Development
-- [ ] Functional "Save Password" button integration
-- [ ] Password length slider synchronization with the text field
-- [ ] Password retrieval/viewing interface
-- [ ] Password decryption for viewing saved passwords
-- [ ] Copy-to-clipboard functionality
-- [ ] Progress bar visualization of password strength
-- [ ] Input validation for username and service name fields
-
-### Planned Features
+- [ ] Master Password Initialization after first usage
 - [ ] Search and filter saved passwords
 - [ ] Edit and delete password entries
+
+### Planned Features
 - [ ] Password expiration reminders
 - [ ] Export/import password database
-- [ ] Master password protection
-- [ ] Dark mode theme
 - [ ] Comprehensive unit tests
 
 ## Contributing

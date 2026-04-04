@@ -1,0 +1,14 @@
+2026-03-12T16:39:13.261Z [INFO] ----------------------invoke list_jdks----------------------
+2026-03-12T16:39:13.261Z [INFO] [Tool.invoke]({name: list_jdks, input: {
+  "additionalSearchPaths": [
+    "C:\\Program Files\\Java",
+    "C:\\Program Files (x86)\\Java"
+  ],
+  "version": "11",
+  "projectPath": "c:\\Users\\Wren\\IdeaProjects\\EntroPass"
+}}).
+2026-03-12T16:39:13.261Z [INFO] [Tool.invoke] do invoke.
+2026-03-12T16:39:13.335Z [INFO] [Tool.invoke]({result: {
+  "message": "No JDK installations found."
+}}).
+2026-03-12T16:39:13.335Z [INFO] ----------------------invoked list_jdks----------------------

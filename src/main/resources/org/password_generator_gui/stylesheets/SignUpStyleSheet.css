@@ -33,7 +33,7 @@
 }
 
 .root-pane {
-    -fx-background-image: url("../Icons/Images/sign_up_backgorund.jpg");
+    -fx-background-image: url("../../Assets/Images/sign_up_backgorund.jpg");
     -fx-background-size: cover;
 }
 

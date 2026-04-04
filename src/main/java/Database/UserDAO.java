@@ -1,9 +1,6 @@
 package Database;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +34,41 @@ public class UserDAO {
         Connection connection = DatabaseManager.getInstance().getConnection();
         try (Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)){
+
+            //Loops through the rows, adding a user object to the dataVault list for every table row.
+            while (rs.next()) {
+                dataVault.add(new User(
+                        rs.getString("service_name"),
+                        rs.getString("username"),
+                        rs.getString("encrypted_password"),
+                        rs.getString("notes"),
+                        rs.getString("created_date")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dataVault;
+    }
+
+    public List<User> loadRepoData(String searchedText) throws SQLException {
+        List<User> dataVault = new ArrayList<>();
+
+        //Prepares the query
+        String query = """
+                SELECT service_name, username, encrypted_password, notes, created_date 
+                FROM vault WHERE service_name LIKE ? OR username LIKE ?
+        """;
+
+        //Establish a connection with the database
+        Connection connection = DatabaseManager.getInstance().getConnection();
+
+        //Prepares the query execution with the necessary parameters.
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, searchedText);
+        preparedStatement.setString(2, searchedText);
+
+        try (ResultSet rs = preparedStatement.executeQuery()){
 
             //Loops through the rows, adding a user object to the dataVault list for every table row.
             while (rs.next()) {

@@ -18,6 +18,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import org.Password_Generator.Configurator;
 import org.Password_Generator.StrengthChecker;
+import org.controlsfx.control.action.Action;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class SignUpController {
     }
 
     @FXML
-    private void insertIntoDB() throws SQLException {
+    private void insertIntoDB(ActionEvent event) throws SQLException, IOException {
         boolean invalidPassword = getMasterPass().isEmpty();
         String salt = PDKF2.getSalt();
 
@@ -65,6 +66,7 @@ public class SignUpController {
             DatabaseOperations.insertToMasterDB(getHashedMasterPass(), salt);
             masterPasswordField.clear();
             masterPasswordField.setPromptText("MASTER PASSWORD SAVED SUCCESSFULLY");
+            switchToSignInScene(event);
         }
         else masterPasswordField.setPromptText("MASTER PASSWORD CANNOT BE EMPTY");
     }
@@ -98,7 +100,7 @@ public class SignUpController {
         return new Configurator(hasNumbers, hasSymbols, hasUpper, hasLower);
     }
 
-    public void setMasterKey(ActionEvent actionEvent) throws SQLException {
-        insertIntoDB();
+    public void setMasterKey(ActionEvent event) throws SQLException, IOException {
+        insertIntoDB(event);
     }
 }

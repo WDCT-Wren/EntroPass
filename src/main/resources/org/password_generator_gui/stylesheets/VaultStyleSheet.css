@@ -13,3 +13,7 @@
     -fx-background-color: #D1EBD8FF; /* A different color for unfocused state */
 }
 
+.search-bar {
+    -fx-border-radius: 10;
+    -fx-background-color: #D1EBD8FF;
+}

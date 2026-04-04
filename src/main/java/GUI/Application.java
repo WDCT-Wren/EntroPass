@@ -5,16 +5,19 @@ import Database.MasterDAO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.util.Objects;
 
 
 public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
+        //Load fonts in the application
+        Font.loadFont(getClass().getResourceAsStream("org/Assets/Fonts/SpaceGrotesk-Regular.ttf"), 16);
+        Font.loadFont(getClass().getResourceAsStream("org/Assets/Fonts/SpaceGrotesk-Bold.ttf"), 16);
+
         boolean masterPasswordExist = MasterDAO.retrieveMasterPass() != null;
         if (masterPasswordExist) {
             try {

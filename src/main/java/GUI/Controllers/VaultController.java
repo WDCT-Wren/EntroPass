@@ -14,21 +14,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class VaultController implements Initializable {
+    @FXML
+    private TextField searchField;
+
     @FXML
     private Label itemAmountLabel;
 
@@ -48,7 +50,7 @@ public class VaultController implements Initializable {
     private TextField notes;
 
     @FXML
-    private TextField password;
+    private PasswordField password;
 
     @FXML
     private TextField serviceName;
@@ -62,7 +64,32 @@ public class VaultController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //populate the listview with all the assets initially
+        populateList();
 
+        searchField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    if (searchField.getText().isEmpty()) {
+                        populateList();
+                    }
+                    else {
+                        populateSearchedList();
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        userRepoList.getSelectionModel().selectFirst();
+        notesIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/org/Assets/Images/noteIcon.png")).toExternalForm()));
+
+        itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
+    }
+
+    private void populateList() {
+        userRepoList.getItems().clear();
         userRepoList.setCellFactory(lv -> new VaultEntryCell());
         userRepoList.getItems().addAll(userDAO.loadRepoData());
 
@@ -73,11 +100,21 @@ public class VaultController implements Initializable {
                     }
                 })
         );
+    }
 
-        userRepoList.getSelectionModel().selectFirst();
-        notesIcon.setImage(new Image(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/Icons/Images/noteIcon.png")).toExternalForm()));
+    private void populateSearchedList() throws SQLException {
+        userRepoList.getItems().clear();
+        String searched = searchField.getText();
+        userRepoList.setCellFactory(lv -> new VaultEntryCell());
+        userRepoList.getItems().addAll(userDAO.loadRepoData(searched));
 
-        itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
+        userRepoList.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        populateDetail(newValue);
+                    }
+                })
+        );
     }
 
     private void populateDetail(User user) {

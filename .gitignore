@@ -25,3 +25,11 @@ target
 
 # NetBeans
 nbproject/
+
+# my Database and other personal information(for obvious reasons)
+/src/main/resources/org/data/PasswordDataBase.sqlite
+/TODO-list.md
+
+# my personal tester class
+/src/main/java/Database/Tester.java
+/NUL

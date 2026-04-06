@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class UserDAO {
     /**
-     * Method used to access the database and retrieve necessary entries
+     * Method used to access the database and retrieve all asset entries
      * in the password creation process that was saved.
      *
      * @return <ul> A list of the following data:
@@ -51,22 +51,25 @@ public class UserDAO {
         return dataVault;
     }
 
+    /**
+     * Repopulates the vault for the entries that matches with the search query.
+     * This search feature is not case-sensitive and is used to search for matching
+     * <b>usernames</b> and <b>service names</b>
+     *
+     * @param searchedText the search query
+     * @return <ul> A list of the following data:
+     *          <li>The password's service name that matches with the search query (e.g., Spotify, YouTube, Netflix)</li>
+     *          <li>The username that matches with the search query</li>
+     *          <li>The password (encrypted and is about to be decrypted)</li>
+     *          <li>Optional notes (e.g., answers for security questions)</li>
+     *          <li>The creation date</li>
+     *      </ul>
+     */
     public List<User> loadRepoData(String searchedText) throws SQLException {
         List<User> dataVault = new ArrayList<>();
 
-        //Prepares the query
-        String query = """
-                SELECT service_name, username, encrypted_password, notes, created_date 
-                FROM vault WHERE service_name LIKE ? OR username LIKE ?
-        """;
-
-        //Establish a connection with the database
-        Connection connection = DatabaseManager.getInstance().getConnection();
-
-        //Prepares the query execution with the necessary parameters.
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, searchedText);
-        preparedStatement.setString(2, searchedText);
+        //Call a prepared query method.
+        PreparedStatement preparedStatement =  getPreparedStatement(searchedText);
 
         try (ResultSet rs = preparedStatement.executeQuery()){
 
@@ -84,6 +87,29 @@ public class UserDAO {
             e.printStackTrace();
         }
         return dataVault;
+    }
+
+    /**
+     * Helper method that prepares a non-case sensitive query that asks sqlite for the entries' username and
+     * service names that matches with the search query.
+     *
+     * @param searchedText what the user wishes to filter in his database list
+     * @return A prepared statement
+     */
+    private PreparedStatement getPreparedStatement(String searchedText) throws SQLException {
+        //Prepares the query
+        String query = """
+                SELECT service_name, username, encrypted_password, notes, created_date 
+                FROM vault WHERE UPPER(service_name) LIKE UPPER(?) OR UPPER(username) LIKE UPPER(?)
+        """;
+
+        //Establish a connection with the database
+        Connection connection = DatabaseManager.getInstance().getConnection();
+
+        //Prepares the query execution with the necessary parameters.
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, searchedText);
+        preparedStatement.setString(2, searchedText);
     }
 
     /**

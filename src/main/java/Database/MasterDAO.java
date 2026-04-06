@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 public class MasterDAO {
     public static String retrieveMasterPass() {
@@ -37,6 +38,7 @@ public class MasterDAO {
             ResultSet rs = stmt.executeQuery(query)){
 
             salt = rs.getBytes("salt");
+            System.out.println(Arrays.toString(salt));
         } catch (SQLException e) {
             e.printStackTrace();
         }

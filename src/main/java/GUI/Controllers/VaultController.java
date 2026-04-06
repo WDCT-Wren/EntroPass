@@ -3,6 +3,7 @@ package GUI.Controllers;
 import Database.*;
 import Encryption.AES;
 import GUI.Application;
+import GUI.Utils.SceneUtils;
 import GUI.views.VaultEntryCell;
 
 import java.io.IOException;
@@ -134,12 +135,12 @@ public class VaultController implements Initializable {
 
     @FXML
     public void switchToMenuScene(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
-        Parent root = fxmlLoader.load();
+        String fxmlFile = "StartingMenu.fxml";
+        String cssFile = "StartingMenuStyleSheet.css";
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+        SceneUtils.switchScene(stage, fxmlFile, cssFile);
     }
 
     @FXML

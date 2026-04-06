@@ -5,6 +5,7 @@ import Database.DatabaseOperations;
 import Database.MasterDAO;
 import Encryption.PDKF2;
 import GUI.Application;
+import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,16 +75,12 @@ public class SignUpController {
     @FXML
     void switchToSignInScene(ActionEvent event) throws IOException {
         boolean masterPasswordExists = MasterDAO.retrieveMasterPass() != null;
+        String fxmlFile = "PasswordBuilder.fxml";
+        String cssFile = "BuilderStyleSheet.css";
 
-        if (masterPasswordExists) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/AuthStyleSheet.css")).toExternalForm());
-            stage.setScene(scene);
-            stage.show();
-        }
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        if (masterPasswordExists) SceneUtils.switchScene(stage, fxmlFile, cssFile);
         else signInWarning.setVisible(true);
     }
 

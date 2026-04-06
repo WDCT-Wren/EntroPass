@@ -5,6 +5,7 @@ import Database.User;
 import Database.UserDAO;
 import Database.UserOperations;
 import GUI.Application;
+import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,13 +51,12 @@ public class ForgotPasswordController {
 
     @FXML
     void switchToAuthScene(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/SignUPScene.fxml"));
-        Parent root = fxmlLoader.load();
+        String fxmlFile = "AuthMenu.fxml";
+        String cssFile = "AuthStyleSheet.css";
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/AuthStyleSheet.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+
+        SceneUtils.switchScene(stage, fxmlFile, cssFile);
     }
 
 }

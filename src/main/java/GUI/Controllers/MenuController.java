@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import GUI.Application;
+import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,22 +22,21 @@ public class MenuController {
 
     @FXML
     void switchToPasswordBuilder(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/PasswordBuilder.fxml"));
-        Parent root = fxmlLoader.load();
+        String fxmlFile = "PasswordBuilder.fxml";
+        String cssFile = "BuilderStyleSheet.css";
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+        SceneUtils.switchScene(stage, fxmlFile, cssFile);
     }
 
     @FXML
     void switchToPasswordVault(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/PasswordVault.fxml"));
-        Parent root = fxmlLoader.load();
+        String fxmlFile = "PasswordVault.fxml";
+        String cssFile = "VaultStyleSheet.css";
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/VaultStyleSheet.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+
+        SceneUtils.switchScene(stage, fxmlFile, cssFile);
     }
 }

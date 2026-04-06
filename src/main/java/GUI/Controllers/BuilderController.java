@@ -3,6 +3,7 @@ package GUI.Controllers;
 import Database.UserOperations;
 import Encryption.AES;
 import GUI.Application;
+import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,12 +81,11 @@ public class BuilderController {
      */
     @FXML
     public void switchToMenuScene(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
-        Parent root = fxmlLoader.load();
+        String fxmlFileName = "StartingMenu.fxml";
+        String cssFileName = "StartingMenuStyleSheet.css";
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SceneUtils.switchScene(stage, fxmlFileName, cssFileName);
     }
 
     /**

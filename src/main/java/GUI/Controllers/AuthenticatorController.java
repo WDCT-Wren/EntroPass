@@ -1,19 +1,21 @@
 package GUI.Controllers;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Objects;
 
 import Database.MasterDAO;
 import Encryption.AES;
 import Encryption.PDKF2;
 import GUI.Application;
+import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyCode;
@@ -32,7 +34,6 @@ public class AuthenticatorController {
     private Label validatorLabel;
 
     private static final String password = MasterDAO.retrieveMasterPass();
-    SecretKey key = PDKF2.deriveKey(password.toCharArray(), MasterDAO.retrieveSaltByte());
 
     public AuthenticatorController() throws Exception {
     }
@@ -57,58 +58,59 @@ public class AuthenticatorController {
     }
 
     @FXML
-    private boolean validateLogIn() {
-        return BCrypt.checkpw(AuthTextField.getText(), password);
-    }
-
-    @FXML
     private void switchToForgetPasswordScene(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/ForgotPassword.fxml"));
-        Parent root = fxmlLoader.load();
+        String fxmlFileName = "ForgotPassword.fxml";
+        String cssFileName = "ForgotPasswordStyleSheet.css";
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/ForgotPasswordStyleSheet.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+        SceneUtils.switchScene(stage, fxmlFileName, cssFileName);
     }
 
     @FXML
     private void switchToSignUpScene(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/SignUpScene.fxml"));
-        Parent root = fxmlLoader.load();
+        String fxmlFileName = "SignUpScnee.fxml";
+        String cssFileName = "SignUpStyleSheet.css";
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/org/password_generator_gui/stylesheets/SignUpStyleSheet.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+        SceneUtils.switchScene(stage, fxmlFileName, cssFileName);
     }
 
+    /**
+     * Switches to the starting menu with the use of a button
+     * @param event when the user presses "Unlock Vault"
+     */
     @FXML
     private void switchToMenuScene(ActionEvent event) throws Exception {
-        if (validateLogIn()) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-            AES.setKey(key); //inserts the key to the class.
-        }
-        else {
-            validatorLabel.setVisible(true);
-        }
+        switchToMenuScene((Node) event.getSource());
     }
 
+    /**
+     * Switches to the starting menu with the use of the enter key
+     * @param event when the user presses enter
+     */
     @FXML
     private void switchToMenuScene(KeyEvent event) throws Exception {
-        if (validateLogIn()) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/StartingMenu.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+        switchToMenuScene((Node) event.getSource());
+    }
+
+    /**
+     * Validates the master password and switches to the main menu scene if successful.
+     * Derives the AES key from the validated password and stores it for session use.
+     *
+     * @param source the UI node that triggered the scene switch, used to retrieve the current Stage
+     * @throws Exception if key derivation, salt retrieval, or scene loading fails
+     */
+    private void switchToMenuScene(Node source) throws Exception {
+        boolean validLogin = BCrypt.checkpw(AuthTextField.getText(), password);
+
+        if (validLogin) {
+            SecretKey key = PDKF2.deriveKey(password.toCharArray(), MasterDAO.retrieveSaltByte());
+            System.out.println(Arrays.toString(MasterDAO.retrieveSaltByte()));
+            String fxmlFileName = "StartingMenu.fxml";
+            String cssFileName = "StartingMenuStyleSheet.css";
+
+            Stage stage = (Stage) source.getScene().getWindow();
+            SceneUtils.switchScene(stage, fxmlFileName, cssFileName);
 
             AES.setKey(key); //inserts the key to the class.
         }

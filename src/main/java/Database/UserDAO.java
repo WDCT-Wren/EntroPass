@@ -110,6 +110,8 @@ public class UserDAO {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, searchedText);
         preparedStatement.setString(2, searchedText);
+
+        return preparedStatement;
     }
 
     /**

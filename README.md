@@ -31,7 +31,7 @@
 ## Technology Stack
 
 ### Core Technologies
-- **Java 24**: Latest Java features and performance improvements
+- **Java 25**: Latest Java features and performance improvements
 - **JavaFX 21**: Modern UI framework for rich desktop applications
 - **Maven**: Dependency management and build automation
 
@@ -39,7 +39,6 @@
 - **Passay 1.6.6**: Password generation and validation
 - **SQLite JDBC 3.51.1.0**: Embedded database connectivity
 - **jBCrypt 0.4** & **BCrypt 0.10.2**: Password hashing and security
-- **JUnit Jupiter 5.12.1**: Unit testing framework
 
 ### Additional Components
 - **ControlsFX 11.2.1**: Enhanced JavaFX controls
@@ -51,37 +50,41 @@
 ## Project Structure
 
 ```
-Password_Generator_GUI/
+EntroPass/
 ├── src/
 │   └── main/
-│       ├── java/
-│       │   ├── Database/
-│       │   │   ├── DatabaseManager.java    # Singleton database connection manager
-│       │   │   ├── PasswordHasher.java     # BCrypt password hashing utility
-│       │   │   └── UserRepository.java     # Data Class with additional Database operations (insert/update/delete/retrieve)
-│       │   ├── GUI/
-│       │   │   ├── Controllers/
-│       │   │   │   ├── Builder.java        # Controller for the password generator section
-│       │   │   │   ├── Menu.java           # Controller for the main menu
-│       │   │   │   └── Vault.java          # Controller for the password vault
-│       │   │   ├── Application.java        # Main application entry point
-│       │      └── Launcher.java           # Application launcher
-│       │   └── org/password_generator/
-│       │       ├── Builder.java            # Password generation orchestrator
-│       │       ├── Configuration.java      # Configuration for password rules
-│       │       └── StrengthChecker.java    # Entropy-based strength evaluation
-│       └── resources/org/
-│           ├── data/
-│           │   └── PasswordDataBase.sqlite  # SQLite database file (Hidden for obvious reasons)
-│           └── password_generator_gui/
-│               ├── Scenes/
-│               │   ├── StartingMenu.fxml    # Main menu UI
-│               │   ├── PasswordBuilder.fxml # Password generation UI
-│               │   └── PasswordVault.fxml   # Password storage system UI
-│               └── StyleShseets
-│                   └── #SOON for cleaner code organization              
-├── pom.xml                                  # Maven configuration
-└── README.md                                # This file
+│       ├── java/            # Java source files
+│       │   ├── Database/    # SQLite connection and DAO logic
+│       │   │   ├── DatabaseManager.java
+│       │   │   ├── DatabaseOperations.java
+│       │   │   ├── MasterDAO.java
+│       │   │   ├── Tester.java
+│       │   │   ├── User.java
+│       │   │   ├── UserDAO.java
+│       │   │   └── UserOperations.java
+│       │   ├── Encryption/  # Security and hashing algorithms
+│       │   │   ├── AES.java
+│       │   │   └── PDKF2.java
+│       │   ├── GUI/         # JavaFX UI Components
+│       │   │   ├── Controllers/ # FXML Controller classes
+│       │   │   ├── Utils/       # UI helper classes (SceneUtils)
+│       │   │   └── views/       # Custom UI components (VaultEntryCell)
+│       │   ├── org.Password_Generator/ # Core logic for password generation
+│       │   │   ├── Builder.java
+│       │   │   ├── Configurator.java
+│       │   │   └── StrengthChecker.java
+│       │   ├── Application.java    # Main JavaFX application class
+│       │   ├── Launcher.java       # Main entry point for JAR execution
+│       │   └── module-info.java    # Java Module System configuration
+│       └── resources/      # Non-code assets
+│           └── org/
+│               ├── Assets/         # Images, icons, and logos
+│               ├── data/           # Local storage (PasswordDataBase.sqlite)
+│               └── password_generator_gui/
+│                   ├── Scenes/     # FXML layout files
+│                   └── stylesheets/ # CSS files for UI styling
+├── pom.xml                 # Maven project configuration
+└── README.md               # This file 
 ```
 
 ## Architecture & Design Principles

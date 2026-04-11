@@ -28,7 +28,7 @@ public class UserDAO {
         List<User> dataVault = new ArrayList<>();
 
         //Prepares the query
-        String query = "SELECT service_name, username, encrypted_password, notes, created_date FROM vault";
+        String query = "SELECT id, service_name, username, encrypted_password, notes, created_date FROM vault";
 
         //Establish a connection with the database
         Connection connection = DatabaseManager.getInstance().getConnection();
@@ -38,6 +38,7 @@ public class UserDAO {
             //Loops through the rows, adding a user object to the dataVault list for every table row.
             while (rs.next()) {
                 dataVault.add(new User(
+                        rs.getInt("id"),
                         rs.getString("service_name"),
                         rs.getString("username"),
                         rs.getString("encrypted_password"),
@@ -76,6 +77,7 @@ public class UserDAO {
             //Loops through the rows, adding a user object to the dataVault list for every table row.
             while (rs.next()) {
                 dataVault.add(new User(
+                        rs.getInt("id"),
                         rs.getString("service_name"),
                         rs.getString("username"),
                         rs.getString("encrypted_password"),
@@ -99,7 +101,7 @@ public class UserDAO {
     private PreparedStatement getPreparedStatement(String searchedText) throws SQLException {
         //Prepares the query
         String query = """
-                SELECT service_name, username, encrypted_password, notes, created_date 
+                SELECT id, service_name, username, encrypted_password, notes, created_date 
                 FROM vault WHERE UPPER(service_name) LIKE UPPER(?) OR UPPER(username) LIKE UPPER(?)
         """;
 

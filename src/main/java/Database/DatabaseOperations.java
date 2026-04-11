@@ -39,16 +39,16 @@ public class DatabaseOperations {
         }
     }
 
-    public void deletePassword(int id) {
+    public static void deletePassword(int id) {
         // Establish a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();
 
         // Declare the delete query
         String sql = "DELETE FROM vault WHERE id = ?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

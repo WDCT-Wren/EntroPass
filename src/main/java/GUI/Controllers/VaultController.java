@@ -162,4 +162,16 @@ public class VaultController implements Initializable {
         copyUsername.setText("Copied!");
         copyPassword.setText("Copy");
     }
+
+    @FXML
+    public void deleteEntry() throws SQLException {
+        User user = userRepoList.getSelectionModel().getSelectedItem();
+        int id = user.getId();
+        DatabaseOperations.deletePassword(id);
+
+        populateDetail(user);
+        populateList();
+        itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
+        userRepoList.getSelectionModel().selectFirst();
+    }
 }

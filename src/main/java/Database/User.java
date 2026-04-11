@@ -1,5 +1,6 @@
 package Database;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -7,13 +8,15 @@ import javafx.beans.property.SimpleStringProperty;
  * to be retrieved by the {@link UserDAO}
  */
 public class User {
+    private final SimpleIntegerProperty id;
     private final SimpleStringProperty serviceName;
     private final SimpleStringProperty userName;
     private final SimpleStringProperty password;
     private final SimpleStringProperty note;
     private final SimpleStringProperty dateCreated;
 
-    public User(String serviceName, String userName, String password, String notes, String createdDate) {
+    public User(int id, String serviceName, String userName, String password, String notes, String createdDate) {
+        this.id = new SimpleIntegerProperty(id);
         this.serviceName = new SimpleStringProperty(serviceName);
         this.userName = new SimpleStringProperty(userName);
         this.password = new SimpleStringProperty(password);
@@ -21,6 +24,7 @@ public class User {
         this.dateCreated = new SimpleStringProperty(createdDate);
     }
 
+    public int getId() {return id.get();}
     public String getServiceName() {return serviceName.get();}
     public String getUserName() {return userName.get();}
     public String getPassword() {return password.get();}

@@ -199,14 +199,10 @@ CREATE TABLE passwords (
 ## Current Limitations & Roadmap
 
 ### In Development
-- [ ] Master Password Initialization after first usage
-- [ ] Search and filter saved passwords
-- [ ] Edit and delete password entries
-
-### Planned Features
 - [ ] Password expiration reminders
 - [ ] Export/import password database
 - [ ] Comprehensive unit tests
+- [ ] Edit and delete password entries
 
 ## Contributing
 

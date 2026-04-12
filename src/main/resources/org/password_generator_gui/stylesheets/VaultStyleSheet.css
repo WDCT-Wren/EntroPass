@@ -150,6 +150,8 @@
     -fx-background-color: #818876;
     -fx-text-fill: #b4f13b;
     -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-cursor: hand;
 }
 
 .side-bar-button:hover {

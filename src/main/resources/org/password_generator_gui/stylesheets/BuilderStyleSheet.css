@@ -1,0 +1,67 @@
+.side-bar {
+    -fx-background-color: #3c3c3c;
+}
+
+.side-bar-button {
+    --border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-font: Semibold 20px "Segoe UI";
+    -fx-text-fill: #C2C7D0;
+}
+
+.side-bar-button-selected {
+    -fx-background-color: #818876;
+    -fx-text-fill: #b4f13b;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+.side-bar-button:hover {
+    -fx-background-color: #454545;
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+.root-pane {
+    -fx-background-color: #191919;
+    -fx-padding: 40;
+    -fx-spacing: 25;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-background-insets: 0;
+}
+
+.notes-area {
+    -fx-background-color: #101010; /* Darker grey from your design */
+    -fx-text-fill: white;
+    -fx-border-color: #272727;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
+
+.notes-area .viewport {
+    -fx-background-color: transparent;
+}
+
+.notes-area .content {
+    -fx-background-color: transparent;
+}
+
+.notes-area .text {
+    -fx-fill: #8a8d91; /* Muted text color for notes */
+}
+
+.root-textfield {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: #101010;
+    -fx-border-color: #272727;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+    -fx-text-fill: #404040;
+    -fx-padding: 10;
+    -fx-font: Semibold 16px "Segoe UI";
+}

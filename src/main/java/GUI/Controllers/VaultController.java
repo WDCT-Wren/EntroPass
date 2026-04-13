@@ -2,22 +2,16 @@ package GUI.Controllers;
 
 import Database.*;
 import Encryption.AES;
-import GUI.Application;
 import GUI.Utils.SceneUtils;
-import GUI.views.VaultEntryCell;
+import GUI.Utils.VaultEntryCell;
 
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
@@ -25,7 +19,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class VaultController implements Initializable {
@@ -136,7 +129,7 @@ public class VaultController implements Initializable {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        SceneUtils.switchScene(stage, fxmlFile, cssFile);
+        SceneUtils.getScene(stage, fxmlFile, cssFile);
     }
 
     @FXML

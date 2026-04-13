@@ -73,7 +73,7 @@ public class SignUpController {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        if (masterPasswordExists) SceneUtils.switchScene(stage, fxmlFile, cssFile);
+        if (masterPasswordExists) SceneUtils.getScene(stage, fxmlFile, cssFile);
         else signInWarning.setVisible(true);
     }
 

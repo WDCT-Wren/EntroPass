@@ -2,20 +2,14 @@ package GUI.Controllers;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Base64;
-import java.util.Objects;
 
 import Database.MasterDAO;
 import Encryption.AES;
 import Encryption.PDKF2;
-import GUI.Application;
 import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyCode;
@@ -63,7 +57,7 @@ public class AuthenticatorController {
         String cssFileName = "ForgotPasswordStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneUtils.switchScene(stage, fxmlFileName, cssFileName);
+        SceneUtils.getScene(stage, fxmlFileName, cssFileName);
     }
 
     @FXML
@@ -72,7 +66,7 @@ public class AuthenticatorController {
         String cssFileName = "SignUpStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneUtils.switchScene(stage, fxmlFileName, cssFileName);
+        SceneUtils.getScene(stage, fxmlFileName, cssFileName);
     }
 
     /**
@@ -111,7 +105,7 @@ public class AuthenticatorController {
             String cssFileName = "StartingMenuStyleSheet.css";
 
             Stage stage = (Stage) source.getScene().getWindow();
-            SceneUtils.switchScene(stage, fxmlFileName, cssFileName);
+            SceneUtils.getScene(stage, fxmlFileName, cssFileName);
 
             AES.setKey(key); //inserts the key to the class.
         }

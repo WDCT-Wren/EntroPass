@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.Password_Generator.Configurator;
 import org.Password_Generator.StrengthChecker;
@@ -20,7 +22,11 @@ import java.sql.SQLException;
 
 public class BuilderController {
     @FXML
+    private HBox manualEntryButton;
+    @FXML
     private Button copyButton;
+    @FXML
+    private Button passwordGenerate;
     @FXML
     private ProgressBar strengthIndicator;
     @FXML
@@ -30,9 +36,9 @@ public class BuilderController {
     @FXML
     private TextField serviceNameField;
     @FXML
-    private TextField noteField;
+    private TextArea noteField;
     @FXML
-    private Label passwordText;
+    private TextField passwordText;
     @FXML
     private TextField passLength;
     @FXML
@@ -81,7 +87,7 @@ public class BuilderController {
         String cssFileName = "StartingMenuStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneUtils.switchScene(stage, fxmlFileName, cssFileName);
+        SceneUtils.getScene(stage, fxmlFileName, cssFileName);
     }
 
     /**
@@ -90,6 +96,7 @@ public class BuilderController {
     @FXML
     private void generatePassword() {
         Configurator configuration = new Configurator(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
+        passwordGenerate.setText("Regenerate");
         try {
             if (getPasswordLength() < 8 || getPasswordLength() > 64) passwordText.setText("Length must be between 8 and 64 characters!");
 
@@ -114,9 +121,9 @@ public class BuilderController {
         if (password.length() > maxLength) {
             double minSize = 7.0;
             double newSize = Math.max(minSize, baseSize * (maxLength / password.length()));
-            passwordText.setStyle("-fx-font-family: 'Monospaced Bold'; -fx-font-weight: bold; -fx-font-size: " + String.format("%.1f", newSize) + ";");
+            passwordText.setStyle("-fx-font-size: " + String.format("%.1f", newSize) + ";");
         } else {
-            passwordText.setStyle("-fx-font-family: 'Monospaced Bold'; -fx-font-weight: bold; -fx-font-size: baseSize;");
+            passwordText.setStyle("-fx-font-size: baseSize;");
         }
     }
 
@@ -177,4 +184,18 @@ public class BuilderController {
         return noteField.getText();
     }
     private String getEncryptedPassword() {return AES.encrypt(passwordText.getText());}
+
+    @FXML
+    public void toggleManualEntry() {
+    }
+
+    @FXML
+    public void switchToVaultScene(MouseEvent event) throws IOException {
+        String fxmlFile = "PasswordVault.fxml";
+        String cssFile = "VaultStyleSheet.css";
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        SceneUtils.getScene(stage, fxmlFile, cssFile);
+    }
 }

@@ -1,5 +1,12 @@
+* {
+    -fx-Matcha-Green: #a3e635;
+    -fx-Background: #111318;
+    -fx-Surface: #1d2024;
+}
+
+
 .side-bar {
-    -fx-background-color: #3c3c3c;
+    -fx-background-color: -fx-Surface ;
 }
 
 .side-bar-button {
@@ -10,8 +17,8 @@
 }
 
 .side-bar-button-selected {
-    -fx-background-color: #818876;
-    -fx-text-fill: #b4f13b;
+    -fx-background-color: #4b631e;
+    -fx-text-fill: #a3e635;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
     -fx-cursor: hand;
@@ -26,7 +33,7 @@
 }
 
 .root-pane {
-    -fx-background-color: #191919;
+    -fx-background-color:-fx-Background ;
     -fx-padding: 40;
     -fx-spacing: 25;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
@@ -34,11 +41,11 @@
 }
 
 .notes-area {
-    -fx-background-color: #101010; /* Darker grey from your design */
+    -fx-background-color: -fx-Background; /* Darker grey from your design */
     -fx-text-fill: white;
     -fx-border-color: #272727;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
     -fx-padding: 10;
 }
 
@@ -54,14 +61,139 @@
     -fx-fill: #8a8d91; /* Muted text color for notes */
 }
 
-.root-textfield {
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-background-color: #101010;
+.textfield {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: -fx-Background;
     -fx-border-color: #272727;
     -fx-border-width: 1;
     -fx-border-style: solid;
     -fx-text-fill: #404040;
     -fx-padding: 10;
     -fx-font: Semibold 16px "Segoe UI";
+}
+
+.password-container-buttons {
+    -fx-text-fill: #8a8d91;
+    -fx-font: Semibold 16px "Segoe UI";
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.password-container-buttons:hover {
+    -fx-text-fill: #a3e635;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+}
+
+.password-field {
+    -fx-padding: 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: -fx-Background;
+    -fx-border-color: #272727;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+    -fx-text-fill: #a3e635 ;
+    -fx-font: Semibold 16px "Segoe UI";
+}
+
+.password-container {
+    -fx-background-color: -fx-Surface;
+    -fx-background-radius: 10;
+    -fx-padding: 30;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgb(255 255 255), 10, 0, 0, 0);
+}
+
+.progress-bar .bar {
+    -fx-background-color: #6BA000;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.progress-bar .track {
+    -fx-background-color: #a3e635;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.settings-container {
+    -fx-background-color: -fx-Surface  ;
+}
+
+.password-length-text {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #a3e635;
+}
+
+.password-length-slider {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #8a8d91;
+    -fx-font: Semibold 16px "Segoe UI";
+}
+
+.password-length-slider .thumb {
+    -fx-background-color: #a3e635;
+}
+
+.password-length-slider .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-accent: #a3e635;
+}
+
+.separator {
+    -fx-background-color: #24282c;
+}
+
+.information-container {
+    -fx-border-color: #a3e635;
+    -fx-background-color: #293526;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+.main-button {
+    -fx-background-color: #a3e635;
+    -fx-background-radius: 25;
+}
+
+.main-button Label {
+    -fx-text-fill: black;
+}
+
+.main-button:hover {
+    -fx-background-color: #b4f13b;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-text-fill: black;
+    -fx-border-color: #a3e635;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #a3e635;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+}
+
+.secondary-button Label {
+    -fx-text-fill: #a3e635;
+}
+
+.secondary-button:hover {
+    -fx-background-color: -fx-surface;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-text-fill: black;
+    -fx-border-color: #a3e635;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
 }

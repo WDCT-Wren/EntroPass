@@ -1,4 +1,4 @@
-package GUI.views;
+package GUI.Utils;
 
 import Database.User;
 import javafx.geometry.Insets;

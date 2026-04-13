@@ -2,6 +2,7 @@ package GUI;
 
 import Database.DatabaseManager;
 import Database.MasterDAO;
+import GUI.Utils.SceneUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
@@ -22,12 +23,11 @@ public class Application extends javafx.application.Application {
         if (masterPasswordExist) {
             try {
                 DatabaseManager.getInstance().initDatabase();
-                FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/AuthMenu.fxml"));
-                Region root = fxmlLoader.load();
-                Scene scene = new Scene(root);
-                stage.setTitle("EntroPass 0.67");
-                stage.setScene(scene);
-                stage.show();
+                DatabaseManager.getInstance().initDatabase();
+                String fxmlFile = "AuthMenu.fxml";
+                String cssFile = "AuthStyleSheet.css";
+
+                SceneUtils.getScene(stage, fxmlFile, cssFile);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -35,12 +35,10 @@ public class Application extends javafx.application.Application {
         else {
             try {
                 DatabaseManager.getInstance().initDatabase();
-                FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("/org/password_generator_gui/Scenes/SignUpScene.fxml"));
-                Region root = fxmlLoader.load();
-                Scene scene = new Scene(root);
-                stage.setTitle("EntroPass 0.67");
-                stage.setScene(scene);
-                stage.show();
+                String fxmlFile = "SignUpScene.fxml";
+                String cssFile = "SignUpStyleSheet.css";
+
+                SceneUtils.getScene(stage, fxmlFile, cssFile);
             } catch (Exception e) {
                 e.printStackTrace();
             }

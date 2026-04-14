@@ -16,9 +16,9 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="901.0" prefWidth="1230.0" style="-fx-background-color: gray;" styleClass="root-pane" stylesheets="@../stylesheets/SignUpStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.SignUpController">
+<AnchorPane prefHeight="901.0" prefWidth="1230.0" style="-fx-background-color: gray;" styleClass="root-pane" stylesheets="@../Stylesheets/SignUpStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.SignUpController">
    <children>
-      <BorderPane layoutX="405.0" layoutY="332.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="431.0" styleClass="auth-box" stylesheets="@../stylesheets/AuthStyleSheet.css">
+      <BorderPane layoutX="405.0" layoutY="332.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="431.0" styleClass="auth-box" stylesheets="@../Stylesheets/AuthStyleSheet.css">
          <center>
             <VBox alignment="CENTER" prefHeight="441.0" prefWidth="431.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
@@ -80,7 +80,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="signInButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSignInScene" prefHeight="28.0" prefWidth="92.0" styleClass="sing-up-button" text="Unlock here" textAlignment="CENTER">
+                        <Button fx:id="signInButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSignInScene" prefHeight="28.0" prefWidth="92.0" styleClass="sign-up-button" text="Unlock here" textAlignment="CENTER">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>

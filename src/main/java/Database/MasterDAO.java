@@ -8,8 +8,6 @@ import java.util.Arrays;
 
 public class MasterDAO {
     public static String retrieveMasterPass() {
-        String masterPassword = "";
-
         //Establish a connection with the database
         Connection connection = DatabaseManager.getInstance().getConnection();
 
@@ -18,11 +16,13 @@ public class MasterDAO {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)){
 
-            masterPassword = rs.getString("hash");
+            if (rs.next()) {
+                return rs.getString("hash");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return masterPassword;
+        return null;
     }
 
     public static byte[] retrieveSaltByte() {

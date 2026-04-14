@@ -16,7 +16,7 @@ public class DatabaseManager {
     private Connection connection;
 
     //follow this path structure when making your own database
-    private static final String DB_PATH = "src/main/resources/org/data/PasswordDataBase.sqlite";
+    private static final String DB_PATH = System.getProperty("user.home") + "/EntroPass/PasswordDatabase.sqlite";
     private static final String url = "jdbc:sqlite:" + DB_PATH;
     /**
      * Simple constructor to connect a class to the database file
@@ -24,7 +24,7 @@ public class DatabaseManager {
     public  DatabaseManager() {
         try {
             File dbFile = new File(DB_PATH);
-            if (!dbFile.exists()) {
+            if (!dbFile.getParentFile().mkdirs() && !dbFile.getParentFile().exists()) {
                 System.out.println("Database Connection cannot be found!");
             }
             this.connection = DriverManager.getConnection(url);

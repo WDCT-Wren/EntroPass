@@ -187,10 +187,16 @@ public class BuilderController {
 
     @FXML
     public void toggleManualEntry() {
+        passwordText.setEditable(!passwordText.isEditable());
+        passwordGenerate.setDisable(!passwordGenerate.isDisable());
+        passwordText.setStyle("-fx-font-size: 20");
+        passwordText.setText("Input YOUR OWN banger password here!");
+
+        //TODO: change the type of strength indicator to a manual entry indicator.
     }
 
     @FXML
-    public void switchToVaultScene(MouseEvent event) throws IOException {
+    public void switchToVaultScene(ActionEvent event) throws IOException {
         String fxmlFile = "PasswordVault.fxml";
         String cssFile = "VaultStyleSheet.css";
 

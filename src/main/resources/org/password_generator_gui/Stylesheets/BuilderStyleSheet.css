@@ -4,6 +4,9 @@
     -fx-Surface: #1d2024;
 }
 
+.green-text {-fx-text-fill: #a3e635;}
+.grey-text {-fx-text-fill: #c2c7d0;}
+.white-text {-fx-text-fill: white;}
 
 .side-bar {
     -fx-background-color: -fx-Surface ;

@@ -19,29 +19,19 @@ public class Application extends javafx.application.Application {
         Font.loadFont(getClass().getResourceAsStream("org/Assets/Fonts/SpaceGrotesk-Regular.ttf"), 16);
         Font.loadFont(getClass().getResourceAsStream("org/Assets/Fonts/SpaceGrotesk-Bold.ttf"), 16);
 
-        boolean masterPasswordExist = MasterDAO.retrieveMasterPass() != null;
-        if (masterPasswordExist) {
-            try {
-                DatabaseManager.getInstance().initDatabase();
-                DatabaseManager.getInstance().initDatabase();
-                String fxmlFile = "AuthMenu.fxml";
-                String cssFile = "AuthStyleSheet.css";
-
-                SceneUtils.getScene(stage, fxmlFile, cssFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            DatabaseManager.getInstance().initDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else {
-            try {
-                DatabaseManager.getInstance().initDatabase();
-                String fxmlFile = "SignUpScene.fxml";
-                String cssFile = "SignUpStyleSheet.css";
 
-                SceneUtils.getScene(stage, fxmlFile, cssFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        boolean masterPasswordExist = MasterDAO.retrieveMasterPass() != null;
+        try {
+            String fxmlFile = masterPasswordExist ? "AuthMenu.fxml" : "SignUpScene.fxml";
+            String cssFile = masterPasswordExist ? "AuthStyleSheet.css" : "SignUpStyleSheet.css";
+            SceneUtils.getScene(stage, fxmlFile, cssFile);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

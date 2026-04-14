@@ -80,7 +80,7 @@
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="signInButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSignInScene" prefHeight="28.0" prefWidth="92.0" styleClass="sing-up-button" text="Unlock here" textAlignment="CENTER">
+                        <Button fx:id="signInButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToSignInScene" prefHeight="28.0" prefWidth="92.0" styleClass="sign-up-button" text="Unlock here" textAlignment="CENTER">
                            <font>
                               <Font name="Segoe UI" size="14.0" />
                            </font>

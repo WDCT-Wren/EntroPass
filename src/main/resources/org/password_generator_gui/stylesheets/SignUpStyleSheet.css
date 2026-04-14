@@ -27,8 +27,8 @@
 }
 
 .sing-up-button {
-    -fx-background-color: clear;
-    -fx-border-color: clear;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-text-fill: #6BA000;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .forgot-password {
-    -fx-background-color: clear;
-    -fx-border-color: clear;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-text-fill: #C2C7D0;
 }

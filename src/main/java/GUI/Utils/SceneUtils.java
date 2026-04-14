@@ -14,7 +14,7 @@ public class SceneUtils {
     @FXML
     public static void switchScene(Stage stage, String fxmlFile, String cssFile) throws IOException {
         String fxmlSourceRoot = "/org/password_generator_gui/Scenes/" + fxmlFile;
-        String cssSourceRoot = "/org/password_generator_gui/Stylesheets/" + cssFile;
+        String cssSourceRoot = "/org/password_generator_gui/stylesheets/" + cssFile;
 
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource(fxmlSourceRoot));
         Parent root = fxmlLoader.load();

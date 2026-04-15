@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -166,5 +167,15 @@ public class VaultController implements Initializable {
         populateList();
         itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
         userRepoList.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    void switchToPasswordBuilder(ActionEvent event) throws IOException {
+        String fxmlFile = "PasswordBuilder.fxml";
+        String cssFile = "BuilderStyleSheet.css";
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        SceneUtils.getScene(stage, fxmlFile, cssFile);
     }
 }

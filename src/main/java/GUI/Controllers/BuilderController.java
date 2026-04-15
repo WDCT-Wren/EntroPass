@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.Password_Generator.Configurator;
@@ -50,6 +49,8 @@ public class BuilderController {
     @FXML
     private Label passwordStrength;
 
+    private boolean isManualEntry = false;
+
     /**
      *
      */
@@ -64,6 +65,10 @@ public class BuilderController {
                     passLength.setText(oldValue); //the passLength would be set back to the old value
                 }
             });
+
+            if (isManualEntry) {
+
+            }
         }
 
         passwordLengthSlider.valueProperty().addListener((_, _, newValue) -> {
@@ -71,8 +76,6 @@ public class BuilderController {
                 passLength.setText(String.valueOf(newValue.intValue()));
             }
         });
-
-        strengthIndicator.setStyle("-fx-accent: #64ED86;");
     }
 
     /**
@@ -138,7 +141,6 @@ public class BuilderController {
                 checkGeneratedStrength(entropyBits)
         );
 
-        //TODO: fix bug where if checkboxes are not chosen it doesn't evaluate the strength even with max length.
         System.out.println(normalizedStrength);
         System.out.println(entropyBits);
         strengthIndicator.setProgress(normalizedStrength);
@@ -192,7 +194,14 @@ public class BuilderController {
         passwordText.setStyle("-fx-font-size: 20");
         passwordText.setText("Input YOUR OWN banger password here!");
 
-        //TODO: change the type of strength indicator to a manual entry indicator.
+        isManualEntry = true;
+        passwordText.textProperty().addListener((observable, oldValue, newValue) -> {
+            double entropy = StrengthChecker.getSignUpEntropy(getManualConfiguration(passwordText.getText()), passwordText.getLength());
+            double strength = StrengthChecker.checkManualEntryStrength(entropy);
+            strengthIndicator.setProgress(strength);
+            passwordStrength.setText(StrengthChecker.displayManualEntryStrength(strength));
+        });
+        //TODO: fix
     }
 
     @FXML
@@ -203,5 +212,14 @@ public class BuilderController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         SceneUtils.getScene(stage, fxmlFile, cssFile);
+    }
+
+    private Configurator getManualConfiguration(String password) {
+        boolean hasLower   = password.matches(".*[a-z].*");
+        boolean hasUpper   = password.matches(".*[A-Z].*");
+        boolean hasNumbers = password.matches(".*[0-9].*");
+        boolean hasSymbols = password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{}].*");
+
+        return new Configurator(hasNumbers, hasSymbols, hasUpper, hasLower);
     }
 }

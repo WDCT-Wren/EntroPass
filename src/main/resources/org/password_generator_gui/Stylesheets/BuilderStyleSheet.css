@@ -109,14 +109,14 @@
     -fx-effect: dropshadow(gaussian, rgb(255 255 255), 10, 0, 0, 0);
 }
 
-.progress-bar .bar {
-    -fx-background-color: #6BA000;
+.strength-indicator .bar {
+    -fx-background-color: #a3e635;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
 
-.progress-bar .track {
-    -fx-background-color: #a3e635;
+.strength-indicator .track {
+    -fx-background-color: #6BA000;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }

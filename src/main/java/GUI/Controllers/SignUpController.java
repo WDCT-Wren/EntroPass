@@ -46,7 +46,7 @@ public class SignUpController {
 
         masterPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
             double entropy = StrengthChecker.getSignUpEntropy(getConfiguration(getMasterPass()), getMasterKeyLength());
-            double strength = StrengthChecker.checkMasterPasswordStrength(entropy);
+            double strength = StrengthChecker.checkManualEntryStrength(entropy);
             masterKeyStrength.setProgress(strength);
         });
     }

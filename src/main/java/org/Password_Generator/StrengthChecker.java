@@ -83,12 +83,20 @@ public class StrengthChecker {
      * @param entropyBits the bit entropy of the master password
      * @return a percentage of the strength of the master password
      */
-    public static double checkMasterPasswordStrength(double entropyBits) {
+    public static double checkManualEntryStrength(double entropyBits) {
         if (entropyBits >= 128) return (double) 100 /100;
         else if (entropyBits >= 60) return (double) 75/100;
         else if (entropyBits >= 36) return (double) 50/100;
         else if (entropyBits >= 28) return (double) 25/100;
         else return (double) 0/100;
+    }
+
+    public static String displayManualEntryStrength(double manualEntryStrength) {
+        if (manualEntryStrength >= 1) return "VERY STRONG";
+        else if (manualEntryStrength >= 0.75) return "STRONG";
+        else if (manualEntryStrength >= 0.50) return "MEDIUM";
+        else if (manualEntryStrength >= 0.25) return "WEAK";
+        else return "VERY WEAK";
     }
 
     /**

@@ -1,6 +1,6 @@
-# EntroPass - Secure Password Generator
+# EntroPass - Secure Password Generator and Storage System
 
-**EntroPass** is a JavaFX-based desktop application that generates cryptographically secure passwords with customizable parameters and stores them safely in a local SQLite database with BCrypt encryption.
+**EntroPass** is a JavaFX-based desktop application that generates cryptographically secure passwords with customizable parameters and stores them safely in a local SQLite database with a mixture of Bcrypt and AES-256-GCM encryption.
 
 ## Features
 

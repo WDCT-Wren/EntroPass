@@ -100,7 +100,6 @@ public class AuthenticatorController {
 
         if (validLogin) {
             SecretKey key = PDKF2.deriveKey(masterPassword, MasterDAO.retrieveSaltByte());
-            System.out.println(Arrays.toString(MasterDAO.retrieveSaltByte()));
             String fxmlFileName = "StartingMenu.fxml";
             String cssFileName = "StartingMenuStyleSheet.css";
 

@@ -4,6 +4,7 @@ import Database.DatabaseOperations;
 import Database.MasterDAO;
 import Encryption.PDKF2;
 import GUI.Utils.SceneUtils;
+import GUI.Utils.StrengthUIHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -44,11 +45,8 @@ public class SignUpController {
             signInWarning.setVisible(false);
         });
 
-        masterPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
-            double entropy = StrengthChecker.getSignUpEntropy(getConfiguration(getMasterPass()), getMasterKeyLength());
-            double strength = StrengthChecker.checkManualEntryStrength(entropy);
-            masterKeyStrength.setProgress(strength);
-        });
+        masterPasswordField.textProperty().addListener(
+                StrengthUIHelper.manualStrengthListener(masterKeyStrength));
     }
 
     @FXML
@@ -77,18 +75,10 @@ public class SignUpController {
         else signInWarning.setVisible(true);
     }
 
-    //getter methods
+    // helper getter methods
     private String getHashedMasterPass() { return BCrypt.hashpw(masterPasswordField.getText(), BCrypt.gensalt());}
     private String getMasterPass() { return masterPasswordField.getText();}
     private int getMasterKeyLength() {return masterPasswordField.getLength();}
-    private Configurator getConfiguration(String masterKey) {
-        boolean hasLower   = masterKey.matches(".*[a-z].*");
-        boolean hasUpper   = masterKey.matches(".*[A-Z].*");
-        boolean hasNumbers = masterKey.matches(".*[0-9].*");
-        boolean hasSymbols = masterKey.matches(".*[!@#$%^&*()_+\\-=\\[\\]{}].*");
-
-        return new Configurator(hasNumbers, hasSymbols, hasUpper, hasLower);
-    }
     public void setMasterKey(ActionEvent event) throws SQLException, IOException {
         insertIntoDB(event);
     }

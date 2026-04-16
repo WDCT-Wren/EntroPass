@@ -3,6 +3,9 @@ package GUI.Controllers;
 import Database.UserOperations;
 import Encryption.AES;
 import GUI.Utils.SceneUtils;
+import GUI.Utils.StrengthUIHelper;
+import com.sun.javafx.scene.control.FormatterAccessor;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -50,6 +53,7 @@ public class BuilderController {
     private Label passwordStrength;
 
     private boolean isManualEntry = false;
+    private ChangeListener<String> manualStrengthListener;
 
     /**
      *
@@ -65,10 +69,6 @@ public class BuilderController {
                     passLength.setText(oldValue); //the passLength would be set back to the old value
                 }
             });
-
-            if (isManualEntry) {
-
-            }
         }
 
         passwordLengthSlider.valueProperty().addListener((_, _, newValue) -> {
@@ -81,6 +81,7 @@ public class BuilderController {
     /**
      * Method that handles the scene switch from the current password generator scene
      * to the main menu scene.
+     *
      * @param event the event of pressing the {@code back button}
      * @throws IOException an unexpected event in the input
      */
@@ -101,14 +102,14 @@ public class BuilderController {
         Configurator configuration = new Configurator(numberCheckBox.isSelected(), specialCharCheckBox.isSelected(), mixedCaseCheckBox.isSelected());
         passwordGenerate.setText("Regenerate");
         try {
-            if (getPasswordLength() < 8 || getPasswordLength() > 64) passwordText.setText("Length must be between 8 and 64 characters!");
+            if (getPasswordLength() < 8 || getPasswordLength() > 64)
+                passwordText.setText("Length must be between 8 and 64 characters!");
 
             int passwordLength = getPasswordLength();
             setPassword(passwordLength, configuration);
             setPasswordStrength(configuration, passwordLength);
             copyButton.setText("copy to clipboard");
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             passwordText.setText("Please enter a valid number");
         }
     }
@@ -138,11 +139,9 @@ public class BuilderController {
 
         passwordStrength.setText(
                 StrengthChecker.
-                checkGeneratedStrength(entropyBits)
+                        checkGeneratedStrength(entropyBits)
         );
 
-        System.out.println(normalizedStrength);
-        System.out.println(entropyBits);
         strengthIndicator.setProgress(normalizedStrength);
     }
 
@@ -158,7 +157,7 @@ public class BuilderController {
         if (invalidUserName) {
             usernameField.setPromptText("This field is required!");
         }
-        if (!invalidUserName && !invalidServiceName){
+        if (!invalidUserName && !invalidServiceName) {
             newRepo.insertPassword();
             passwordText.setStyle("-fx-font-size: 18");
             passwordText.setText("Password Saved Successfully!");
@@ -176,32 +175,26 @@ public class BuilderController {
         copyButton.setText("Copied to Clipboard!");
     }
 
-
-    //Getter Methods
-    private int getPasswordLength() {return Integer.parseInt(passLength.getText());}
-    private String getUsername() {return usernameField.getText();}
-    private String getServiceName() {return serviceNameField.getText();}
-    private String getNote() {
-        if (noteField.getText().isEmpty()) return "";
-        return noteField.getText();
-    }
-    private String getEncryptedPassword() {return AES.encrypt(passwordText.getText());}
-
     @FXML
     public void toggleManualEntry() {
-        passwordText.setEditable(!passwordText.isEditable());
-        passwordGenerate.setDisable(!passwordGenerate.isDisable());
-        passwordText.setStyle("-fx-font-size: 20");
-        passwordText.setText("Input YOUR OWN banger password here!");
+        isManualEntry = !isManualEntry;
+        passwordText.setEditable(isManualEntry);
+        passwordGenerate.setDisable(isManualEntry);
 
-        isManualEntry = true;
-        passwordText.textProperty().addListener((observable, oldValue, newValue) -> {
-            double entropy = StrengthChecker.getSignUpEntropy(getManualConfiguration(passwordText.getText()), passwordText.getLength());
-            double strength = StrengthChecker.checkManualEntryStrength(entropy);
-            strengthIndicator.setProgress(strength);
-            passwordStrength.setText(StrengthChecker.displayManualEntryStrength(strength));
-        });
-        //TODO: fix
+        if (isManualEntry) {
+            strengthIndicator.setProgress(0);
+            passwordText.setStyle("-fx-font-size: 20; -fx-text-fill: #a3e635");
+            passwordText.setText("");
+            passwordText.setPromptText("Input YOUR OWN banger password here!");
+            manualStrengthListener = StrengthUIHelper.manualStrengthListener(strengthIndicator);
+            passwordText.textProperty().addListener(manualStrengthListener);
+        } else {
+            nullifyListener();
+            strengthIndicator.setProgress(0);
+            passwordText.setStyle("-fx-font-size: 25; -fx-text-fill: #a3e635");
+            passwordText.setText("");
+            passwordText.setPromptText("Banger generated password here");
+        }
     }
 
     @FXML
@@ -214,12 +207,31 @@ public class BuilderController {
         SceneUtils.getScene(stage, fxmlFile, cssFile);
     }
 
-    private Configurator getManualConfiguration(String password) {
-        boolean hasLower   = password.matches(".*[a-z].*");
-        boolean hasUpper   = password.matches(".*[A-Z].*");
-        boolean hasNumbers = password.matches(".*[0-9].*");
-        boolean hasSymbols = password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{}].*");
+    /**
+     * Nullifies the listener if it exists.
+     */
+    private void nullifyListener() {
+        if (manualStrengthListener != null) {
+            passwordText.textProperty().removeListener(manualStrengthListener);
+            manualStrengthListener = null;
+        }
+    }
 
-        return new Configurator(hasNumbers, hasSymbols, hasUpper, hasLower);
+    //Getter Methods
+    private int getPasswordLength() {
+        return Integer.parseInt(passLength.getText());
+    }
+    private String getUsername() {
+        return usernameField.getText();
+    }
+    private String getServiceName() {
+        return serviceNameField.getText();
+    }
+    private String getNote() {
+        if (noteField.getText().isEmpty()) return "";
+        return noteField.getText();
+    }
+    private String getEncryptedPassword() {
+        return AES.encrypt(passwordText.getText());
     }
 }

@@ -101,6 +101,10 @@
     -fx-font: Semibold 16px "Segoe UI";
 }
 
+.password-field .prompt-text {
+    -fx-fill: #a3e635;
+}
+
 .password-container {
     -fx-background-color: -fx-Surface;
     -fx-background-radius: 10;
@@ -108,6 +112,8 @@
     -fx-spacing: 10;
     -fx-effect: dropshadow(gaussian, rgb(255 255 255), 10, 0, 0, 0);
 }
+
+
 
 .strength-indicator .bar {
     -fx-background-color: #a3e635;

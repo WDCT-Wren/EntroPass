@@ -14,10 +14,17 @@
     -fx-background-color: #313131;
 }
 
-.sing-up-button {
-    -fx-background-color: clear;
-    -fx-border-color: clear;
+.sign-up-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-text-fill: #6BA000;
+}
+
+.sign-up-buttonL:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: #81b214;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
 }
 
 .root-pane {
@@ -31,8 +38,15 @@
     -fx-border-radius: 25;
 }
 
+.unlock-button:hover {
+    -fx-background-color: #a7d64e;
+    -fx-cursor: hand;
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+}
+
 .forgot-password {
-    -fx-background-color: clear;
-    -fx-border-color: clear;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-text-fill: #C2C7D0;
 }

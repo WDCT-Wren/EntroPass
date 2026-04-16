@@ -12,7 +12,6 @@ public class VaultEntryCell extends ListCell<User> {
     private final VBox layout = new VBox(2, serviceName, userName);
 
     public VaultEntryCell() {
-        // Remove any .setStyle calls that set colors!
         serviceName.getStyleClass().add("cell-title");
         userName.getStyleClass().add("cell-subtitle");
 

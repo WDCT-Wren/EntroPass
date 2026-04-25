@@ -1,232 +1,131 @@
-# EntroPass - Secure Password Generator and Storage System
+# EntroPass
 
-**EntroPass** is a JavaFX-based desktop application that generates cryptographically secure passwords with customizable parameters and stores them safely in a local SQLite database with a mixture of Bcrypt and AES-256-GCM encryption.
+EntroPass is a JavaFX desktop password manager focused on practical local security: master-password authentication, encrypted vault storage, and a configurable password builder.
 
-## Features
+This project is designed as a real desktop application, not a demo screen flow. It persists data locally with SQLite, protects vault secrets with authenticated encryption, and gates access through a hashed master credential.
 
-### Password Generation
-- **Customizable Length**: Generate passwords between 8–128 characters
-- **Flexible Character Sets**:
-  - Uppercase letters (A-Z)
-  - Numbers (0-9)
-  - Special characters (!@#$...)
-- **Entropy-Based Strength Analysis**: Real-time password strength evaluation using the Password Entropy Formula
-- **Passay Integration**: Leverages the Passay library for robust password generation
+## Tech Stack
 
-### Password Storage
-- **SQLite Database**: Local storage for generated passwords
-- **AES-256-GCM Encryption**: Industry-standard symmetrical password encryption
-- **Organized Storage**: Save passwords with associated metadata:
-  - Service name
-  - Username
-  - Notes
-  - Creation date
+- Language: Java
+- UI: JavaFX 21.0.6 (FXML + CSS scene architecture)
+- Build Tool: Maven
+- Local Data Store: SQLite (`sqlite-jdbc`)
+- Password Hashing: jBCrypt (master password verification)
+- Key Derivation: PBKDF2-HMAC-SHA256 (session key derivation)
+- Vault Encryption: AES-GCM (`AES/GCM/NoPadding`)
+- Password Generation: Passay
 
-### User Interface
-- **Modern JavaFX GUI**: Clean, intuitive interface with Comic Sans MS styling
-- **Interactive Controls**: Checkboxes, sliders, and text fields for password customization
-- **Real-Time Feedback**: Instant password strength indicators
-- **Scene Navigation**: Multiple views for different application functions
+## Current Features
 
-## Technology Stack
+### Authentication
 
-### Core Technologies
-- **Java 25**: Latest Java features and performance improvements
-- **JavaFX 21**: Modern UI framework for rich desktop applications
-- **Maven**: Dependency management and build automation
+- Register and store a master password hash in SQLite
+- Login validation against stored BCrypt hash
+- Session-based vault access after successful authentication
+- First-run routing to registration, returning-user routing to login
 
-### Libraries & Dependencies
-- **Passay 1.6.6**: Password generation and validation
-- **SQLite JDBC 3.51.1.0**: Embedded database connectivity
-- **jBCrypt 0.4** & **BCrypt 0.10.2**: Password hashing and security
+### Vault
 
-### Additional Components
-- **ControlsFX 11.2.1**: Enhanced JavaFX controls
-- **FormsFX 11.6.0**: Form validation and handling
-- **ValidatorFX 0.6.1**: Input validation
-- **Ikonli 12.3.1**: Icon library
-- **BootstrapFX 0.4.0**: Bootstrap-inspired styling
+- Load and display saved vault entries
+- Decrypt and view selected password details
+- Search entries by service name or username
+- Copy username/password to clipboard
+- Delete entries from vault
 
-## Project Structure
+### Password Builder
 
-```
-EntroPass/
-├── src/
-│   └── main/
-│       ├── java/            # Java source files
-│       │   ├── Database/    # SQLite connection and DAO logic
-│       │   │   ├── DatabaseManager.java
-│       │   │   ├── DatabaseOperations.java
-│       │   │   ├── MasterDAO.java
-│       │   │   ├── Tester.java
-│       │   │   ├── User.java
-│       │   │   ├── UserDAO.java
-│       │   │   └── UserOperations.java
-│       │   ├── Encryption/  # Security and hashing algorithms
-│       │   │   ├── AES.java
-│       │   │   └── PDKF2.java
-│       │   ├── GUI/         # JavaFX UI Components
-│       │   │   ├── Controllers/ # FXML Controller classes
-│       │   │   ├── Utils/       # UI helper classes (SceneUtils)
-│       │   │   └── views/       # Custom UI components (VaultEntryCell)
-│       │   ├── org.Password_Generator/ # Core logic for password generation
-│       │   │   ├── Builder.java
-│       │   │   ├── Configurator.java
-│       │   │   └── StrengthChecker.java
-│       │   ├── Application.java    # Main JavaFX application class
-│       │   ├── Launcher.java       # Main entry point for JAR execution
-│       │   └── module-info.java    # Java Module System configuration
-│       └── resources/      # Non-code assets
-│           └── org/
-│               ├── Assets/         # Images, icons, and logos
-│               ├── data/           # Local storage (PasswordDataBase.sqlite)
-│               └── password_generator_gui/
-│                   ├── Scenes/     # FXML layout files
-│                   └── stylesheets/ # CSS files for UI styling
-├── pom.xml                 # Maven project configuration
-└── README.md               # This file 
-```
+- Generate passwords with configurable options:
+  - Length (8-64)
+  - Digits
+  - Special characters
+  - Mixed-case letters
+- Manual entry mode with real-time strength feedback
+- Entropy-based strength scoring and progress visualization
+- Save generated/manual passwords to encrypted vault entries
 
-## Architecture & Design Principles
+## In Progress / Planned
 
-### Clean Code Implementation
-- **Separation of Concerns**: Clear distinction between GUI, business logic, and data layers
-- **Encapsulation**: Private fields with controlled access through getter methods
-- **Single Responsibility**: Each class has a well-defined purpose
-- **Dependency Injection**: Singleton pattern for database management
+- Update existing vault entries (edit save/cancel handlers are currently placeholders)
+- Add automated tests (`src/test` is currently empty)
+- Continue codebase cleanup and UI refinements from `TODO-list.md`
 
-### Design Patterns
-- **Singleton Pattern**: `DatabaseManager` ensures single database connection
-- **Builder Pattern**: `PasswordBuilder` constructs passwords based on configuration
-- **Strategy Pattern**: `PasswordConfiguration` defines rules for password generation
-
-### Security Considerations
-- **BCrypt Hashing**: Passwords stored with secure, salted hashes (cost factor: 12)
-- **SQL Injection Prevention**: Prepared statements for all database operations
-- **Input Validation**: Regex-based validation for password length and parameters
-
-## Password Strength Algorithm
-
-EntroPass uses the **Password Entropy Formula** to evaluate password strength:
-
-```
-Entropy (bits) = Password Length × log₂(Character Pool Size)
-```
-
-### Strength Thresholds
-- **Strong**: ≥ 100 bits of entropy
-- **Medium**: ≥ 72 bits of entropy
-- **Weak**: ≥ 44 bits of entropy
-- **Very Weak**: < 44 bits of entropy
-
-### Character Pool Sizes
-- Lowercase letters: 26 characters
-- Mixed case (upper and lower): 52 characters
-- Numbers: 10 characters
-- Special characters: 32 characters
-
-**Example**: A 12-character password with a mixed case, numbers, and special characters has:
-- Pool size: 52 + 10 + 32 = 94 characters
-- Entropy: 12 × log₂(94) ≈ 78 bits → **Medium strength**
-
-## Installation & Setup
+## Setup and Run
 
 ### Prerequisites
-- **Java Development Kit (JDK) 24** or later
-- **Maven 3.6+**
-- **JavaFX 21** (included as Maven dependency)
 
-### Build Instructions
+- JDK compatible with project compiler/preview settings
+- Maven 3.6+
 
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd Password_Generator_GUI
-   ```
+### Run Commands
 
-2. **Build with Maven**:
-   ```bash
-   mvn clean install
-   ```
-
-3. **Run the application**:
-   ```bash
-   mvn javafx:run
-   ```
-
-### Database Setup
-
-The application automatically creates the SQLite database at:
-```
-src/main/resources/data/PasswordDataBase.sqlite
+```bash
+mvn clean install
+mvn javafx:run
 ```
 
-**Database Schema**:
+### Current Build Note
+
+At the moment, `mvn -q -DskipTests compile` fails locally with:
+
+- `invalid source release 24 with --enable-preview`
+- `preview language features are only supported for release 25`
+
+This is a Java source/preview configuration mismatch in the current build setup.
+
+## Security Design
+
+EntroPass follows a layered local-security model:
+
+1. The master password is never stored in plaintext. A BCrypt hash is stored in the `master` table.
+2. On successful login, PBKDF2-HMAC-SHA256 derives an AES key from the entered master password plus stored salt.
+3. Vault passwords are encrypted with AES-GCM before writing to SQLite.
+4. A fresh IV is generated per encryption operation and prepended to ciphertext for decryption.
+5. Decryption only occurs during an authenticated session, using the in-memory session key.
+
+Database file location:
+
+- `${user.home}/EntroPass/PasswordDatabase.sqlite`
+
+Current tables:
+
 ```sql
-CREATE TABLE passwords (
-    id INTEGER PRIMARY KEY,
-    service_name TEXT NOT NULL,
-    username TEXT,
-    encrypted_password TEXT NOT NULL,
-    notes TEXT,
-    created_date TEXT
+CREATE TABLE IF NOT EXISTS master (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  hash TEXT NOT NULL,
+  salt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS vault (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  service_name TEXT NOT NULL,
+  username TEXT NOT NULL,
+  encrypted_password TEXT NOT NULL,
+  notes TEXT,
+  created_date TEXT
 );
 ```
 
-## Usage
+## Project Structure
 
-### Generating a Password
-
-1. Launch the application
-2. Navigate to the **Password Builder** screen
-3. Set your desired password length (8–128 characters)
-4. Select character type options:
-   - ☑ Uppercase characters
-   - ☑ Numbers
-   - ☑ Special characters
-5. Click **Generate Password**
-6. View the generated password and its strength rating
-
-### Saving a Password
-
-1. After generating a password:
-   - Enter the **Username**
-   - Enter the **Service Name** (e.g., "Gmail," "GitHub")
-   - Add optional **Notes**
-2. Click **Save Password**
-3. The password is encrypted with BCrypt and stored in the database
-
-## Current Limitations & Roadmap
-
-### In Development
-- [ ] Password expiration reminders
-- [ ] Export/import password database
-- [ ] Comprehensive unit tests
-- [ ] Edit and delete password entries
-
-## Contributing
-
-This project follows clean code principles and object-oriented design patterns. When contributing:
-
-1. Maintain separation between GUI, business logic, and database layers
-2. Follow existing naming conventions
-3. Add Javadoc comments for public methods
-4. Write unit tests for new features
-5. Ensure BCrypt is used for all password storage
+```text
+EntroPass/
+|- pom.xml
+|- README.md
+|- TODO-list.md
+|- src/
+|  |- main/
+|  |  |- java/
+|  |  |  |- Database/
+|  |  |  |- Encryption/
+|  |  |  |- GUI/
+|  |  |  |- org/Password_Generator/
+|  |  |  \- module-info.java
+|  |  \- resources/org/password_generator_gui/
+|  |     |- Scenes/
+|  |     \- Stylesheets/
+\- target/
+```
 
 ## License
 
-[Soon(?)]
-
-## Acknowledgments
-
-- **Passay**: Password generation library
-- **BCrypt**: Secure password hashing algorithm
-- **SQLite**: Lightweight embedded database
-- **JavaFX**: Modern UI framework
-
----
-
-**Version**: 1.0-SNAPSHOT
-**Last Updated**: March 2026
-**Artifact Name**: EntroPass
+Not yet specified.

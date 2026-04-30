@@ -68,10 +68,10 @@
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-background-color: -fx-Background;
-    -fx-border-color: #272727;
+    -fx-border-color: #5e5e5e;
     -fx-border-width: 1;
     -fx-border-style: solid;
-    -fx-text-fill: #404040;
+    -fx-text-fill: #b5b5b5;
     -fx-padding: 10;
     -fx-font: Semibold 16px "Segoe UI";
 }
@@ -112,8 +112,6 @@
     -fx-spacing: 10;
     -fx-effect: dropshadow(gaussian, rgb(255 255 255), 10, 0, 0, 0);
 }
-
-
 
 .strength-indicator .bar {
     -fx-background-color: #a3e635;

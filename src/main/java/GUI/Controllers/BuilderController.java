@@ -4,7 +4,6 @@ import Database.UserOperations;
 import Encryption.AES;
 import GUI.Utils.SceneUtils;
 import GUI.Utils.StrengthUIHelper;
-import com.sun.javafx.scene.control.FormatterAccessor;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

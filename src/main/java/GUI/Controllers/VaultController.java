@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class VaultController implements Initializable {
@@ -169,14 +170,26 @@ public class VaultController implements Initializable {
 
     @FXML
     public void deleteEntry() throws SQLException {
-        User user = userRepoList.getSelectionModel().getSelectedItem();
-        int id = user.getId();
-        DatabaseOperations.deletePassword(id);
+        if (deleteConfirmation()) {
+            User user = userRepoList.getSelectionModel().getSelectedItem();
+            int id = user.getId();
+            DatabaseOperations.deletePassword(id);
 
-        populateDetail(user);
-        populateList();
-        itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
-        userRepoList.getSelectionModel().selectFirst();
+            populateDetail(user);
+            populateList();
+            itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
+            userRepoList.getSelectionModel().selectFirst();
+        }
+    }
+
+    private boolean deleteConfirmation() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Entry");
+        alert.setHeaderText("Delete " + serviceName.getText() + " in Vault?");
+        alert.setContentText("This cannot be undone.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 
     @FXML

@@ -15,7 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -36,10 +36,16 @@ public class VaultController implements Initializable {
     private Button copyUsername;
 
     @FXML
+    private Button editEntryButton;
+
+    @FXML
     private Label createdDate;
 
     @FXML
     private TextArea notes;
+
+    @FXML
+    private HBox buttonContainer;
 
     @FXML
     private PasswordField password;
@@ -53,6 +59,7 @@ public class VaultController implements Initializable {
     @FXML
     private ListView<User> userRepoList;
     private final UserDAO userDAO = new UserDAO();
+    private boolean isEditMode = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,6 +80,9 @@ public class VaultController implements Initializable {
                 }
             }
         });
+
+        buttonContainer.setVisible(false);
+        buttonContainer.setManaged(false);
 
         userRepoList.getSelectionModel().selectFirst();
 
@@ -170,6 +180,24 @@ public class VaultController implements Initializable {
     }
 
     @FXML
+    public void toggleEditEntry() {
+        isEditMode = !isEditMode;
+        userName.setEditable(isEditMode);
+        password.setEditable(isEditMode);
+        notes.setEditable(isEditMode);
+        editEntryButton.setDisable(isEditMode);
+
+        if (isEditMode) {
+            buttonContainer.setVisible(true);
+            buttonContainer.setManaged(true);
+        }
+        else {
+            buttonContainer.setVisible(false);
+            buttonContainer.setManaged(false);
+        }
+    }
+
+    @FXML
     void switchToPasswordBuilder(ActionEvent event) throws IOException {
         String fxmlFile = "PasswordBuilder.fxml";
         String cssFile = "BuilderStyleSheet.css";
@@ -177,5 +205,14 @@ public class VaultController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         SceneUtils.getScene(stage, fxmlFile, cssFile);
+    }
+
+    public void saveEdits() {
+        toggleEditEntry();
+    }
+
+    public void cancelEdits() {
+        populateDetail(userRepoList.getSelectionModel().getSelectedItem());
+        toggleEditEntry();
     }
 }

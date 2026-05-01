@@ -11,6 +11,12 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SceneUtils {
+    /**
+     * Utility method that lets you load a scene from a fxml file and a css file
+     * @param stage the stage that the scene will be loaded into
+     * @param fxmlFile the fxml file that will be loaded
+     * @param cssFile the CSS file that will be loaded
+     */
     @FXML
     public static void getScene(Stage stage, String fxmlFile, String cssFile) throws IOException {
         String fxmlSourceRoot = "/org/password_generator_gui/Scenes/" + fxmlFile;

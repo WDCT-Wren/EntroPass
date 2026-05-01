@@ -149,6 +149,7 @@ public class BuilderController {
         UserOperations newRepo = new UserOperations(getServiceName(), getUsername(), getEncryptedPassword(), getNote());
         boolean invalidServiceName = serviceNameField.getText().isEmpty();
         boolean invalidUserName = usernameField.getText().isEmpty();
+        boolean invalidPassword = passwordText.getText().isEmpty();
 
         if (invalidServiceName) {
             serviceNameField.setPromptText("This field is required!");
@@ -156,7 +157,10 @@ public class BuilderController {
         if (invalidUserName) {
             usernameField.setPromptText("This field is required!");
         }
-        if (!invalidUserName && !invalidServiceName) {
+        if (invalidPassword) {
+            passwordText.setPromptText("This field is required!");
+        }
+        if (!invalidUserName && !invalidServiceName && !invalidPassword) {
             newRepo.insertPassword();
             passwordText.setStyle("-fx-font-size: 18");
             passwordText.setText("Password Saved Successfully!");

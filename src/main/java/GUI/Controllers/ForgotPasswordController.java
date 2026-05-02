@@ -20,9 +20,6 @@ public class ForgotPasswordController {
     private CheckBox acknowledgementCheckbox;
 
     @FXML
-    private Button cancelButton;
-
-    @FXML
     private Label storedAssetsCounter;
 
     @FXML

@@ -234,3 +234,69 @@
 .root-text {
     -fx-text-fill: #C2C7D0;
 }
+
+.warning-container {
+    -fx-background-color: #333333;
+    -fx-padding: 20;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.warning-header {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-font-family: "Segoe UI";
+}
+
+.warning-text {
+    -fx-text-fill: #989898;
+    -fx-font-size: 20px;
+    -fx-font-family: "Segoe UI";
+    -fx-padding: 10;
+}
+
+.cancel-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #ffffff;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-text-fill: black;
+    -fx-border-color: #ffffff;
+    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.confirm-button {
+    -fx-background-color: #c53030;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #d54040;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-text-fill: white;
+    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}

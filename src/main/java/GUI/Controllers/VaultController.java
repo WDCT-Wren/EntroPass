@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -167,22 +168,30 @@ public class VaultController implements Initializable {
         copyPassword.setText("Copy");
     }
 
-    @FXML
-    public void deleteEntry() throws SQLException {
-        if (deleteConfirmation()) {
-            User user = userRepoList.getSelectionModel().getSelectedItem();
-            int id = user.getId();
-            DatabaseOperations.deletePassword(id);
+    private void deleteEntry() throws SQLException, IOException {
+        User user = userRepoList.getSelectionModel().getSelectedItem();
+        int id = user.getId();
+        DatabaseOperations.deletePassword(id);
 
-            populateDetail(user);
-            populateList();
-            itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
-            userRepoList.getSelectionModel().selectFirst();
-        }
+        populateDetail(user);
+        populateList();
+        itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
+        userRepoList.getSelectionModel().selectFirst();
     }
 
-    private boolean deleteConfirmation() {
-        return true;
+    @FXML
+    public void deleteConfirmation() throws IOException {
+        SceneUtils.showWindow("ConfirmationWindow.fxml",
+                "Delete " + serviceName.getText() + " entry?",
+                "Are you sure? All values associated with this entry will be deleted and cannot be undone.",
+                "Delete Entry",
+                () -> {
+                    try {
+                        deleteEntry();
+                    } catch (SQLException | IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
     @FXML
@@ -206,17 +215,26 @@ public class VaultController implements Initializable {
     @FXML
     void switchToPasswordBuilder(ActionEvent event) throws IOException {
         String fxmlFile = "PasswordBuilder.fxml";
-        String cssFile = "BuilderStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         SceneUtils.getScene(stage, fxmlFile);
     }
 
-    public void saveEdits() {
+    private void saveEdits() {
         toggleEditEntry();
     }
 
+    @FXML
+    public void saveEditsConfirmation() throws IOException {
+        SceneUtils.showWindow("ConfirmationWindow.fxml",
+                "Update " + serviceName.getText() + " entry?",
+                "Are you sure? All values associated with this entry will be changed and cannot be undone.",
+                "Save Edits",
+                this::saveEdits);
+    }
+
+    @FXML
     public void cancelEdits() {
         populateDetail(userRepoList.getSelectionModel().getSelectedItem());
         toggleEditEntry();

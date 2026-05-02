@@ -32,12 +32,6 @@ public class SignUpController {
     private PasswordField masterPasswordField;
 
     @FXML
-    private Button setKey;
-
-    @FXML
-    private Button signInButton;
-
-    @FXML
     public void initialize() {
         signInWarning.setVisible(false);
 

@@ -137,11 +137,10 @@ public class VaultController implements Initializable {
     @FXML
     public void switchToMenuScene(ActionEvent event) throws IOException {
         String fxmlFile = "StartingMenu.fxml";
-        String cssFile = "StartingMenuStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        SceneUtils.getScene(stage, fxmlFile, cssFile);
+        SceneUtils.getScene(stage, fxmlFile);
     }
 
     @FXML
@@ -183,13 +182,7 @@ public class VaultController implements Initializable {
     }
 
     private boolean deleteConfirmation() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Entry");
-        alert.setHeaderText("Delete " + serviceName.getText() + " in Vault?");
-        alert.setContentText("This cannot be undone.");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
+        return true;
     }
 
     @FXML
@@ -198,7 +191,7 @@ public class VaultController implements Initializable {
         userName.setEditable(isEditMode);
         password.setEditable(isEditMode);
         notes.setEditable(isEditMode);
-        editEntryButton.setDisable(isEditMode);
+        editEntryButton.setVisible(!isEditMode);
 
         if (isEditMode) {
             buttonContainer.setVisible(true);
@@ -217,7 +210,7 @@ public class VaultController implements Initializable {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        SceneUtils.getScene(stage, fxmlFile, cssFile);
+        SceneUtils.getScene(stage, fxmlFile);
     }
 
     public void saveEdits() {

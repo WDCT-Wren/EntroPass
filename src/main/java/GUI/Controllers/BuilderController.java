@@ -87,10 +87,9 @@ public class BuilderController {
     @FXML
     public void switchToMenuScene(ActionEvent event) throws IOException {
         String fxmlFileName = "StartingMenu.fxml";
-        String cssFileName = "StartingMenuStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneUtils.getScene(stage, fxmlFileName, cssFileName);
+        SceneUtils.getScene(stage, fxmlFileName);
     }
 
     /**
@@ -203,11 +202,9 @@ public class BuilderController {
     @FXML
     public void switchToVaultScene(ActionEvent event) throws IOException {
         String fxmlFile = "PasswordVault.fxml";
-        String cssFile = "VaultStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        SceneUtils.getScene(stage, fxmlFile, cssFile);
+        SceneUtils.getScene(stage, fxmlFile);
     }
 
     /**

@@ -54,19 +54,17 @@ public class AuthenticatorController {
     @FXML
     private void switchToForgetPasswordScene(ActionEvent event) throws IOException {
         String fxmlFileName = "ForgotPassword.fxml";
-        String cssFileName = "ForgotPasswordStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneUtils.getScene(stage, fxmlFileName, cssFileName);
+        SceneUtils.getScene(stage, fxmlFileName);
     }
 
     @FXML
     private void switchToSignUpScene(ActionEvent event) throws IOException {
         String fxmlFileName = "SignUpScene.fxml";
-        String cssFileName = "SignUpStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneUtils.getScene(stage, fxmlFileName, cssFileName);
+        SceneUtils.getScene(stage, fxmlFileName);
     }
 
     /**
@@ -101,10 +99,9 @@ public class AuthenticatorController {
         if (validLogin) {
             SecretKey key = PDKF2.deriveKey(masterPassword, MasterDAO.retrieveSaltByte());
             String fxmlFileName = "StartingMenu.fxml";
-            String cssFileName = "StartingMenuStyleSheet.css";
 
             Stage stage = (Stage) source.getScene().getWindow();
-            SceneUtils.getScene(stage, fxmlFileName, cssFileName);
+            SceneUtils.getScene(stage, fxmlFileName);
 
             AES.setKey(key); //inserts the key to the class.
         }

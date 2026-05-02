@@ -67,11 +67,10 @@ public class SignUpController {
     void switchToSignInScene(ActionEvent event) throws IOException {
         boolean masterPasswordExists = MasterDAO.retrieveMasterPass() != null;
         String fxmlFile = "AuthMenu.fxml";
-        String cssFile = "AuthStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        if (masterPasswordExists) SceneUtils.getScene(stage, fxmlFile, cssFile);
+        if (masterPasswordExists) SceneUtils.getScene(stage, fxmlFile);
         else signInWarning.setVisible(true);
     }
 

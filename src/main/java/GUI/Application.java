@@ -28,8 +28,7 @@ public class Application extends javafx.application.Application {
         boolean masterPasswordExist = MasterDAO.retrieveMasterPass() != null;
         try {
             String fxmlFile = masterPasswordExist ? "AuthMenu.fxml" : "SignUpScene.fxml";
-            String cssFile = masterPasswordExist ? "AuthStyleSheet.css" : "SignUpStyleSheet.css";
-            SceneUtils.getScene(stage, fxmlFile, cssFile);
+            SceneUtils.getScene(stage, fxmlFile);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -45,11 +45,10 @@ public class ForgotPasswordController {
     @FXML
     void switchToAuthScene(ActionEvent event) throws IOException {
         String fxmlFile = "AuthMenu.fxml";
-        String cssFile = "AuthStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        SceneUtils.getScene(stage, fxmlFile, cssFile);
+        SceneUtils.getScene(stage, fxmlFile);
     }
 
 }

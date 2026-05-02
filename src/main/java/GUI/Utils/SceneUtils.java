@@ -15,19 +15,21 @@ public class SceneUtils {
      * Utility method that lets you load a scene from a fxml file and a css file
      * @param stage the stage that the scene will be loaded into
      * @param fxmlFile the fxml file that will be loaded
-     * @param cssFile the CSS file that will be loaded
      */
     @FXML
-    public static void getScene(Stage stage, String fxmlFile, String cssFile) throws IOException {
+    public static void getScene(Stage stage, String fxmlFile) throws IOException {
         String fxmlSourceRoot = "/org/password_generator_gui/Scenes/" + fxmlFile;
-        String cssSourceRoot = "/org/password_generator_gui/Stylesheets/" + cssFile;
 
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource(fxmlSourceRoot));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(SceneUtils.class.getResource(cssSourceRoot)).toExternalForm());
-        stage.setTitle("EntroPass 0.67");
+        Scene scene = new Scene(root);stage.setTitle("EntroPass 0.67");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    public static void showWindow(String fxmlFile) throws IOException {
+        String fxmlSourceRoot = "/org/password_generator_gui/Scenes/" + fxmlFile;
+
     }
 }

@@ -13,20 +13,18 @@ public class MenuController {;
     @FXML
     void switchToPasswordBuilder(MouseEvent event) throws IOException {
         String fxmlFile = "PasswordBuilder.fxml";
-        String cssFile = "BuilderStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        SceneUtils.getScene(stage, fxmlFile, cssFile);
+        SceneUtils.getScene(stage, fxmlFile);
     }
 
     @FXML
     void switchToPasswordVault(MouseEvent event) throws IOException {
         String fxmlFile = "PasswordVault.fxml";
-        String cssFile = "VaultStyleSheet.css";
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        SceneUtils.getScene(stage, fxmlFile, cssFile);
+        SceneUtils.getScene(stage, fxmlFile);
     }
 }

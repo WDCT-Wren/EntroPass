@@ -1,7 +1,7 @@
 package GUI.Controllers;
 
 import Database.DatabaseOperations;
-import Database.UserDAO;
+import Database.UserCRUD.UserDAO;
 import GUI.Utils.SceneUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

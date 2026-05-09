@@ -1,6 +1,6 @@
 package GUI.Controllers;
 
-import Database.UserOperations;
+import Database.UserCRUD.UserOperations;
 import Encryption.AES;
 import GUI.Utils.SceneUtils;
 import GUI.Utils.StrengthUIHelper;

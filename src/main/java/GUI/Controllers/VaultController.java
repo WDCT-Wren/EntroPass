@@ -1,6 +1,8 @@
 package GUI.Controllers;
 
-import Database.*;
+import Database.UserCRUD.User;
+import Database.UserCRUD.UserDAO;
+import Database.UserCRUD.UserOperations;
 import Encryption.AES;
 import GUI.Utils.SceneUtils;
 import GUI.Utils.VaultEntryCell;
@@ -11,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -21,7 +22,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class VaultController implements Initializable {
@@ -151,9 +151,6 @@ public class VaultController implements Initializable {
 
         content.putString(password.getText());
         clipboard.setContent(content);
-
-        copyPassword.setText("Copied!");
-        copyUsername.setText("Copy");
     }
 
     @FXML
@@ -163,15 +160,12 @@ public class VaultController implements Initializable {
 
         content.putString(userName.getText());
         clipboard.setContent(content);
-
-        copyUsername.setText("Copied!");
-        copyPassword.setText("Copy");
     }
 
     private void deleteEntry() throws SQLException, IOException {
         User user = userRepoList.getSelectionModel().getSelectedItem();
         int id = user.getId();
-        DatabaseOperations.deletePassword(id);
+        UserOperations.deletePassword(id);
 
         populateDetail(user);
         populateList();
@@ -188,6 +182,7 @@ public class VaultController implements Initializable {
                 () -> {
                     try {
                         deleteEntry();
+
                     } catch (SQLException | IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -221,17 +216,33 @@ public class VaultController implements Initializable {
         SceneUtils.getScene(stage, fxmlFile);
     }
 
-    private void saveEdits() {
+    private void saveEdits(int id, String userName, String password, String notes) {
+        //TODO: Add validation for all fields
+
+        // Saves the new changes to the database
+        UserOperations.updatePassword(id, userName, password, notes);
+        itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
+        populateDetail(userRepoList.getSelectionModel().getSelectedItem());
+        populateList();
+        userRepoList.getSelectionModel().selectFirst();
         toggleEditEntry();
     }
 
     @FXML
-    public void saveEditsConfirmation() throws IOException {
+    public void saveEditsConfirmation() throws IOException{
+        String userNameInput = userName.getText();
+        String passwordInput = password.getText();
+        String notesInput = notes.getText();
+        int id = userRepoList.getSelectionModel().getSelectedItem().getId();
+        String encryptedPassword = AES.encrypt(passwordInput);
+
         SceneUtils.showWindow("ConfirmationWindow.fxml",
                 "Update " + serviceName.getText() + " entry?",
                 "Are you sure? All values associated with this entry will be changed and cannot be undone.",
                 "Save Edits",
-                this::saveEdits);
+                () -> {
+                    saveEdits(id, userNameInput, encryptedPassword, notesInput);
+                });
     }
 
     @FXML

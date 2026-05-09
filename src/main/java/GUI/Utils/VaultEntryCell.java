@@ -1,6 +1,6 @@
 package GUI.Utils;
 
-import Database.User;
+import Database.UserCRUD.User;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;

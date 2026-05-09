@@ -22,35 +22,19 @@ public class DatabaseOperations {
         preparedStatement.close();
     }
 
-    public static void purgeDB() throws SQLException {
+    public static void purgeDB() {
         //Establish a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();
 
         //Declare the vault table and the master table queries
-        String purgeVault = "delete from vault";
-        String purgeMaster = "delete from master";
+        String purgeVault = "DELETE FROM vault";
+        String purgeMaster = "DELETE FROM master";
 
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(purgeVault);
             stmt.execute(purgeMaster);
         }
         catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void deletePassword(int id) {
-        // Establish a connection first
-        Connection connection = DatabaseManager.getInstance().getConnection();
-
-        // Declare the delete query
-        String sql = "DELETE FROM vault WHERE id = ?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

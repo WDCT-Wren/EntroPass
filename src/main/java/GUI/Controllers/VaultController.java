@@ -216,11 +216,16 @@ public class VaultController implements Initializable {
         SceneUtils.getScene(stage, fxmlFile);
     }
 
-    private void saveEdits(int id, String userName, String password, String notes) {
+    private void saveEdits(int id) {
         //TODO: Add validation for all fields
+        UserOperations user = new UserOperations(
+                getServiceName(),
+                getUsername(),
+                getEncryptedPassword(),
+                getNotes());
 
         // Saves the new changes to the database
-        UserOperations.updatePassword(id, userName, password, notes);
+        user.updatePassword(id);
         itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
         populateDetail(userRepoList.getSelectionModel().getSelectedItem());
         populateList();
@@ -230,18 +235,14 @@ public class VaultController implements Initializable {
 
     @FXML
     public void saveEditsConfirmation() throws IOException{
-        String userNameInput = userName.getText();
-        String passwordInput = password.getText();
-        String notesInput = notes.getText();
         int id = userRepoList.getSelectionModel().getSelectedItem().getId();
-        String encryptedPassword = AES.encrypt(passwordInput);
 
         SceneUtils.showWindow("ConfirmationWindow.fxml",
                 "Update " + serviceName.getText() + " entry?",
                 "Are you sure? All values associated with this entry will be changed and cannot be undone.",
                 "Save Edits",
                 () -> {
-                    saveEdits(id, userNameInput, encryptedPassword, notesInput);
+                    saveEdits(id);
                 });
     }
 
@@ -249,5 +250,23 @@ public class VaultController implements Initializable {
     public void cancelEdits() {
         populateDetail(userRepoList.getSelectionModel().getSelectedItem());
         toggleEditEntry();
+    }
+
+    //Getter Methods
+//    private int getPasswordLength() {
+//        return Integer.parseInt(passLength.getText());
+//    }
+    private String getUsername() {
+        return userName.getText();
+    }
+    private String getServiceName() {
+        return serviceName.getText();
+    }
+    private String getNotes() {
+        if (notes.getText().isEmpty()) return "";
+        return notes.getText();
+    }
+    private String getEncryptedPassword() {
+        return AES.encrypt(password.getText());
     }
 }

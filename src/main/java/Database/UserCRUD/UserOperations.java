@@ -78,24 +78,23 @@ public class UserOperations {
     }
 
     /**
-     * Updates a certain entry in the database
-     * @param id the id of the entry as an integer
-     * @param userName the new username to be stored in the entry as a string
-     * @param password the new password to be stored in the entry as an encrypted string
-     * @param notes the updated notes of the entry as a string
+     * Updates a certain entry in the database based on the id passed
+     * which also updates the created_date column, essentially making it
+     * {@code Last Updated}
      */
-    public static void updatePassword(int id, String userName, String password, String notes) {
+    public void updatePassword(int id) {
         // Estabblish a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();
 
         // Declare the update query
-        String sql = "UPDATE vault SET  username = ?, encrypted_password = ?, notes = ? WHERE id = ?";
+        String sql = "UPDATE vault SET  username = ?, encrypted_password = ?, notes = ?, created_date = ?  WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, userName);
             stmt.setString(2, password);
             stmt.setString(3, notes);
-            stmt.setInt(4, id);
+            stmt.setObject(4, createdDate);
+            stmt.setInt(5, id);
             stmt.executeUpdate();
         }
         catch (SQLException e) {

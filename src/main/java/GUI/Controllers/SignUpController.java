@@ -71,8 +71,5 @@ public class SignUpController {
     // helper getter methods
     private String getHashedMasterPass() { return BCrypt.hashpw(masterPasswordField.getText(), BCrypt.gensalt());}
     private String getMasterPass() { return masterPasswordField.getText();}
-    private int getMasterKeyLength() {return masterPasswordField.getLength();}
-    public void setMasterKey(ActionEvent event) throws SQLException, IOException {
-        insertIntoDB(event);
-    }
+    public void setMasterKey(ActionEvent event) throws SQLException, IOException {insertIntoDB(event);}
 }

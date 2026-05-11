@@ -22,7 +22,7 @@ This project is designed as a real desktop application, not a demo screen flow. 
 - Register and store a master password hash in SQLite
 - Login validation against stored BCrypt hash
 - Session-based vault access after successful authentication
-- First-run routing to registration, returning-user routing to login
+- First-run routing to registration, returning-user routing to log in
 
 ### Vault
 
@@ -42,10 +42,10 @@ This project is designed as a real desktop application, not a demo screen flow. 
 - Manual entry mode with real-time strength feedback
 - Entropy-based strength scoring and progress visualization
 - Save generated/manual passwords to encrypted vault entries
+- Update existing vault entries (edit save/cancel handlers are currently placeholders)
 
 ## In Progress / Planned
 
-- Update existing vault entries (edit save/cancel handlers are currently placeholders)
 - Add automated tests (`src/test` is currently empty)
 - Continue codebase cleanup and UI refinements from `TODO-list.md`
 
@@ -76,7 +76,7 @@ This is a Java source/preview configuration mismatch in the current build setup.
 
 EntroPass follows a layered local-security model:
 
-1. The master password is never stored in plaintext. A BCrypt hash is stored in the `master` table.
+1. The master password is <b>never stored in plaintext</b>. A BCrypt hash is stored in the `master` table.
 2. On successful login, PBKDF2-HMAC-SHA256 derives an AES key from the entered master password plus stored salt.
 3. Vault passwords are encrypted with AES-GCM before writing to SQLite.
 4. A fresh IV is generated per encryption operation and prepended to ciphertext for decryption.

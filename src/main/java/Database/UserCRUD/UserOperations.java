@@ -57,6 +57,10 @@ public class UserOperations {
         preparedStatement.close();
     }
 
+    /**
+     * Deletes a certain entry of user credentials in the database.
+     * @param id the id of the entry to be deleted as an integer
+     */
     public static void deletePassword(int id) {
         // Establish a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();
@@ -73,6 +77,13 @@ public class UserOperations {
         }
     }
 
+    /**
+     * Updates a certain entry in the database
+     * @param id the id of the entry as an integer
+     * @param userName the new username to be stored in the entry as a string
+     * @param password the new password to be stored in the entry as an encrypted string
+     * @param notes the updated notes of the entry as a string
+     */
     public static void updatePassword(int id, String userName, String password, String notes) {
         // Estabblish a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();

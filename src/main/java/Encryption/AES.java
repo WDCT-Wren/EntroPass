@@ -8,10 +8,17 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+/**
+ * AES implementation for password encryption in {@code vault} database
+ */
 public class AES {
     private static SecretKey key;
     private static final int T_LEN = 128;
 
+    /**
+     * Sets the key for decryption derived from the {@link PDKF2} class.
+     * @param key the key for decryption
+     */
     public static void setKey(SecretKey key) {
         AES.key = key;
     }

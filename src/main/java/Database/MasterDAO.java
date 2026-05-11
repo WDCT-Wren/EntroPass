@@ -6,7 +6,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 
+/**
+ * Class used to retrieve data from the database {@code MasterDB}.
+ */
 public class MasterDAO {
+    /**
+     * Retrieves the master password from the database.
+     * @return the master password as a hashed string
+     */
     public static String retrieveMasterPass() {
         //Establish a connection with the database
         Connection connection = DatabaseManager.getInstance().getConnection();
@@ -25,6 +32,10 @@ public class MasterDAO {
         return null;
     }
 
+    /**
+     * Retrieves the salt from the database.
+     * @return the salt as a byte array
+     */
     public static byte[] retrieveSaltByte() {
         byte[] salt = new byte[16];
 

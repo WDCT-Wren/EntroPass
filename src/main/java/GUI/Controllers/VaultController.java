@@ -67,6 +67,7 @@ public class VaultController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //populate the listview with all the assets initially
         populateList();
+        notes.setWrapText(true);
 
         searchField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -121,17 +122,16 @@ public class VaultController implements Initializable {
     }
 
     private void populateDetail(User user) {
-        serviceName.setText(user.getServiceName());
-        userName.setText(user.getUserName());
-
         try {
+            serviceName.setText(AES.decrypt(user.getServiceName()));
+            userName.setText(AES.decrypt(user.getUserName()));
             password.setText(AES.decrypt(user.getPassword()));
         } catch (RuntimeException e) {
             password.setText("[Legacy Password - Please re-enter password]");
             password.setStyle("-fx-text-fill: #FF6B6B;");
         }
 
-        notes.setText(user.getNotes());
+        notes.setText(AES.decrypt(user.getNotes()));
         createdDate.setText(user.getCreatedDate());
     }
 
@@ -216,12 +216,15 @@ public class VaultController implements Initializable {
         SceneUtils.getScene(stage, fxmlFile);
     }
 
+//    private boolean isEditValid() {
+//        boolean is
+//    }
+
     private void saveEdits(int id) {
-        //TODO: Add validation for all fields
         UserOperations user = new UserOperations(
                 getServiceName(),
                 getUsername(),
-                getEncryptedPassword(),
+                getPassword(),
                 getNotes());
 
         // Saves the new changes to the database
@@ -252,21 +255,14 @@ public class VaultController implements Initializable {
         toggleEditEntry();
     }
 
-    //Getter Methods
-//    private int getPasswordLength() {
-//        return Integer.parseInt(passLength.getText());
-//    }
-    private String getUsername() {
-        return userName.getText();
-    }
-    private String getServiceName() {
-        return serviceName.getText();
-    }
+    //Getter Methods with all fields encrypted
+    private String getUsername() {return AES.encrypt(userName.getText());}
+    private String getServiceName() {return AES.encrypt(serviceName.getText());}
     private String getNotes() {
-        if (notes.getText().isEmpty()) return "";
-        return notes.getText();
+        if (notes.getText().isEmpty()) return AES.encrypt("");
+        return AES.encrypt(notes.getText());
     }
-    private String getEncryptedPassword() {
+    private String getPassword() {
         return AES.encrypt(password.getText());
     }
 }

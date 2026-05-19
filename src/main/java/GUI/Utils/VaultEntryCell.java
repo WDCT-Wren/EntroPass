@@ -1,6 +1,7 @@
 package GUI.Utils;
 
 import Database.UserCRUD.User;
+import Encryption.AES;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -28,8 +29,8 @@ public class VaultEntryCell extends ListCell<User> {
             setGraphic(null);
             setText(null);
         } else {
-            serviceName.setText(entry.getServiceName());
-            userName.setText(entry.getUserName());
+            serviceName.setText(AES.decrypt(entry.getServiceName()));
+            userName.setText(AES.decrypt(entry.getUserName()));
             setGraphic(layout);
             setText(null);
         }

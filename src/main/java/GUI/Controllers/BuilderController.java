@@ -59,6 +59,7 @@ public class BuilderController {
      */
     @FXML
     private void initialize() {
+        noteField.setWrapText(true);
         if (passLength != null) {
             passLength.setText("8");
 
@@ -217,21 +218,13 @@ public class BuilderController {
         }
     }
 
-    //Getter Methods
-    private int getPasswordLength() {
-        return Integer.parseInt(passLength.getText());
-    }
-    private String getUsername() {
-        return usernameField.getText();
-    }
-    private String getServiceName() {
-        return serviceNameField.getText();
-    }
+    //Getter Methods with all fields encrypted
+    private int getPasswordLength() {return Integer.parseInt(passLength.getText());}
+    private String getUsername() {return AES.encrypt(usernameField.getText());}
+    private String getServiceName() {return AES.encrypt(serviceNameField.getText());}
     private String getNote() {
         if (noteField.getText().isEmpty()) return "";
-        return noteField.getText();
+        return AES.encrypt(noteField.getText());
     }
-    private String getEncryptedPassword() {
-        return AES.encrypt(passwordText.getText());
-    }
+    private String getEncryptedPassword() {return AES.encrypt(passwordText.getText());}
 }

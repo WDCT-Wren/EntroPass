@@ -281,6 +281,12 @@
     -fx-border-radius: 10;
 }
 
+.service-name {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
 .confirm-button {
     -fx-background-color: #c53030;
     -fx-text-fill: white;

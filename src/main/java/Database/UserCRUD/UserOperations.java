@@ -87,14 +87,15 @@ public class UserOperations {
         Connection connection = DatabaseManager.getInstance().getConnection();
 
         // Declare the update query
-        String sql = "UPDATE vault SET  username = ?, encrypted_password = ?, notes = ?, created_date = ?  WHERE id = ?";
+        String sql = "UPDATE vault SET service_name = ?,  username = ?, encrypted_password = ?, notes = ?, created_date = ?  WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, userName);
-            stmt.setString(2, password);
-            stmt.setString(3, notes);
-            stmt.setObject(4, createdDate);
-            stmt.setInt(5, id);
+            stmt.setString(1, serviceName);
+            stmt.setString(2, userName);
+            stmt.setString(3, password);
+            stmt.setString(4, notes);
+            stmt.setObject(5, createdDate);
+            stmt.setInt(6, id);
             stmt.executeUpdate();
         }
         catch (SQLException e) {

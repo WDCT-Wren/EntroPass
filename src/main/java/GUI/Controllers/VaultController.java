@@ -53,7 +53,7 @@ public class VaultController implements Initializable {
     private PasswordField password;
 
     @FXML
-    private Label serviceName;
+    private TextField serviceName;
 
     @FXML
     private TextField userName;
@@ -192,6 +192,7 @@ public class VaultController implements Initializable {
     @FXML
     public void toggleEditEntry() {
         isEditMode = !isEditMode;
+        serviceName.setEditable(isEditMode);
         userName.setEditable(isEditMode);
         password.setEditable(isEditMode);
         notes.setEditable(isEditMode);
@@ -217,7 +218,7 @@ public class VaultController implements Initializable {
     }
 
 //    private boolean isEditValid() {
-//        boolean is
+//
 //    }
 
     private void saveEdits(int id) {

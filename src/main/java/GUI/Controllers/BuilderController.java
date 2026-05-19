@@ -4,12 +4,15 @@ import Database.UserCRUD.UserOperations;
 import Encryption.AES;
 import GUI.Utils.SceneUtils;
 import GUI.Utils.StrengthUIHelper;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.Password_Generator.Configurator;
 import org.Password_Generator.StrengthChecker;
@@ -118,16 +121,23 @@ public class BuilderController {
         org.Password_Generator.Builder builder = new org.Password_Generator.Builder(passwordLength);
         String password = builder.buildPassword(configuration);
         passwordText.setText(password);
+        Platform.runLater(() -> fitPasswordFont(password));
+    }
 
-        double maxLength = 40;
-        double baseSize = 18.0;
-        if (password.length() > maxLength) {
-            double minSize = 7.0;
-            double newSize = Math.max(minSize, baseSize * (maxLength / password.length()));
-            passwordText.setStyle("-fx-font-size: " + String.format("%.1f", newSize) + ";");
-        } else {
-            passwordText.setStyle("-fx-font-size: baseSize;");
+    private void fitPasswordFont(String password) {
+        double fieldWidth = passwordText.getWidth() - 20;
+        double fontSize = 25.0;
+        double minFontSize = 7.0;
+
+        Text measurer = new Text(password);
+        measurer.setFont(Font.font(fontSize));
+
+        while (measurer.getBoundsInLocal().getWidth() > fieldWidth && fontSize > minFontSize) {
+            fontSize -= 0.5;
+            measurer.setFont(Font.font(fontSize));
         }
+
+        passwordText.setStyle("-fx-font-size: " + String.format("%.1f", fontSize) + "; -fx-text-fill: #a3e635;");
     }
 
     @FXML

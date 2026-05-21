@@ -4,16 +4,52 @@ EntroPass is a JavaFX desktop password manager focused on practical local securi
 
 This project is designed as a real desktop application, not a demo screen flow. It persists data locally with SQLite, protects vault secrets with authenticated encryption, and gates access through a hashed master credential.
 
+---
+
+## Screenshots
+
+### Login / Registration
+
+![Log into your encrypted assets](src/main/resources/org/Assets/screenshots/log_in_page.png)
+*Log in page to gain access to your encrypted assets*
+
+![Register and save a master key](src/main/resources/org/Assets/screenshots/registration_page.png)
+*If you're a new user, you may save a master password that will be your only key for access*
+
+![Delete your assets and start anew if you forget your master key](src/main/resources/org/Assets/screenshots/forgot_password_page.png)
+*In the case that a user forgot their master key, they have no choice but to create a new account and lose their encrypted assets.*
+
+### Password Vault
+
+![View of the vault that stores all entries](src/main/resources/org/Assets/screenshots/password_vault_page.png)
+*Easily access your stored password entries*
+
+![Edit feature of the password vault](src/main/resources/org/Assets/screenshots/password_vault_edit.png)
+*As well as easily edit and save changes to your assets*
+
+### Password Builder
+![Edit feature of the password vault](src/main/resources/org/Assets/screenshots/password_generator_page.png)
+*Generate secure unpredictable passwords that can be customized to your needs with the use of <b>Passay</b>*
+
+![Edit feature of the password vault](src/main/resources/org/Assets/screenshots/password_manual_entry.png)
+*Old passwords are still possible to enter and save to our system just by toggling <b>Manual Entry</b>*
+
+---
+
 ## Tech Stack
 
-- Language: Java
-- UI: JavaFX 21.0.6 (FXML + CSS scene architecture)
-- Build Tool: Maven
-- Local Data Store: SQLite (`sqlite-jdbc`)
-- Password Hashing: jBCrypt (master password verification)
-- Key Derivation: PBKDF2-HMAC-SHA256 (session key derivation)
-- Vault Encryption: AES-GCM (`AES/GCM/NoPadding`)
-- Password Generation: Passay
+| Layer | Technology |
+|---|---|
+| Language | Java 25 (preview features enabled) |
+| UI | JavaFX 25 (FXML + CSS scene architecture) |
+| Build | Maven 3.6+ |
+| Database | SQLite (`sqlite-jdbc 3.51.1.0`) |
+| Password Hashing | jBCrypt 0.4 (master password) |
+| Key Derivation | PBKDF2-HMAC-SHA256 |
+| Vault Encryption | AES-GCM (`AES/GCM/NoPadding`) |
+| Password Generation | Passay 1.6.6 |
+
+---
 
 ## Current Features
 
@@ -22,38 +58,47 @@ This project is designed as a real desktop application, not a demo screen flow. 
 - Register and store a master password hash in SQLite
 - Login validation against stored BCrypt hash
 - Session-based vault access after successful authentication
-- First-run routing to registration, returning-user routing to log in
+- First-run routing to registration, returning-user routing to login
+- Forgot password flow
 
 ### Vault
 
 - Load and display saved vault entries
-- Decrypt and view selected password details
+- Decrypt and view selected entry details
 - Search entries by service name or username
-- Copy username/password to clipboard
-- Delete entries from vault
+- Copy username or password to clipboard
+- Edit all fields on existing entries (service name, username, password, notes)
+- Delete entries with a confirmation dialog
+- Conditional empty-state view when vault has no entries
+- Real-time password strength indicators with descriptive labels and progress bars in edit mode
+- All sensitive fields (username, password, notes) encrypted with AES-GCM; creation date stored in plaintext
 
 ### Password Builder
 
 - Generate passwords with configurable options:
-  - Length (8-64)
+  - Length (8–64)
   - Digits
   - Special characters
   - Mixed-case letters
 - Manual entry mode with real-time strength feedback
-- Entropy-based strength scoring and progress visualization
-- Save generated/manual passwords to encrypted vault entries
-- Update existing vault entries (edit save/cancel handlers are currently placeholders)
+- Entropy-based strength scoring with labeled progress visualization
+- Save generated or manually entered passwords to new vault entries
+- Dynamic font size adjustment for long passwords in the preview field
+
+---
 
 ## In Progress / Planned
 
 - Add automated tests (`src/test` is currently empty)
-- Continue codebase cleanup and UI refinements from `TODO-list.md`
+- Continue UI/UX polish and code cleanup from `TODO-list`
+
+---
 
 ## Setup and Run
 
 ### Prerequisites
 
-- JDK compatible with project compiler/preview settings
+- JDK 25+
 - Maven 3.6+
 
 ### Run Commands
@@ -63,68 +108,78 @@ mvn clean install
 mvn javafx:run
 ```
 
-### Current Build Note
+### Build Note
 
-At the moment, `mvn -q -DskipTests compile` fails locally with:
+The previous source/preview mismatch (`source=24` with `--enable-preview`, which requires release 25) has been resolved. `pom.xml` now consistently targets Java 25 with preview features enabled. The build should compile and run cleanly provided JDK 25 is installed.
 
-- `invalid source release 24 with --enable-preview`
-- `preview language features are only supported for release 25`
+If you see `invalid source release` errors, verify your active JDK version:
 
-This is a Java source/preview configuration mismatch in the current build setup.
+```bash
+java -version
+```
+
+---
 
 ## Security Design
 
 EntroPass follows a layered local-security model:
 
-1. The master password is <b>never stored in plaintext</b>. A BCrypt hash is stored in the `master` table.
-2. On successful login, PBKDF2-HMAC-SHA256 derives an AES key from the entered master password plus stored salt.
+1. The master password is **never stored in plaintext**. A BCrypt hash is stored in the `master` table.
+2. On successful login, PBKDF2-HMAC-SHA256 derives an AES key from the entered master password plus a stored salt.
 3. Vault passwords are encrypted with AES-GCM before writing to SQLite.
-4. A fresh IV is generated per encryption operation and prepended to ciphertext for decryption.
-5. Decryption only occurs during an authenticated session, using the in-memory session key.
+4. A fresh IV is generated per encryption operation and prepended to the ciphertext for decryption.
+5. Decryption only occurs during an authenticated session using the in-memory session key.
 
 Database file location:
 
 - `${user.home}/EntroPass/PasswordDatabase.sqlite`
 
-Current tables:
+Current schema:
 
 ```sql
 CREATE TABLE IF NOT EXISTS master (
-  id INTEGER PRIMARY KEY CHECK (id = 1),
+  id   INTEGER PRIMARY KEY CHECK (id = 1),
   hash TEXT NOT NULL,
   salt TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS vault (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  service_name TEXT NOT NULL,
-  username TEXT NOT NULL,
+  id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+  service_name       TEXT NOT NULL,
+  username           TEXT NOT NULL,
   encrypted_password TEXT NOT NULL,
-  notes TEXT,
-  created_date TEXT
+  notes              TEXT,
+  created_date       TEXT
 );
 ```
+
+---
 
 ## Project Structure
 
 ```text
 EntroPass/
-|- pom.xml
-|- README.md
-|- TODO-list.md
-|- src/
-|  |- main/
-|  |  |- java/
-|  |  |  |- Database/
-|  |  |  |- Encryption/
-|  |  |  |- GUI/
-|  |  |  |- org/Password_Generator/
-|  |  |  \- module-info.java
-|  |  \- resources/org/password_generator_gui/
-|  |     |- Scenes/
-|  |     \- Stylesheets/
-\- target/
+├── pom.xml
+├── README.md
+├── TODO-list.md
+└── src/
+    └── main/
+        ├── java/
+        │   ├── Database/               # DB manager, DAO classes
+        │   ├── Encryption/             # AES-GCM, PBKDF2 key derivation
+        │   ├── GUI/
+        │   │   ├── Controllers/        # Scene controllers (Auth, SignUp, Builder, Vault, Menu, ForgotPassword)
+        │   │   ├── Utils/              # SceneUtils, StrengthUIHelper, vault cell rendering
+        │   │   └── Application.java    # JavaFX entry point
+        │   ├── org/Password_Generator/ # PasswordBuilder, Configurator, StrengthChecker
+        │   └── module-info.java
+        └── resources/
+            └── org/password_generator_gui/
+                ├── Scenes/             # FXML files (7 scenes)
+                └── Stylesheets/        # CSS theming
 ```
+
+---
 
 ## License
 

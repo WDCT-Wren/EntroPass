@@ -26,6 +26,7 @@ public class StrengthUIHelper {
             descriptiveStrength.setText(description);
 
             if (strength <= 0.25) descriptiveStrength.setStyle("-fx-text-fill: red");
+            else descriptiveStrength.setStyle("-fx-text-fill: #a3e635");
         };
     }
 }

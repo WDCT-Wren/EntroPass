@@ -27,7 +27,7 @@ public class ForgotPasswordController {
 
     UserDAO userDAO = new UserDAO();
 
-    private void initialize() {
+    public void initialize() {
         // Prevents the player from clicking reset if the checkbox was not clicked
         resetButton.disableProperty().bind(acknowledgementCheckbox.selectedProperty().not());
         storedAssetsCounter.setText(String.valueOf(userDAO.getRowCount()));

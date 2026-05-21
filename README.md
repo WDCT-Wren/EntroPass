@@ -182,5 +182,4 @@ EntroPass/
 ---
 
 ## License
-
-Not yet specified.
+MIT License — see [LICENSE](LICENSE) for details.

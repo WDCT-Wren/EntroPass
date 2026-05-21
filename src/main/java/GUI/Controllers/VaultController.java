@@ -71,6 +71,12 @@ public class VaultController implements Initializable {
     private Label passwordStrength;
 
     @FXML
+    private VBox  emptyContainer;
+
+    @FXML
+    private VBox detailContainer;
+
+    @FXML
     private ListView<User> userRepoList;
     private final UserDAO userDAO = new UserDAO();
     private boolean isEditMode;
@@ -110,6 +116,10 @@ public class VaultController implements Initializable {
         itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
     }
 
+    private boolean checkForEntry(User user) {
+        return user != null;
+    }
+
     private void populateList() {
         userRepoList.getItems().clear();
         userRepoList.setCellFactory(lv -> new VaultEntryCell());
@@ -119,6 +129,12 @@ public class VaultController implements Initializable {
                 ((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         populateDetail(newValue);
+                        detailContainer.setVisible(true);
+                        emptyContainer.setVisible(false);
+                    }
+                    else {
+                        detailContainer.setVisible(false);
+                        emptyContainer.setVisible(true);
                     }
                 })
         );
@@ -134,6 +150,7 @@ public class VaultController implements Initializable {
                 ((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         populateDetail(newValue);
+
                     }
                 })
         );

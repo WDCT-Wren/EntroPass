@@ -306,3 +306,15 @@
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 }
+
+.strength-indicator .bar {
+    -fx-background-color: #a3e635;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.strength-indicator .track {
+    -fx-background-color: #6BA000;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}

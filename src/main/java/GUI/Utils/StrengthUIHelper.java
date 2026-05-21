@@ -1,6 +1,7 @@
 package GUI.Utils;
 
 import javafx.beans.value.ChangeListener;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import org.Password_Generator.Configurator;
 import org.Password_Generator.StrengthChecker;
@@ -15,11 +16,16 @@ public class StrengthUIHelper {
         return new Configurator(hasNumbers, hasSymbols, hasUpper, hasLower);
     }
 
-    public static ChangeListener<String> manualStrengthListener (ProgressBar passwordStrength) {
+    public static ChangeListener<String> manualStrengthListener (ProgressBar numericalStrength, Label descriptiveStrength) {
         return (observable, oldValue, newValue) -> {
             double entropy = StrengthChecker.getSignUpEntropy(StrengthUIHelper.getManualConfiguration(newValue), newValue.length());
             double strength = StrengthChecker.checkManualEntryStrength(entropy);
-            passwordStrength.setProgress(strength);
+            String description = StrengthChecker.displayManualEntryStrength(strength);
+
+            numericalStrength.setProgress(strength);
+            descriptiveStrength.setText(description);
+
+            if (strength <= 0.25) descriptiveStrength.setStyle("-fx-text-fill: red");
         };
     }
 }

@@ -10,6 +10,8 @@
     -fx-padding: 0;
 }
 
+.green-text {-fx-text-fill: #a3e635;}
+
 .text-field {
     -fx-background-color: #1e1e1e;
     -fx-background-radius: 10px;

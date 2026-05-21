@@ -54,8 +54,9 @@ public class BuilderController {
     @FXML
     private Label passwordStrength;
 
-    private boolean isManualEntry = false;
     private ChangeListener<String> manualStrengthListener;
+    private boolean isManualEntry = false;
+    double entropyBits;
 
     /**
      *
@@ -142,13 +143,12 @@ public class BuilderController {
 
     @FXML
     private void setPasswordStrength(Configurator configuration, int passwordLength) {
-        double entropyBits = StrengthChecker.getGeneratorEntropy(configuration, passwordLength);
+        entropyBits = StrengthChecker.getGeneratorEntropy(configuration, passwordLength);
         double normalizedStrength = StrengthChecker.getNormalizedValue(entropyBits);
 
 
         passwordStrength.setText(
-                StrengthChecker.
-                        checkGeneratedStrength(entropyBits)
+                StrengthChecker.checkGeneratedStrength(entropyBits)
         );
 
         strengthIndicator.setProgress(normalizedStrength);
@@ -199,9 +199,10 @@ public class BuilderController {
             passwordText.setStyle("-fx-font-size: 20; -fx-text-fill: #a3e635");
             passwordText.setText("");
             passwordText.setPromptText("Input YOUR OWN banger password here!");
-            manualStrengthListener = StrengthUIHelper.manualStrengthListener(strengthIndicator);
+            manualStrengthListener = StrengthUIHelper.manualStrengthListener(strengthIndicator, passwordStrength);
             passwordText.textProperty().addListener(manualStrengthListener);
-        } else {
+        }
+        else {
             nullifyListener();
             strengthIndicator.setProgress(0);
             passwordText.setStyle("-fx-font-size: 25; -fx-text-fill: #a3e635");

@@ -5,10 +5,12 @@ import Database.UserCRUD.UserDAO;
 import Database.UserCRUD.UserOperations;
 import Encryption.AES;
 import GUI.Utils.SceneUtils;
+import GUI.Utils.StrengthUIHelper;
 import GUI.Utils.VaultEntryCell;
 
 import java.io.IOException;
 
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +20,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -30,6 +33,9 @@ public class VaultController implements Initializable {
 
     @FXML
     private Label itemAmountLabel;
+
+    @FXML
+    private ProgressBar strengthIndicator;
 
     @FXML
     private Button copyPassword;
@@ -50,6 +56,9 @@ public class VaultController implements Initializable {
     private HBox buttonContainer;
 
     @FXML
+    private VBox strengthContainer;
+
+    @FXML
     private PasswordField password;
 
     @FXML
@@ -59,9 +68,12 @@ public class VaultController implements Initializable {
     private TextField userName;
 
     @FXML
+    private Label passwordStrength;
+
+    @FXML
     private ListView<User> userRepoList;
     private final UserDAO userDAO = new UserDAO();
-    private boolean isEditMode = false;
+    private boolean isEditMode;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,6 +96,12 @@ public class VaultController implements Initializable {
             }
         });
 
+        ChangeListener<String> manualStrengthListener = StrengthUIHelper.manualStrengthListener(strengthIndicator, passwordStrength);
+        password.textProperty().addListener(manualStrengthListener);
+
+        isEditMode = false;
+        strengthContainer.setVisible(false);
+        strengthContainer.setManaged(false);
         buttonContainer.setVisible(false);
         buttonContainer.setManaged(false);
 
@@ -192,20 +210,27 @@ public class VaultController implements Initializable {
     @FXML
     public void toggleEditEntry() {
         isEditMode = !isEditMode;
+        entryEditMode();
+    }
+
+    private void entryEditMode() {
+        // Sets the editability of the text fields
         serviceName.setEditable(isEditMode);
+        serviceName.requestFocus();
         userName.setEditable(isEditMode);
         password.setEditable(isEditMode);
         notes.setEditable(isEditMode);
-        editEntryButton.setVisible(!isEditMode);
 
-        if (isEditMode) {
-            buttonContainer.setVisible(true);
-            buttonContainer.setManaged(true);
-        }
-        else {
-            buttonContainer.setVisible(false);
-            buttonContainer.setManaged(false);
-        }
+        // Hides/shows strength indicator
+        strengthContainer.setVisible(isEditMode);
+        strengthContainer.setManaged(isEditMode);
+
+        // Save and Cancel buttons are hidden/shown
+        buttonContainer.setVisible(isEditMode);
+        buttonContainer.setManaged(isEditMode);
+
+        // Edit button is hidden while in editing mode
+        editEntryButton.setVisible(!isEditMode);
     }
 
     @FXML
@@ -218,6 +243,9 @@ public class VaultController implements Initializable {
     }
 
 //    private boolean isEditValid() {
+//        boolean isServiceNameInvalid = serviceName.getText().isEmpty();
+//        boolean isUserNameInvalid = userName.getText().isEmpty();
+//        boolean isPasswordValid;
 //
 //    }
 

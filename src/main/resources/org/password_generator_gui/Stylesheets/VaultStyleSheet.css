@@ -15,7 +15,8 @@
 .side-bar-button {
     --border-color: transparent;
     -fx-background-color: transparent;
-    -fx-font: Semibold 20px "Segoe UI";
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 20px;
     -fx-text-fill: #C2C7D0;
 }
 
@@ -138,7 +139,8 @@
     -fx-background-color: #1b1b1b;
     -fx-text-fill: #404040;
     -fx-padding: 10;
-    -fx-font: Semibold 16px "Segoe UI";
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 20px;
 }
 
 /* 1. Target the main control container */

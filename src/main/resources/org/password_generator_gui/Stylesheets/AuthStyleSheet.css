@@ -20,7 +20,7 @@
     -fx-text-fill: #6BA000;
 }
 
-.sign-up-buttonL:hover {
+.sign-up-button:hover {
     -fx-cursor: hand;
     -fx-text-fill: #81b214;
     -fx-border-color: transparent;

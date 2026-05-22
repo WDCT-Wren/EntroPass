@@ -270,12 +270,29 @@ public class VaultController implements Initializable {
         SceneUtils.getScene(stage, fxmlFile);
     }
 
-//    private boolean isEditValid() {
-//        boolean isServiceNameInvalid = serviceName.getText().isEmpty();
-//        boolean isUserNameInvalid = userName.getText().isEmpty();
-//        boolean isPasswordValid;
-//
-//    }
+    private boolean isEditValid() {
+        String invalidFieldWarning = "Field cannot be empty!";
+        boolean isServiceNameInvalid = serviceName.getText().isEmpty();
+        boolean isUserNameInvalid = userName.getText().isEmpty();
+        boolean isPasswordInvalid = password.getText().isEmpty();
+
+        if (isServiceNameInvalid) {
+            serviceName.setPromptText(invalidFieldWarning);
+            return false;
+        }
+        if (isUserNameInvalid) {
+            userName.setPromptText(invalidFieldWarning);
+            return false;
+        }
+        if (isPasswordInvalid) {
+            password.setPromptText(invalidFieldWarning);
+            viewablePassword.setPromptText(invalidFieldWarning);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 
     private void saveEdits(int id) {
         UserOperations user = new UserOperations(
@@ -297,12 +314,12 @@ public class VaultController implements Initializable {
     public void saveEditsConfirmation() throws IOException{
         int id = userRepoList.getSelectionModel().getSelectedItem().getId();
 
-        SceneUtils.showWindow("ConfirmationWindow.fxml",
+        if (isEditValid()) SceneUtils.showWindow("ConfirmationWindow.fxml",
                 "Update " + serviceName.getText() + " entry?",
                 "Are you sure? All values associated with this entry will be changed and cannot be undone.",
                 "Save Edits",
                 () -> {
-                    saveEdits(id);
+                    if (isEditValid()) saveEdits(id);
                 });
     }
 

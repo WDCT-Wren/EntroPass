@@ -62,6 +62,9 @@ public class VaultController implements Initializable {
     private PasswordField password;
 
     @FXML
+    private TextField viewablePassword;
+
+    @FXML
     private TextField serviceName;
 
     @FXML
@@ -80,6 +83,7 @@ public class VaultController implements Initializable {
     private ListView<User> userRepoList;
     private final UserDAO userDAO = new UserDAO();
     private boolean isEditMode;
+    private boolean isViewable;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,22 +106,27 @@ public class VaultController implements Initializable {
             }
         });
 
+        //Initialize listener for real-time password strength feedback
         ChangeListener<String> manualStrengthListener = StrengthUIHelper.manualStrengthListener(strengthIndicator, passwordStrength);
         password.textProperty().addListener(manualStrengthListener);
 
+        //Initializes listener to sync textfield and password field of password.
+        ChangeListener<String> passwordSync = SceneUtils.synchronizePasswordFields(password, viewablePassword);
+        password.textProperty().addListener(passwordSync);
+        viewablePassword.textProperty().addListener(passwordSync);
+
         isEditMode = false;
+        isViewable = false;
         strengthContainer.setVisible(false);
         strengthContainer.setManaged(false);
         buttonContainer.setVisible(false);
         buttonContainer.setManaged(false);
 
+        viewablePassword.setVisible(false);
+
         userRepoList.getSelectionModel().selectFirst();
 
         itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
-    }
-
-    private boolean checkForEntry(User user) {
-        return user != null;
     }
 
     private void populateList() {
@@ -150,7 +159,6 @@ public class VaultController implements Initializable {
                 ((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         populateDetail(newValue);
-
                     }
                 })
         );
@@ -161,8 +169,10 @@ public class VaultController implements Initializable {
             serviceName.setText(AES.decrypt(user.getServiceName()));
             userName.setText(AES.decrypt(user.getUserName()));
             password.setText(AES.decrypt(user.getPassword()));
+            viewablePassword.setText(AES.decrypt(user.getPassword()));
         } catch (RuntimeException e) {
             password.setText("[Legacy Password - Please re-enter password]");
+            viewablePassword.setText("[Legacy Password - Please re-enter password]");
             password.setStyle("-fx-text-fill: #FF6B6B;");
         }
 
@@ -236,6 +246,7 @@ public class VaultController implements Initializable {
         serviceName.requestFocus();
         userName.setEditable(isEditMode);
         password.setEditable(isEditMode);
+        viewablePassword.setEditable(isEditMode);
         notes.setEditable(isEditMode);
 
         // Hides/shows strength indicator
@@ -299,6 +310,17 @@ public class VaultController implements Initializable {
     public void cancelEdits() {
         populateDetail(userRepoList.getSelectionModel().getSelectedItem());
         toggleEditEntry();
+    }
+
+    @FXML
+    void toggleView() {
+        isViewable = !isViewable;
+        viewPassword();
+    }
+
+    private void viewPassword() {
+        password.setVisible(!isViewable);
+        viewablePassword.setVisible(isViewable);
     }
 
     //Getter Methods with all fields encrypted

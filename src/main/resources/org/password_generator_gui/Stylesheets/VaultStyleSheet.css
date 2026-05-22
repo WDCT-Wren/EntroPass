@@ -140,7 +140,11 @@
     -fx-text-fill: #404040;
     -fx-padding: 10;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 20px;
+    -fx-font-size: 16px;
+}
+
+.root-textfield.container {
+    -fx-padding: 0;
 }
 
 /* 1. Target the main control container */
@@ -155,10 +159,14 @@
 
 .main-button {
     -fx-background-color: #1d2024;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
     -fx-text-fill: #ffffff;
     -fx-padding: 10;
+}
+
+.main-button.delete-button {
+    -fx-text-fill: #b51a1a;
 }
 
 .main-button:hover {
@@ -172,23 +180,8 @@
     -fx-padding: 10;
 }
 
-.delete-button {
-    -fx-background-color: #b51a1a;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-text-fill: white;
-    -fx-padding: 10;
-}
-
-.delete-button:hover {
-    -fx-background-color: #c53030;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
-    -fx-text-fill: white;
-    -fx-border-color: #c53030;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-padding: 10;
+.main-button.delete-button:hover {
+    -fx-text-fill: #b51a1a;
 }
 
 .notes-area .viewport {
@@ -230,7 +223,7 @@
 .credential-container {
     -fx-background-radius: 20;
     -fx-background-color: #1d2024;
-    -fx-padding: 25;
+    -fx-padding: 30;
 }
 
 .root-text {

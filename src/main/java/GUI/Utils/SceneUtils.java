@@ -2,14 +2,20 @@ package GUI.Utils;
 
 import GUI.Application;
 import GUI.Controllers.ConfirmationDialogController;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.Password_Generator.StrengthChecker;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -59,5 +65,18 @@ public class SceneUtils {
 
         // Show and wait for user action
         dialog.showAndWait();
+    }
+
+    /**
+     * Listener util to sync both password fields and textfield in the password entry
+     * @param hiddenPassword the password field with hidden text
+     * @param visiblePassword the password field's visible text counterpart
+     * @return synchronizes the text of both fields for the password entry
+     */
+    public static ChangeListener<String> synchronizePasswordFields (PasswordField hiddenPassword, TextField visiblePassword) {
+        return (observable, oldValue, newValue) -> {
+            hiddenPassword.setText(newValue);
+            visiblePassword.setText(newValue);
+        };
     }
 }

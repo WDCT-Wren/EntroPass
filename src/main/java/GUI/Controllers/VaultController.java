@@ -91,6 +91,7 @@ public class VaultController implements Initializable {
         populateList();
         notes.setWrapText(true);
 
+        // Initializes the listener for the search function.
         searchField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 try {
@@ -127,6 +128,18 @@ public class VaultController implements Initializable {
         userRepoList.getSelectionModel().selectFirst();
 
         itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
+    }
+
+    @FXML
+    public void switchToMenuScene(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneUtils.getScene(stage, "StartingMenu.fxml");
+    }
+
+    @FXML
+    void switchToPasswordBuilder(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneUtils.getScene(stage, "PasswordBuilder.fxml");
     }
 
     private void populateList() {
@@ -180,14 +193,6 @@ public class VaultController implements Initializable {
         createdDate.setText(user.getCreatedDate());
     }
 
-    @FXML
-    public void switchToMenuScene(ActionEvent event) throws IOException {
-        String fxmlFile = "StartingMenu.fxml";
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        SceneUtils.getScene(stage, fxmlFile);
-    }
 
     @FXML
     private void copyPassword() {
@@ -259,15 +264,6 @@ public class VaultController implements Initializable {
 
         // Edit button is hidden while in editing mode
         editEntryButton.setVisible(!isEditMode);
-    }
-
-    @FXML
-    void switchToPasswordBuilder(ActionEvent event) throws IOException {
-        String fxmlFile = "PasswordBuilder.fxml";
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        SceneUtils.getScene(stage, fxmlFile);
     }
 
     private boolean isEditValid() {

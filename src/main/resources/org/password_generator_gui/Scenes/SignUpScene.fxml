@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="901.0" prefWidth="1230.0" spacing="24.0" styleClass="root-pane" stylesheets="@../Stylesheets/SignUpStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.SignUpController">
+<VBox alignment="CENTER" prefHeight="901.0" prefWidth="1230.0" spacing="24.0" stylesheets="@../Stylesheets/AuthStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.SignUpController">
    <children>
       <VBox alignment="CENTER" spacing="8.0">
          <children>
@@ -52,7 +55,7 @@
                         <Font name="Segoe UI Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Label prefWidth="373.0" text="This key is your only way into your vault. We cannot recover it." textFill="#c2c7d0" wrapText="true">
+                  <Label prefWidth="373.0" text="This key is your only way into your vault. Please remember and keep the key safe. We cannot recover it in the case of you losing it." textFill="#c2c7d0" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
@@ -64,14 +67,76 @@
                               <Font name="Segoe UI" size="14.0" />
                            </font>
                         </Label>
-                        <PasswordField fx:id="masterPasswordField" prefHeight="54.0" prefWidth="373.0" promptText="Enter your key">
+                        <HBox alignment="CENTER" prefHeight="54.0" prefWidth="373.0" spacing="5.0">
+                           <children>
+                              <StackPane prefHeight="54.0" prefWidth="420.0">
+                                 <children>
+                                    <TextField fx:id="masterPasswordView" prefHeight="25.0" prefWidth="431.0" styleClass="root-textfield" visible="false" />
+                                    <PasswordField fx:id="masterPasswordField" prefHeight="54.0" prefWidth="315.0" styleClass="root-textfield" StackPane.alignment="CENTER_LEFT">
+                                       <font>
+                                          <Font name="Segoe UI Semibold" size="16.0" />
+                                       </font>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                    </PasswordField>
+                                 </children>
+                              </StackPane>
+                              <Button fx:id="viewPassword" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#toggleView" prefWidth="142.0" styleClass="view-button" text="👁" textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="Segoe UI Emoji" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <styleClass>
+                              <String fx:value="textfield" />
+                              <String fx:value="container" />
+                           </styleClass>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefWidth="373.0" spacing="6.0">
+                     <children>
+                        <Label text="CONFIRM MASTER KEY" textFill="#c2c7d0">
                            <font>
-                              <Font name="Segoe UI" size="16.0" />
+                              <Font name="Segoe UI" size="14.0" />
                            </font>
-                        </PasswordField>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="54.0" prefWidth="373.0" spacing="5.0">
+                           <children>
+                              <StackPane prefWidth="420.0">
+                                 <children>
+                                    <TextField fx:id="confirmPasswordView" prefHeight="25.0" prefWidth="431.0" styleClass="root-textfield" visible="false" />
+                                    <PasswordField fx:id="confirmPasswordField" prefHeight="54.0" prefWidth="245.0" styleClass="root-textfield" StackPane.alignment="CENTER_LEFT">
+                                       <font>
+                                          <Font name="Segoe UI Semibold" size="16.0" />
+                                       </font>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                    </PasswordField>
+                                 </children>
+                              </StackPane>
+                              <Button fx:id="viewPassword1" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#toggleView" prefWidth="142.0" styleClass="view-button" text="👁" textAlignment="RIGHT">
+                                 <font>
+                                    <Font name="Segoe UI Emoji" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <styleClass>
+                              <String fx:value="textfield" />
+                              <String fx:value="container" />
+                           </styleClass>
+                        </HBox>
                         <HBox prefHeight="10.0" prefWidth="551.0" spacing="10.0">
                            <children>
-                              <Label styleClass="green-text" text="New Password Strength:">
+                              <Label styleClass="green-text" text="Strength:">
                                  <font>
                                     <Font name="Segoe UI Semibold" size="15.0" />
                                  </font>
@@ -118,4 +183,8 @@
          </center>
       </BorderPane>
    </children>
+   <styleClass>
+      <String fx:value="root-pane" />
+      <String fx:value="signup-background" />
+   </styleClass>
 </VBox>

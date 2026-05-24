@@ -91,10 +91,14 @@ public class BuilderController {
      */
     @FXML
     public void switchToMenuScene(ActionEvent event) throws IOException {
-        String fxmlFileName = "StartingMenu.fxml";
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneUtils.getScene(stage, fxmlFileName);
+        SceneUtils.getScene(stage, "StartingMenu.fxml");
+    }
+
+    @FXML
+    public void switchToVaultScene(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneUtils.getScene(stage, "PasswordVault.fxml");
     }
 
     /**
@@ -209,14 +213,6 @@ public class BuilderController {
             passwordText.setText("");
             passwordText.setPromptText("Banger generated password here");
         }
-    }
-
-    @FXML
-    public void switchToVaultScene(ActionEvent event) throws IOException {
-        String fxmlFile = "PasswordVault.fxml";
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        SceneUtils.getScene(stage, fxmlFile);
     }
 
     /**

@@ -5,13 +5,11 @@ import Database.MasterDAO;
 import Encryption.PDKF2;
 import GUI.Utils.SceneUtils;
 import GUI.Utils.StrengthUIHelper;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.Password_Generator.Configurator;
 import org.Password_Generator.StrengthChecker;
@@ -23,7 +21,7 @@ import java.sql.SQLException;
 public class SignUpController {
 
     @FXML
-    private Label signInWarning;
+    private PasswordField confirmPasswordField;
 
     @FXML
     private ProgressBar masterKeyStrength;
@@ -32,10 +30,37 @@ public class SignUpController {
     private PasswordField masterPasswordField;
 
     @FXML
+    private TextField masterPasswordView;
+
+    @FXML
+    private TextField confirmPasswordView;
+
+    @FXML
     private Label passwordStrength;
 
     @FXML
+    private Button setKey;
+
+    @FXML
+    private Button signInButton;
+
+    @FXML
+    private Label signInWarning;
+
+    @FXML
+    private Button viewPassword;
+
+    @FXML
+    private Button viewPassword1;
+
+    boolean isViewable;
+    @FXML
     public void initialize() {
+        isViewable = false;
+
+        // Initialized visible objects
+        masterPasswordView.setVisible(false);
+        confirmPasswordField.setVisible(false);
         signInWarning.setVisible(false);
         signInWarning.setManaged(false);
 
@@ -44,8 +69,31 @@ public class SignUpController {
             signInWarning.setManaged(false);
         });
 
+        //Initializes listener to sync both fields in master password setup
+        ChangeListener<String> passwordSync = SceneUtils.synchronizePasswordFields(masterPasswordField, masterPasswordView);
+        masterPasswordField.textProperty().addListener(passwordSync);
+        masterPasswordView.textProperty().addListener(passwordSync);
+
+        //Initializes listener to sync both fields in password confirmation
+        ChangeListener<String> confirmationSync = SceneUtils.synchronizePasswordFields(confirmPasswordField, confirmPasswordView);
+        confirmPasswordField.textProperty().addListener(confirmationSync);
+        confirmPasswordView.textProperty().addListener(confirmationSync);
+
         masterPasswordField.textProperty().addListener(
                 StrengthUIHelper.manualStrengthListener(masterKeyStrength, passwordStrength));
+    }
+
+    @FXML
+    void switchToSignInScene(ActionEvent event) throws IOException {
+        boolean masterPasswordExists = MasterDAO.retrieveMasterPass() != null;
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        if (masterPasswordExists) SceneUtils.getScene(stage, "AuthMenu.fxml");
+        else {
+            signInWarning.setText("You don't have a stored account yet! Make one first before you can sign in!");
+            signInWarning.setVisible(true);
+            signInWarning.setManaged(true);
+        }
     }
 
     @FXML
@@ -78,22 +126,20 @@ public class SignUpController {
             e.printStackTrace();
             signInWarning.setText("Database error occurred. Please try again.");
         }
+
     }
 
-
     @FXML
-    void switchToSignInScene(ActionEvent event) throws IOException {
-        boolean masterPasswordExists = MasterDAO.retrieveMasterPass() != null;
-        String fxmlFile = "AuthMenu.fxml";
+    void toggleView() {
+        isViewable = !isViewable;
+        viewPassword();
+    }
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        if (masterPasswordExists) SceneUtils.getScene(stage, fxmlFile);
-        else {
-            signInWarning.setText("You don't have a stored account yet! Make one first before you can sign in!");
-            signInWarning.setVisible(true);
-            signInWarning.setManaged(true);
-        }
+    private void viewPassword() {
+        masterPasswordField.setVisible(!isViewable);
+        confirmPasswordField.setVisible(!isViewable);
+        masterPasswordView.setVisible(isViewable);
+        confirmPasswordView.setVisible(isViewable);
     }
 
     // helper getter methods

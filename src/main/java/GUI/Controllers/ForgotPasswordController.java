@@ -36,11 +36,13 @@ public class ForgotPasswordController {
     @FXML
     void resetVault(ActionEvent event) throws SQLException, IOException {
         DatabaseOperations.purgeDB();
-        switchToAuthScene(event);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        SceneUtils.getScene(stage, "SignUpScene.fxml");
     }
 
     @FXML
-    void switchToAuthScene(ActionEvent event) throws IOException {
+    void switchToLoginScene(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         SceneUtils.getScene(stage, "AuthMenu.fxml");
     }

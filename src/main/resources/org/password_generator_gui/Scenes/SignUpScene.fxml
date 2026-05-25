@@ -82,7 +82,7 @@
                                     </PasswordField>
                                  </children>
                               </StackPane>
-                              <Button fx:id="viewPassword" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#toggleView" prefWidth="142.0" styleClass="view-button" text="👁" textAlignment="RIGHT">
+                              <Button fx:id="viewPassword" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#toggleMasterPassView" prefWidth="142.0" styleClass="view-button" text="👁" textAlignment="RIGHT">
                                  <font>
                                     <Font name="Segoe UI Emoji" size="12.0" />
                                  </font>
@@ -120,7 +120,7 @@
                                     </PasswordField>
                                  </children>
                               </StackPane>
-                              <Button fx:id="viewPassword1" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#toggleView" prefWidth="142.0" styleClass="view-button" text="👁" textAlignment="RIGHT">
+                              <Button fx:id="viewPassword1" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#toggleConfirmPassView" prefWidth="142.0" styleClass="view-button" text="👁" textAlignment="RIGHT">
                                  <font>
                                     <Font name="Segoe UI Emoji" size="12.0" />
                                  </font>

@@ -39,9 +39,11 @@ public class AuthenticatorController {
     private void initialize() {
         isViewable = false;
         validatorLabel.setVisible(false);
+        validatorLabel.setManaged(false);
 
         authTextField.setOnMouseClicked(event -> {
             validatorLabel.setVisible(false);
+            validatorLabel.setManaged(false);
         });
 
         authTextField.setOnKeyPressed(event -> {
@@ -51,6 +53,10 @@ public class AuthenticatorController {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+            }
+            else {
+                validatorLabel.setVisible(false);
+                validatorLabel.setManaged(false);
             }
         });
 
@@ -82,10 +88,9 @@ public class AuthenticatorController {
     }
 
     /**
-     * Switches to the starting menu with the use of the enter key
-     * @param event when the user presses enter
+     * Switches to the starting menu with the use of the {@code ENTER} key
+     * @param event when the user presses ENTER
      */
-    @FXML
     private void switchToMenuScene(KeyEvent event) throws Exception {
         switchToMenuScene((Node) event.getSource());
     }
@@ -111,6 +116,7 @@ public class AuthenticatorController {
         }
         else {
             validatorLabel.setVisible(true);
+            validatorLabel.setManaged(true);
         }
     }
 
@@ -120,6 +126,7 @@ public class AuthenticatorController {
         viewPassword();
     }
 
+    @FXML
     private void viewPassword() {
         authTextField.setVisible(!isViewable);
         viewAuthField.setVisible(isViewable);

@@ -11,8 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.Password_Generator.Configurator;
-import org.Password_Generator.StrengthChecker;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -53,14 +51,17 @@ public class SignUpController {
     @FXML
     private Button viewPassword1;
 
-    boolean isViewable;
+    boolean isMasterKeyViewable;
+    boolean isConfirmKeyViewable;
+
     @FXML
     public void initialize() {
-        isViewable = false;
+        isMasterKeyViewable = false;
+        isConfirmKeyViewable =false;
 
         // Initialized visible objects
         masterPasswordView.setVisible(false);
-        confirmPasswordField.setVisible(false);
+        confirmPasswordView.setVisible(false);
         signInWarning.setVisible(false);
         signInWarning.setManaged(false);
 
@@ -130,20 +131,42 @@ public class SignUpController {
     }
 
     @FXML
-    void toggleView() {
-        isViewable = !isViewable;
-        viewPassword();
+    void toggleMasterPassView() {
+        isMasterKeyViewable = !isMasterKeyViewable;
+        viewMasterPassword();
     }
 
-    private void viewPassword() {
-        masterPasswordField.setVisible(!isViewable);
-        confirmPasswordField.setVisible(!isViewable);
-        masterPasswordView.setVisible(isViewable);
-        confirmPasswordView.setVisible(isViewable);
+    private void viewMasterPassword() {
+        masterPasswordField.setVisible(!isMasterKeyViewable);
+        masterPasswordView.setVisible(isMasterKeyViewable);
+    }
+
+    @FXML
+    void toggleConfirmPassView() {
+        isConfirmKeyViewable = !isConfirmKeyViewable;
+        viewConfirmPassword();
+    }
+
+    private void viewConfirmPassword() {
+        confirmPasswordField.setVisible(!isConfirmKeyViewable);
+        confirmPasswordView.setVisible(isConfirmKeyViewable);
+    }
+
+    private boolean passwordsMatch() {
+        String passwordConfirmationText = confirmPasswordField.getText();
+        return getMasterPass().equals(passwordConfirmationText);
     }
 
     // helper getter methods
     private String getHashedMasterPass() { return BCrypt.hashpw(masterPasswordField.getText(), BCrypt.gensalt());}
     private String getMasterPass() { return masterPasswordField.getText();}
-    public void setMasterKey(ActionEvent event) throws SQLException, IOException {insertIntoDB(event);}
+
+    public void setMasterKey(ActionEvent event) throws IOException {
+        if (passwordsMatch()) insertIntoDB(event);
+        else {
+            signInWarning.setText("New password doesn't match!");
+            signInWarning.setVisible(true);
+            signInWarning.setManaged(true);
+        }
+    }
 }

@@ -26,8 +26,6 @@ import java.sql.SQLException;
 
 public class BuilderController {
     @FXML
-    private HBox manualEntryButton;
-    @FXML
     private Button copyButton;
     @FXML
     private Button passwordGenerate;
@@ -68,14 +66,14 @@ public class BuilderController {
             passLength.setText("8");
 
             //prevents users from entering anything other than numbers.
-            passLength.textProperty().addListener((_, oldValue, newValue) -> {
+            passLength.textProperty().addListener((obs, oldValue, newValue) -> {
                 if (!newValue.matches("\\d*")) { //if the new value does not match any possible digit through regex checking
                     passLength.setText(oldValue); //the passLength would be set back to the old value
                 }
             });
         }
 
-        passwordLengthSlider.valueProperty().addListener((_, _, newValue) -> {
+        passwordLengthSlider.valueProperty().addListener((obs, oldVal, newValue) -> {
             if (newValue != null) {
                 passLength.setText(String.valueOf(newValue.intValue()));
             }

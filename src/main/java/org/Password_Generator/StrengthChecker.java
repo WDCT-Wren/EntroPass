@@ -68,12 +68,15 @@ public class StrengthChecker {
 
         double normalizedStrength = getNormalizedValue(initialEntropy);
 
-        return switch (normalizedStrength) {
-            case double v when v >= VERY_STRONG_THRESHOLD -> "VERY STRONG";
-            case double v when v >= STRONG_THRESHOLD -> "STRONG";
-            case double v when v >= MEDIUM_THRESHOLD -> "MEDIUM";
-            default -> "WEAK";
-        };
+        if (normalizedStrength >= VERY_STRONG_THRESHOLD) {
+            return "VERY STRONG";
+        } else if (normalizedStrength >= STRONG_THRESHOLD) {
+            return "STRONG";
+        } else if (normalizedStrength >= MEDIUM_THRESHOLD) {
+            return "MEDIUM";
+        } else {
+            return "WEAK";
+        }
     }
 
     /**

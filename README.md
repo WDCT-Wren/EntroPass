@@ -40,7 +40,7 @@ This project is designed as a real desktop application, not a demo screen flow. 
 
 | Layer | Technology |
 |---|---|
-| Language | Java 25 (preview features enabled) |
+| Language | Java 21 (LTS) |
 | UI | JavaFX 25 (FXML + CSS scene architecture) |
 | Build | Maven 3.6+ |
 | Database | SQLite (`sqlite-jdbc 3.51.1.0`) |
@@ -98,7 +98,7 @@ This project is designed as a real desktop application, not a demo screen flow. 
 
 ### Prerequisites
 
-- JDK 25+
+- JDK 21+ (LTS)
 - Maven 3.6+
 
 ### Run Commands
@@ -110,9 +110,9 @@ mvn javafx:run
 
 ### Build Note
 
-The previous source/preview mismatch (`source=24` with `--enable-preview`, which requires release 25) has been resolved. `pom.xml` now consistently targets Java 25 with preview features enabled. The build should compile and run cleanly provided JDK 25 is installed.
+The project targets Java 21 LTS and uses no preview features, ensuring broad compatibility. The build should compile cleanly with JDK 21 or newer.
 
-If you see `invalid source release` errors, verify your active JDK version:
+If you see version mismatch errors, verify your active JDK:
 
 ```bash
 java -version

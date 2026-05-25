@@ -51,7 +51,7 @@
                               <Font name="Segoe UI Bold" size="25.0" />
                            </font>
                         </Label>
-                        <Label text="Create cryptogrpahically secure, unique keys for every new account easily" textFill="#e4e4e4" wrapText="true">
+                        <Label text="Create cryptographically secure, unique keys for every new account easily" textFill="#e4e4e4" wrapText="true">
                            <font>
                               <Font name="Segoe UI Semibold" size="13.0" />
                            </font>

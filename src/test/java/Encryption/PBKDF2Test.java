@@ -3,7 +3,6 @@ package Encryption;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;
-import java.util.Arrays;
 import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.*;

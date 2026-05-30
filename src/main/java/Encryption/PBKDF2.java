@@ -19,6 +19,7 @@ public class PBKDF2 {
      * @throws Exception if the key derivation fails
      */
     public static SecretKey deriveKey(char[] masterPassword, byte[] salt) throws Exception {
+        byte[] keyBytes;
         PBEKeySpec spec = new PBEKeySpec(
                 masterPassword,
                 salt,
@@ -28,7 +29,7 @@ public class PBKDF2 {
 
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-            byte[] keyBytes = factory.generateSecret(spec).getEncoded();
+            keyBytes = factory.generateSecret(spec).getEncoded();
         }
         finally {
             spec.clearPassword(); //wipe the password from memory

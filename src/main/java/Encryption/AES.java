@@ -16,7 +16,7 @@ public class AES {
     private static final int T_LEN = 128;
 
     /**
-     * Sets the key for decryption derived from the {@link PDKF2} class.
+     * Sets the key for decryption derived from the {@link PBKDF2} class.
      * @param key the key for decryption
      */
     public static void setKey(SecretKey key) {

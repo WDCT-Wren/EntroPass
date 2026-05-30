@@ -1,11 +1,10 @@
 package GUI.Controllers;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import Database.MasterDAO;
 import Encryption.AES;
-import Encryption.PDKF2;
+import Encryption.PBKDF2;
 import GUI.Utils.SceneUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -107,7 +106,7 @@ public class AuthenticatorController {
         char[] masterPassword = authTextField.getText().toCharArray();
 
         if (validLogin) {
-            SecretKey key = PDKF2.deriveKey(masterPassword, MasterDAO.retrieveSaltByte());
+            SecretKey key = PBKDF2.deriveKey(masterPassword, MasterDAO.retrieveSaltByte());
 
             Stage stage = (Stage) source.getScene().getWindow();
             SceneUtils.getScene(stage, "StartingMenu.fxml");

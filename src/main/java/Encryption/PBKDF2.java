@@ -8,9 +8,9 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 /**
- * PDKF2 implementation used to derive the AES key from the master password.
+ * PBKDF2 implementation used to derive the AES key from the master password.
  */
-public class PDKF2 {
+public class PBKDF2 {
     /**
      * Derives the AES key from the master password and its stored salt.
      * @param masterPassword master password as a char array

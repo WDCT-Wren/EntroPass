@@ -2,7 +2,7 @@ package GUI.Controllers;
 
 import Database.DatabaseOperations;
 import Database.MasterDAO;
-import Encryption.PDKF2;
+import Encryption.PBKDF2;
 import GUI.Utils.SceneUtils;
 import GUI.Utils.StrengthUIHelper;
 import javafx.beans.value.ChangeListener;
@@ -115,7 +115,7 @@ public class SignUpController {
             }
 
             // Perform database operations safely inside the try block
-            String salt = PDKF2.getSalt();
+            String salt = PBKDF2.getSalt();
             DatabaseOperations.insertToMasterDB(getHashedMasterPass(), salt);
 
             // Update UI upon successful database insert

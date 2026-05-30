@@ -15,7 +15,7 @@ class AESTest {
     @BeforeEach
     void setUp() throws Exception {
         sharedPayload = "password123!";
-        sharedKey = PDKF2.deriveKey(
+        sharedKey = PBKDF2.deriveKey(
                 "masterPassword123!".toCharArray(),
                 "C0X75bHo3wiyUgpGO0aCEw==".getBytes(
                 ));

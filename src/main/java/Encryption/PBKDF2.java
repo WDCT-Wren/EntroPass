@@ -26,10 +26,13 @@ public class PBKDF2 {
                 128 // key length
         );
 
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        byte[] keyBytes = factory.generateSecret(spec).getEncoded();
-
-        spec.clearPassword(); //wipe the password from memory
+        try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            byte[] keyBytes = factory.generateSecret(spec).getEncoded();
+        }
+        finally {
+            spec.clearPassword(); //wipe the password from memory
+        }
         return new SecretKeySpec(keyBytes, "AES");
     }
 

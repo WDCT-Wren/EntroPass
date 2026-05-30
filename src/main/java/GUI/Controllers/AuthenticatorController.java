@@ -1,6 +1,7 @@
 package GUI.Controllers;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import Database.MasterDAO;
 import Encryption.AES;
@@ -102,16 +103,22 @@ public class AuthenticatorController {
      * @throws Exception if key derivation, salt retrieval, or scene loading fails
      */
     private void switchToMenuScene(Node source) throws Exception {
-        boolean validLogin = BCrypt.checkpw(authTextField.getText(), password);
-        char[] masterPassword = authTextField.getText().toCharArray();
+        String input = authTextField.getText();
+        boolean validLogin = BCrypt.checkpw(input, password);
+        char[] masterPassword = input.toCharArray();
 
         if (validLogin) {
-            SecretKey key = PBKDF2.deriveKey(masterPassword, MasterDAO.retrieveSaltByte());
+            try {
+                SecretKey key = PBKDF2.deriveKey(masterPassword, MasterDAO.retrieveSaltByte());
 
-            Stage stage = (Stage) source.getScene().getWindow();
-            SceneUtils.getScene(stage, "StartingMenu.fxml");
+                Stage stage = (Stage) source.getScene().getWindow();
+                SceneUtils.getScene(stage, "StartingMenu.fxml");
 
-            AES.setKey(key); //inserts the key to the class.
+                AES.setKey(key); // inserts the key to the class.
+            }
+            finally {
+                Arrays.fill(masterPassword, '\0'); // zeroes out the master password in memory
+            }
         }
         else {
             validatorLabel.setVisible(true);

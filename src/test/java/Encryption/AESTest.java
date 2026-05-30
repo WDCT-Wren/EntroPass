@@ -6,19 +6,21 @@ import org.junit.jupiter.api.Test;
 import javax.crypto.SecretKey;
 
 import java.util.Arrays;
+import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AESTest {
     private SecretKey sharedKey;
     private String sharedPayload;
+
     @BeforeEach
     void setUp() throws Exception {
+        byte[] salt = Base64.getDecoder().decode(PBKDF2.getSalt());
         sharedPayload = "password123!";
         sharedKey = PBKDF2.deriveKey(
-                "masterPassword123!".toCharArray(),
-                "C0X75bHo3wiyUgpGO0aCEw==".getBytes(
-                ));
+                "masterPassword123!".toCharArray(), salt
+                );
     }
 
     /**
@@ -33,23 +35,25 @@ class AESTest {
         AES.setKey(sharedKey);
         String originalText = sharedPayload;
 
-        String encryptedPassword = AES.encrypt(originalText);
+        char[] encrypted1 = AES.encrypt(originalText).toCharArray();
+        char[] encrypted2 = AES.encrypt(originalText).toCharArray();
 
-        assertNotNull(encryptedPassword);
+        assertNotNull(encrypted1);
         assertFalse(Arrays.equals(
-                originalText.toCharArray(), encryptedPassword.toCharArray()),
+                originalText.toCharArray(), encrypted1),
                 "Encrypted text should not equal to the original text!");
+        assertFalse(Arrays.equals(encrypted1, encrypted2),
+                "Each encryption should make a completely different ciphertext!");
     }
 
     @Test
     void decryptTest() {
         AES.setKey(sharedKey);
-        String originalText = sharedPayload;
 
-        String encryptedPassword = AES.encrypt(originalText);
-        String decryptedPassword = AES.decrypt(encryptedPassword);
+        String encrypted = AES.encrypt(sharedPayload);
+        String decrypted = AES.decrypt(encrypted);
 
-        assertNotNull(decryptedPassword);
-        assertEquals(originalText, decryptedPassword, "Decrypted password must match the original text!");
+        assertNotNull(decrypted);
+        assertEquals(sharedPayload, decrypted, "Decrypted password must match the original text!");
     }
 }

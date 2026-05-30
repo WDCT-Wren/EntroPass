@@ -92,7 +92,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Label alignment="CENTER" prefHeight="59.0" prefWidth="546.0" text="🗹 E2E ENCRYPTED         ·        🗹 ENCRYPTED WITH PDKF2 AND AES-256 GCM" textAlignment="CENTER" textFill="#797474" wrapText="true">
+            <Label alignment="CENTER" prefHeight="59.0" prefWidth="546.0" text="🗹 E2E ENCRYPTED         ·        🗹 ENCRYPTED WITH PBKDF2 AND AES-256 GCM" textAlignment="CENTER" textFill="#797474" wrapText="true">
                <font>
                   <Font name="Segoe UI Semibold" size="12.0" />
                </font>

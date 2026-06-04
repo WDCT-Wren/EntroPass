@@ -16,7 +16,7 @@ class PBKDF2Test {
         SecretKey key1 = PBKDF2.deriveKey("Password123!".toCharArray(), salt);
         SecretKey key2 = PBKDF2.deriveKey("Password123!".toCharArray(), salt);
 
-        assertNotEquals(key1, key2,
+        assertEquals(key1, key2,
                 "Both keys generated with the same salt and password should match!"
         );
     }

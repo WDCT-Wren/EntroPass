@@ -15,6 +15,10 @@ import java.io.IOException;
 public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
+        stage.setWidth(1230);
+        stage.setHeight(900);
+        stage.setResizable(true);
+
         //Load fonts in the application
         Font.loadFont(getClass().getResourceAsStream("org/Assets/Fonts/SpaceGrotesk-Regular.ttf"), 16);
         Font.loadFont(getClass().getResourceAsStream("org/Assets/Fonts/SpaceGrotesk-Bold.ttf"), 16);

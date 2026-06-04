@@ -10,6 +10,7 @@
 
 .side-bar {
     -fx-background-color: -fx-Surface ;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
 }
 
 .side-bar-button {
@@ -40,7 +41,13 @@
     -fx-background-color:-fx-Background ;
     -fx-padding: 40;
     -fx-spacing: 25;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+    -fx-background-insets: 0;
+}
+
+.generator-settings {
+    -fx-background-color:-fx-Background ;
+    -fx-padding: 40 40 40 0;
+    -fx-spacing: 25;
     -fx-background-insets: 0;
 }
 

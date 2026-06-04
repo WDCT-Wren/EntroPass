@@ -11,6 +11,9 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="901.0" prefWidth="1230.0" stylesheets="@../Stylesheets/StartingMenuStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MenuController">
    <center>
       <VBox alignment="CENTER" prefHeight="901.0" prefWidth="727.0" spacing="20.0" styleClass="Main-Pane" stylesheets="@../Stylesheets/StartingMenuStyleSheet.css" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="20" right="20" top="20" bottom="20" />
+         </padding>
          <children>
             <TextFlow textAlignment="CENTER">
                <children>

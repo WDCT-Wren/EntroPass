@@ -12,6 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -43,7 +44,10 @@
             </Label>
          </children>
       </VBox>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="431.0" styleClass="auth-box" stylesheets="@../Stylesheets/AuthStyleSheet.css">
+      <HBox alignment="CENTER" spacing="0">
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="431.0" styleClass="auth-box" stylesheets="@../Stylesheets/AuthStyleSheet.css">
          <center>
             <VBox alignment="CENTER" prefWidth="431.0" spacing="20.0" BorderPane.alignment="CENTER">
                <padding>
@@ -135,7 +139,10 @@
                </children>
             </VBox>
          </center>
-      </BorderPane>
+            </BorderPane>
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
    </children>
    <styleClass>
       <String fx:value="root-pane" />

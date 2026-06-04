@@ -29,11 +29,18 @@ public class SceneUtils {
      */
     @FXML
     public static void getScene(Stage stage, String fxmlFile) throws IOException {
+        double width = stage.getWidth();
+        double height = stage.getHeight();
+
         String fxmlSourceRoot = "/org/password_generator_gui/Scenes/" + fxmlFile;
 
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource(fxmlSourceRoot));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);stage.setTitle("EntroPass 0.67");
+        Scene scene = new Scene(root);
+
+        stage.setWidth(width);
+        stage.setHeight(height);
+        stage.setTitle("EntroPass 0.67");
         stage.setScene(scene);
         stage.show();
     }

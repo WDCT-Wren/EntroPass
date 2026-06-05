@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="901.0" prefWidth="1230.0" spacing="24.0" stylesheets="@../Stylesheets/AuthStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AuthenticatorController">
+<VBox fx:id="root" alignment="CENTER" prefHeight="901.0" prefWidth="1230.0" spacing="24.0" stylesheets="@../Stylesheets/AuthStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.AuthenticatorController">
    <children>
       <VBox alignment="CENTER" spacing="8.0">
          <children>
@@ -48,7 +48,7 @@
          <children>
             <Region HBox.hgrow="ALWAYS" />
             <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="431.0" styleClass="auth-box" stylesheets="@../Stylesheets/AuthStyleSheet.css">
-         <center>
+               <bottom>
             <VBox alignment="CENTER" prefWidth="431.0" spacing="20.0" BorderPane.alignment="CENTER">
                <padding>
                   <Insets bottom="30.0" left="29.0" right="29.0" top="30.0" />
@@ -75,8 +75,8 @@
                            <children>
                               <StackPane prefWidth="420.0">
                                  <children>
-                                    <TextField fx:id="viewAuthField" prefHeight="25.0" prefWidth="431.0" styleClass="root-textfield" visible="false" />
-                                    <PasswordField fx:id="authTextField" prefHeight="54.0" prefWidth="245.0" styleClass="root-textfield" StackPane.alignment="CENTER_LEFT">
+                                    <TextField fx:id="viewAuthField" onAction="#switchToMenuScene" prefHeight="25.0" prefWidth="431.0" styleClass="root-textfield" visible="false" />
+                                    <PasswordField fx:id="authTextField" onAction="#switchToMenuScene" prefHeight="54.0" prefWidth="245.0" styleClass="root-textfield" StackPane.alignment="CENTER_LEFT">
                                        <font>
                                           <Font name="Segoe UI Semibold" size="16.0" />
                                        </font>
@@ -102,11 +102,6 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <Label fx:id="validatorLabel" text="Invalid Password!" textFill="#ff0606" wrapText="true">
-                     <font>
-                        <Font name="Segoe UI Italic" size="12.0" />
-                     </font>
-                  </Label>
                   <Button fx:id="UnlockButton" mnemonicParsing="false" onAction="#switchToMenuScene" prefHeight="59.0" prefWidth="373.0" styleClass="unlock-button" text="Unlock Vault">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
@@ -136,9 +131,14 @@
                         </Button>
                      </children>
                   </HBox>
+                  <Label fx:id="validatorLabel" text="Invalid Password!" textFill="#ff0606" wrapText="true">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </VBox>
-         </center>
+               </bottom>
             </BorderPane>
             <Region HBox.hgrow="ALWAYS" />
          </children>

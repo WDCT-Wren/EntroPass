@@ -16,12 +16,16 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.crypto.SecretKey;
 
 public class AuthenticatorController {
+
+    @FXML
+    private VBox root;
 
     @FXML
     private PasswordField authTextField;
@@ -46,24 +50,17 @@ public class AuthenticatorController {
             validatorLabel.setManaged(false);
         });
 
-        authTextField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                try {
-                    switchToMenuScene(event);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else {
-                validatorLabel.setVisible(false);
-                validatorLabel.setManaged(false);
-            }
-        });
-
         //Initializes listener to sync textfield and password field of password.
         ChangeListener<String> passwordSync = SceneUtils.synchronizePasswordFields(authTextField, viewAuthField);
         authTextField.textProperty().addListener(passwordSync);
-        authTextField.textProperty().addListener(passwordSync);
+        viewAuthField.textProperty().addListener(passwordSync);
+
+        // Initialize a single listener to hide the warnings
+        ChangeListener<String> clearWarning = (observable, oldValue, newValue) -> {
+            validatorLabel.setVisible(false);
+            validatorLabel.setManaged(false);
+        };
+        authTextField.textProperty().addListener(clearWarning);
     }
 
     @FXML

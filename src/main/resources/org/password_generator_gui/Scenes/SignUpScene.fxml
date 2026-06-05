@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="901.0" prefWidth="1230.0" spacing="24.0" stylesheets="@../Stylesheets/AuthStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.SignUpController">
+<VBox fx:id="root" alignment="CENTER" prefHeight="901.0" prefWidth="1230.0" spacing="24.0" stylesheets="@../Stylesheets/AuthStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.SignUpController">
    <children>
       <VBox alignment="CENTER" spacing="8.0">
          <children>
@@ -75,8 +75,8 @@
                            <children>
                               <StackPane prefHeight="54.0" prefWidth="420.0">
                                  <children>
-                                    <TextField fx:id="masterPasswordView" prefHeight="25.0" prefWidth="431.0" styleClass="root-textfield" visible="false" />
-                                    <PasswordField fx:id="masterPasswordField" prefHeight="54.0" prefWidth="315.0" styleClass="root-textfield" StackPane.alignment="CENTER_LEFT">
+                                    <TextField fx:id="masterPasswordView" onAction="#setMasterKey" prefHeight="25.0" prefWidth="373.0" styleClass="root-textfield" visible="false" />
+                                    <PasswordField fx:id="masterPasswordField" onAction="#setMasterKey" prefHeight="54.0" prefWidth="373.0" styleClass="root-textfield" StackPane.alignment="CENTER_LEFT">
                                        <font>
                                           <Font name="Segoe UI Semibold" size="16.0" />
                                        </font>
@@ -113,8 +113,8 @@
                            <children>
                               <StackPane prefWidth="420.0">
                                  <children>
-                                    <TextField fx:id="confirmPasswordView" prefHeight="25.0" prefWidth="431.0" styleClass="root-textfield" visible="false" />
-                                    <PasswordField fx:id="confirmPasswordField" prefHeight="54.0" prefWidth="245.0" styleClass="root-textfield" StackPane.alignment="CENTER_LEFT">
+                                    <TextField fx:id="confirmPasswordView" onAction="#setMasterKey" prefHeight="25.0" prefWidth="373.0" styleClass="root-textfield" visible="false" />
+                                    <PasswordField fx:id="confirmPasswordField" onAction="#setMasterKey" prefHeight="54.0" prefWidth="373.0" styleClass="root-textfield" StackPane.alignment="CENTER_LEFT">
                                        <font>
                                           <Font name="Segoe UI Semibold" size="16.0" />
                                        </font>
@@ -177,7 +177,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Label fx:id="signInWarning" alignment="CENTER" contentDisplay="CENTER" prefWidth="373.0" text="You already have an account!" textAlignment="RIGHT" textFill="#ff0606" wrapText="true">
+                  <Label fx:id="inputWarning" alignment="CENTER" contentDisplay="CENTER" prefWidth="373.0" text="You already have an account!" textAlignment="RIGHT" textFill="#ff0606" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>

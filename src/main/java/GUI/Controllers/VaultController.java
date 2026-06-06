@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class VaultController implements Initializable {
@@ -88,24 +89,32 @@ public class VaultController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //populate the listview with all the assets initially
-        populateList();
         notes.setWrapText(true);
 
+        userRepoList.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        populateDetail(newValue);
+                        detailContainer.setVisible(true);
+                        emptyContainer.setVisible(false);
+                    }
+                    else if (userRepoList.getItems().isEmpty()) {
+                        detailContainer.setVisible(false);
+                        emptyContainer.setVisible(true);
+                    }
+                })
+        );
+
         // Initializes the listener for the search function.
-        searchField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                try {
-                    if (searchField.getText().isEmpty()) {
-                        populateList();
-                    }
-                    else {
-                        populateSearchedList();
-                    }
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        ChangeListener<String> search = (observable, oldValue, newValue) -> {
+            if (newValue.isEmpty())  {
+                populateList();
             }
-        });
+            else {
+                populateSearchedList(newValue);
+            }
+        };
+        searchField.textProperty().addListener(search);
 
         //Initialize listener for real-time password strength feedback
         ChangeListener<String> manualStrengthListener = StrengthUIHelper.manualStrengthListener(strengthIndicator, passwordStrength);
@@ -128,6 +137,7 @@ public class VaultController implements Initializable {
         userRepoList.getSelectionModel().selectFirst();
 
         itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
+        populateList();
     }
 
     @FXML
@@ -147,37 +157,58 @@ public class VaultController implements Initializable {
         userRepoList.setCellFactory(lv -> new VaultEntryCell());
         userRepoList.getItems().addAll(userDAO.loadRepoData());
 
-        userRepoList.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        populateDetail(newValue);
-                        detailContainer.setVisible(true);
-                        emptyContainer.setVisible(false);
-                    }
-                    else {
-                        detailContainer.setVisible(false);
-                        emptyContainer.setVisible(true);
-                    }
-                })
-        );
+        if (!userRepoList.getItems().isEmpty()) {
+            userRepoList.getSelectionModel().selectFirst(); // Select the first entry in the list
+        }
+
+        itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
     }
 
-    private void populateSearchedList() throws SQLException {
+    /**
+     * Method that populates the list in the sidebar based on what the user searched for.
+     * @param searched what the user searched for
+     * @throws SQLException what happens when the SQL action does not work
+     */
+    private void populateSearchedList(String searched) {
         userRepoList.getItems().clear();
-        String searched = searchField.getText();
-        userRepoList.setCellFactory(lv -> new VaultEntryCell());
-        userRepoList.getItems().addAll(userDAO.loadRepoData(searched));
+        String query = searched.trim();
 
-        userRepoList.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        populateDetail(newValue);
+        // 1. Fetch all encrypted records from the DB
+        List<User> allEntries = userDAO.loadRepoData();
+
+        // 2. Filter them in-memory by decrypting and checking if they match the query
+        List<User> filteredEntries = allEntries.stream()
+                .filter(user -> {
+                    try {
+                        String decryptedService = AES.decrypt(user.getServiceName()).toLowerCase();
+                        String decryptedUser = AES.decrypt(user.getUserName()).toLowerCase();
+
+                        return decryptedService.contains(query) || decryptedUser.contains(query);
+                    } catch (Exception e) {
+                        return false; // Skip records that fail decryption gracefully
                     }
                 })
-        );
+                .toList();
+
+        // 3. Update the UI list view
+        userRepoList.setCellFactory(lv -> new VaultEntryCell());
+        userRepoList.getItems().addAll(filteredEntries);
+
+        if (!userRepoList.getItems().isEmpty()) {
+            userRepoList.getSelectionModel().selectFirst();
+        }
+    }
+
+    @FXML
+    private void clearSearch() {
+        searchField.clear();
     }
 
     private void populateDetail(User user) {
+        if (user == null) {
+            return; // Early return if user is null
+        }
+
         try {
             serviceName.setText(AES.decrypt(user.getServiceName()));
             userName.setText(AES.decrypt(user.getUserName()));
@@ -186,7 +217,6 @@ public class VaultController implements Initializable {
         } catch (RuntimeException e) {
             password.setText("[Legacy Password - Please re-enter password]");
             viewablePassword.setText("[Legacy Password - Please re-enter password]");
-            password.setStyle("-fx-text-fill: #FF6B6B;");
         }
 
         notes.setText(AES.decrypt(user.getNotes()));

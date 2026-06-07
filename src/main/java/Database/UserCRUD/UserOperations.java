@@ -37,7 +37,7 @@ public class UserOperations {
     /**
      * Method used to make an insertion query that inputs the password credentials to the database.
      */
-    public void insertPassword() throws SQLException {
+    public void insertEntry() throws SQLException {
         //Establishes a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();
 
@@ -61,7 +61,7 @@ public class UserOperations {
      * Deletes a certain entry of user credentials in the database.
      * @param id the id of the entry to be deleted as an integer
      */
-    public static void deletePassword(int id) {
+    public static void deleteEntry(int id) {
         // Establish a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();
 
@@ -82,7 +82,7 @@ public class UserOperations {
      * which also updates the created_date column, essentially making it
      * {@code Last Updated}
      */
-    public void updatePassword(int id) {
+    public void updateEntry(int id) {
         // Estabblish a connection first
         Connection connection = DatabaseManager.getInstance().getConnection();
 

@@ -13,22 +13,18 @@ import java.io.IOException;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class VaultController implements Initializable {
+public class VaultController {
     @FXML
     private TextField searchField;
 
@@ -86,8 +82,7 @@ public class VaultController implements Initializable {
     private boolean isEditMode;
     private boolean isViewable;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize() {
         //populate the listview with all the assets initially
         notes.setWrapText(true);
 
@@ -136,7 +131,6 @@ public class VaultController implements Initializable {
 
         userRepoList.getSelectionModel().selectFirst();
 
-        itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
         populateList();
     }
 
@@ -154,7 +148,7 @@ public class VaultController implements Initializable {
 
     private void populateList() {
         userRepoList.getItems().clear();
-        userRepoList.setCellFactory(lv -> new VaultEntryCell());
+        userRepoList.setCellFactory(lv -> {return new VaultEntryCell();});
         userRepoList.getItems().addAll(userDAO.loadRepoData());
 
         if (!userRepoList.getItems().isEmpty()) {
@@ -171,13 +165,27 @@ public class VaultController implements Initializable {
      */
     private void populateSearchedList(String searched) {
         userRepoList.getItems().clear();
-        String query = searched.trim();
+        List <User>filteredEntries = getFilteredEntries(searched);
+        String listCount = String.valueOf(filteredEntries.size());
 
-        // 1. Fetch all encrypted records from the DB
+        // Update the UI list view
+        userRepoList.setCellFactory(lv -> {return new VaultEntryCell();});
+        userRepoList.getItems().addAll(filteredEntries);
+
+        if (!userRepoList.getItems().isEmpty()) {
+            userRepoList.getSelectionModel().selectFirst();
+        }
+        itemAmountLabel.setText(listCount);
+    }
+
+    private List<User> getFilteredEntries(String searched) {
+        String query = searched.toLowerCase().trim();
+
+        // Fetch all encrypted records from the DB
         List<User> allEntries = userDAO.loadRepoData();
 
-        // 2. Filter them in-memory by decrypting and checking if they match the query
-        List<User> filteredEntries = allEntries.stream()
+        // Filter in-memory by decrypting and checking if they match the query
+        return allEntries.stream()
                 .filter(user -> {
                     try {
                         String decryptedService = AES.decrypt(user.getServiceName()).toLowerCase();
@@ -189,14 +197,6 @@ public class VaultController implements Initializable {
                     }
                 })
                 .toList();
-
-        // 3. Update the UI list view
-        userRepoList.setCellFactory(lv -> new VaultEntryCell());
-        userRepoList.getItems().addAll(filteredEntries);
-
-        if (!userRepoList.getItems().isEmpty()) {
-            userRepoList.getSelectionModel().selectFirst();
-        }
     }
 
     @FXML
@@ -245,7 +245,7 @@ public class VaultController implements Initializable {
     private void deleteEntry() throws SQLException, IOException {
         User user = userRepoList.getSelectionModel().getSelectedItem();
         int id = user.getId();
-        UserOperations.deletePassword(id);
+        UserOperations.deleteEntry(id);
 
         populateDetail(user);
         populateList();
@@ -328,7 +328,7 @@ public class VaultController implements Initializable {
                 getNotes());
 
         // Saves the new changes to the database
-        user.updatePassword(id);
+        user.updateEntry(id);
         itemAmountLabel.setText(String.valueOf(userDAO.getRowCount()));
         populateDetail(userRepoList.getSelectionModel().getSelectedItem());
         populateList();
@@ -361,6 +361,7 @@ public class VaultController implements Initializable {
         viewPassword();
     }
 
+    @FXML
     private void viewPassword() {
         password.setVisible(!isViewable);
         viewablePassword.setVisible(isViewable);

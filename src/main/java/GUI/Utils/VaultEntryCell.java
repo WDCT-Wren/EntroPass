@@ -18,7 +18,7 @@ public class VaultEntryCell extends ListCell<User> {
 
         // Layout-only settings are fine in Java
         layout.setSpacing(2);
-        layout.setPadding(new Insets(8, 12, 8, 12));
+        layout.setPadding(new Insets(8, 8, 8, 8));
         VBox.setMargin(userName, new Insets(0, 0, 0, 12));
     }
 

@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -173,7 +172,7 @@ public class BuilderController {
             passwordText.setPromptText("This field is required!");
         }
         if (!invalidUserName && !invalidServiceName && !invalidPassword) {
-            newRepo.insertPassword();
+            newRepo.insertEntry();
             passwordText.setStyle("-fx-font-size: 18");
             passwordText.setText("Password Saved Successfully!");
         }
@@ -228,7 +227,7 @@ public class BuilderController {
     private String getUsername() {return AES.encrypt(usernameField.getText());}
     private String getServiceName() {return AES.encrypt(serviceNameField.getText());}
     private String getNote() {
-        if (noteField.getText().isEmpty()) return "";
+        if (noteField.getText().isEmpty()) return AES.encrypt("");
         return AES.encrypt(noteField.getText());
     }
     private String getEncryptedPassword() {return AES.encrypt(passwordText.getText());}

@@ -34,7 +34,7 @@ public class AES {
             byte[] iv = encryptionCipher.getIV();
             encryptionByte = encryptionCipher.doFinal(passwordInByte);
             
-            // Combine IV and encrypted password to prevent duplicate cyphertext if encrypting the same password twice.
+            // Combine IV and encrypted password to prevent duplicate ciphertext if encrypting the same password twice.
             byte[] combined = new byte[iv.length + encryptionByte.length];
 
             System.arraycopy(iv, 0, combined, 0, iv.length); //inserts the iv bytes to the combined array

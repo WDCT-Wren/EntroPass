@@ -153,20 +153,11 @@ CREATE TABLE IF NOT EXISTS vault (
 
 ### Known Limitations
 
-**Master password memory residency**
-JavaFX's `TextField` returns input as an immutable `String` object before it
-can be converted to a `char[]` for zeroing. This means the master password
-briefly exists as a plaintext String in the JVM heap during authentication,
-with its lifetime controlled by the garbage collector rather than explicitly
-wiped. The char array derived from it is zeroed immediately after key
-derivation via `Arrays.fill()`, and `PBEKeySpec.clearPassword()` is called
-after PBKDF2 derivation. The residual String exposure is a known limitation
-of the JavaFX TextField API and represents an acceptable risk for a local
-desktop application where physical/remote access to the process memory would
-already indicate a compromised machine.
+**Master password memory residency** JavaFX's `TextField` returns input as an immutable `String` object before it can be converted to a `char[]` for zeroing. This means the master password briefly exists as a plaintext String in the JVM heap during authentication, with its lifetime controlled by the garbage collector rather than explicitly wiped. The char array derived from it is zeroed immediately after key derivation via `Arrays.fill()`, and `PBEKeySpec.clearPassword()` is called after PBKDF2 derivation. The residual String exposure is a known limitation of the JavaFX TextField API and represents an acceptable risk for a local desktop application where physical/remote access to the process memory would already indicate a compromised machine.
+
 ---
 
-## Project Structure
+## Project Structure 
 
 ```text
 EntroPass/

@@ -10,6 +10,7 @@ import GUI.Utils.VaultEntryCell;
 
 import java.io.IOException;
 
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -90,6 +92,7 @@ public class VaultController {
                 ((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         populateDetail(newValue);
+                        if (isEditMode) toggleEditEntry();
                         detailContainer.setVisible(true);
                         emptyContainer.setVisible(false);
                     }
@@ -135,6 +138,16 @@ public class VaultController {
     }
 
     @FXML
+    private void copyPassword() {
+        copyText(copyPassword, password);
+    }
+
+    @FXML
+    private void copyUsername() {
+        copyText(copyUsername, userName);
+    }
+
+    @FXML
     public void switchToMenuScene(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         SceneUtils.getScene(stage, "StartingMenu.fxml");
@@ -144,6 +157,10 @@ public class VaultController {
     void switchToPasswordBuilder(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         SceneUtils.getScene(stage, "PasswordBuilder.fxml");
+    }
+    @FXML
+    private void clearSearch() {
+        searchField.clear();
     }
 
     private void populateList() {
@@ -199,10 +216,6 @@ public class VaultController {
                 .toList();
     }
 
-    @FXML
-    private void clearSearch() {
-        searchField.clear();
-    }
 
     private void populateDetail(User user) {
         if (user == null) {
@@ -223,23 +236,24 @@ public class VaultController {
         createdDate.setText(user.getCreatedDate());
     }
 
-
-    @FXML
-    private void copyPassword() {
+    /**
+     * Helper method that copies the text in a given textfield to the clipboard.
+     * @param copyUsername The button for the action
+     * @param userName the textfield that's being extracted to the clipboard
+     */
+    private void copyText(Button copyUsername, TextField userName) {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
-
-        content.putString(password.getText());
-        clipboard.setContent(content);
-    }
-
-    @FXML
-    private void copyUsername() {
-        Clipboard clipboard = Clipboard.getSystemClipboard();
-        ClipboardContent content = new ClipboardContent();
+        copyUsername.setText("✔");
 
         content.putString(userName.getText());
         clipboard.setContent(content);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> {
+            copyUsername.setText("📋");
+        });
+        delay.play();
     }
 
     private void deleteEntry() throws SQLException, IOException {

@@ -4,6 +4,7 @@ import Database.UserCRUD.UserOperations;
 import Encryption.AES;
 import GUI.Utils.SceneUtils;
 import GUI.Utils.StrengthUIHelper;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.Password_Generator.Configurator;
 import org.Password_Generator.StrengthChecker;
 
@@ -112,7 +114,6 @@ public class BuilderController {
             int passwordLength = getPasswordLength();
             setPassword(passwordLength, configuration);
             setPasswordStrength(configuration, passwordLength);
-            copyButton.setText("copy to clipboard");
         } catch (NumberFormatException e) {
             passwordText.setText("Please enter a valid number");
         }
@@ -186,7 +187,12 @@ public class BuilderController {
         content.putString(passwordText.getText());
         clipboard.setContent(content);
 
-        copyButton.setText("Copied to Clipboard!");
+        copyButton.setText("Copied to clipboard!");
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> {
+            copyButton.setText("Copy to clipboard");
+        });
+        delay.play();
     }
 
     @FXML

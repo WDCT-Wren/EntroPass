@@ -177,7 +177,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Label fx:id="inputWarning" alignment="CENTER" contentDisplay="CENTER" prefWidth="373.0" text="You already have an account!" textAlignment="RIGHT" textFill="#ff0606" wrapText="true">
+                  <Label fx:id="inputWarning" alignment="CENTER" contentDisplay="CENTER" prefWidth="373.0" text="You already have an account!" textAlignment="CENTER" textFill="#ff0606" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>

@@ -93,6 +93,7 @@
 
 .forgot-password:hover {
     -fx-cursor: hand;
+    -fx-text-fill: #81b214;
 }
 
 /* View Button Styles */

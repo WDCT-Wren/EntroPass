@@ -29,3 +29,16 @@
     -fx-background-radius: 10;
     -fx-padding: 10;
 }
+
+.about-button {
+    -fx-text-fill: #797474;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.about-button:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: #cac9c9;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}

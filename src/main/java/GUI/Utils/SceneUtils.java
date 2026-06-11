@@ -40,7 +40,7 @@ public class SceneUtils {
 
         stage.setWidth(width);
         stage.setHeight(height);
-        stage.setTitle("EntroPass 0.67");
+        stage.setTitle("EntroPass v1.0");
         stage.setScene(scene);
         stage.show();
     }

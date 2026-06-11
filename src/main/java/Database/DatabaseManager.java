@@ -16,14 +16,28 @@ public class DatabaseManager {
     private Connection connection;
 
     //follow this path structure when making your own database
-    private static final String DB_PATH = System.getProperty("user.home") + "/EntroPass/PasswordDatabase.sqlite";
-    private static final String url = "jdbc:sqlite:" + DB_PATH;
+    private static String baseDir;
+    private static String dbPath;
+    private static String url;
+
     /**
      * Simple constructor to connect a class to the database file
      */
-    public  DatabaseManager() {
+    public DatabaseManager() {
+        // Determine the base directory based on OS and user environment variables
+        String appData = System.getenv("APPDATA");
+
+        if (appData != null) {
+            baseDir = appData + "\\EntroPass";
+        } else {
+            baseDir = System.getProperty("user.home") + "/EntroPass";
+        }
+        new File(baseDir).mkdirs(); // Ensure the directory exists
+
+        dbPath = baseDir + File.separator + "PasswordDatabase.sqlite";
+        url = "jdbc:sqlite:" + dbPath;
         try {
-            File dbFile = new File(DB_PATH);
+            File dbFile = new File(dbPath);
             if (!dbFile.getParentFile().mkdirs() && !dbFile.getParentFile().exists()) {
                 System.out.println("Database Connection cannot be found!");
             }
@@ -45,26 +59,25 @@ public class DatabaseManager {
         return instance;
     }
 
-    public void initDatabase() throws SQLException {
-        connection = DriverManager.getConnection(url);
+    public void initDatabase() {
         String createMasterKeyDBQuery = """
-                CREATE TABLE IF NOT EXISTS master (
-                                id INTEGER PRIMARY KEY CHECK (id = 1),
-                                hash TEXT NOT NULL,
-                                salt TEXT NOT NULL)
-                """;
+            CREATE TABLE IF NOT EXISTS master (
+                            id INTEGER PRIMARY KEY CHECK (id = 1),
+                            hash TEXT NOT NULL,
+                            salt TEXT NOT NULL)
+            """;
         String createVaultQuery = """
-                create table if not exists vault (
-                    id                 INTEGER not null
-                        constraint vault_pk
-                            primary key autoincrement,
-                    service_name       TEXT    not null,
-                    username           TEXT    not null,
-                    encrypted_password TEXT    not null,
-                    notes              TEXT,
-                    created_date       TEXT
-                )
-                """;
+            create table if not exists vault (
+                id                 INTEGER not null
+                    constraint vault_pk
+                        primary key autoincrement,
+                service_name       TEXT    not null,
+                username           TEXT    not null,
+                encrypted_password TEXT    not null,
+                notes              TEXT,
+                created_date       TEXT
+            )
+            """;
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(createMasterKeyDBQuery);
             stmt.execute(createVaultQuery);

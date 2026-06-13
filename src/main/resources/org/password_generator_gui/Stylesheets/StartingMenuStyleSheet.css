@@ -1,5 +1,5 @@
 .Main-Pane {
-    -fx-background-color: #191919;
+    -fx-background-color: #111318;
     -fx-background-repeat: no-repeat;
     -fx-padding: 40 ;
 }
@@ -24,7 +24,7 @@
 }
 
 .icon {
-    -fx-text-fill: #b4f13b;
+    -fx-text-fill: #a3e635;
     -fx-background-color: #818876;
     -fx-background-radius: 10;
     -fx-padding: 10;
@@ -41,4 +41,47 @@
     -fx-text-fill: #cac9c9;
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+}
+
+.about-scroll {
+    -fx-background-color: #111318;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.about-scroll > .viewport {
+    -fx-background-color: #111318;
+}
+
+.about-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+}
+
+.about-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #3c3c3c;
+    -fx-background-radius: 6;
+}
+
+.about-scroll .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #454545;
+}
+
+.about-scroll .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.about-scroll .scroll-bar:vertical .increment-button,
+.about-scroll .scroll-bar:vertical .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
+
+.about-scroll .corner {
+    -fx-background-color: transparent;
+}
+
+.about-separator .line {
+    -fx-border-color: #2a2d35;
+    -fx-border-width: 1 0 0 0;
 }

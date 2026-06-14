@@ -11,105 +11,115 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="901.0" prefWidth="1230.0" stylesheets="@../Stylesheets/StartingMenuStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.MenuController">
    <center>
-      <VBox alignment="CENTER" prefHeight="901.0" prefWidth="727.0" spacing="20.0" styleClass="Main-Pane" stylesheets="@../Stylesheets/StartingMenuStyleSheet.css" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="901.0" prefWidth="727.0" spacing="20.0" styleClass="Main-Pane"
+            stylesheets="@../Stylesheets/StartingMenuStyleSheet.css" BorderPane.alignment="CENTER">
          <padding>
-            <Insets bottom="20" left="20" right="20" top="20" />
+            <Insets bottom="20" left="20" right="20" top="20"/>
          </padding>
-         <children>
-            <TextFlow textAlignment="CENTER">
-               <children>
-                  <Label text="Welcome Back, " textFill="#fcfcfc">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="53.0" />
-                     </font>
-                  </Label>
-                  <Label text="Curator." textFill="#b4f13b">
-                     <font>
-                        <Font name="Segoe UI Semibold" size="53.0" />
-                     </font>
-                  </Label>
-               </children>
-            </TextFlow>
-            <Label prefHeight="59.0" prefWidth="546.0" text="Focus on the essential. Secure, generate, and manage your digital identity with organic simplicity" textAlignment="CENTER" textFill="#e4e4e4" wrapText="true">
+         <TextFlow textAlignment="CENTER">
+            <Label text="Welcome Back, " textFill="#fcfcfc">
                <font>
-                  <Font name="Segoe UI Semibold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="20.0" top="-20.0" />
-               </VBox.margin>
-            </Label>
-            <HBox alignment="CENTER" prefHeight="314.0" prefWidth="893.0" spacing="30.0">
-               <children>
-                  <VBox alignment="BOTTOM_LEFT" onMouseClicked="#switchToPasswordBuilder" prefHeight="200.0" prefWidth="400.0" styleClass="menu-button">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="63.0" prefWidth="67.0" styleClass="icon" text="🔑" textAlignment="CENTER">
-                           <font>
-                              <Font size="29.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="55.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label alignment="TOP_LEFT" contentDisplay="TOP" text="Generate Password" textFill="WHITE">
-                           <font>
-                              <Font name="Segoe UI Bold" size="25.0" />
-                           </font>
-                        </Label>
-                        <Label text="Create cryptographically secure, unique keys for every new account easily" textFill="#e4e4e4" wrapText="true">
-                           <font>
-                              <Font name="Segoe UI Semibold" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label text="Start generating →" textFill="#b4f13b" wrapText="true">
-                           <font>
-                              <Font name="Segoe UI Semibold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <VBox alignment="BOTTOM_LEFT" onMouseClicked="#switchToPasswordVault" prefHeight="200.0" prefWidth="400.0" styleClass="menu-button">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="63.0" prefWidth="67.0" styleClass="icon" text="🔒" textAlignment="CENTER">
-                           <font>
-                              <Font size="29.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="55.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label alignment="TOP_LEFT" contentDisplay="TOP" text="Password Vault" textFill="WHITE">
-                           <font>
-                              <Font name="Segoe UI Bold" size="25.0" />
-                           </font>
-                        </Label>
-                        <Label text="Access your end-to-end encrypted database of credentials and secure notes" textFill="#e4e4e4" wrapText="true">
-                           <font>
-                              <Font name="Segoe UI Semibold" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label text="Open vault →" textFill="#b4f13b" wrapText="true">
-                           <font>
-                              <Font name="Segoe UI Semibold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <Label alignment="CENTER" prefHeight="59.0" prefWidth="546.0" text="🗹 E2E ENCRYPTED         ·        🗹 ENCRYPTED WITH PBKDF2 AND AES-256 GCM" textAlignment="CENTER" textFill="#797474" wrapText="true">
-               <font>
-                  <Font name="Segoe UI Semibold" size="12.0" />
+                  <Font name="Segoe UI Semibold" size="53.0"/>
                </font>
             </Label>
-            <Button fx:id="aboutButton" mnemonicParsing="false" styleClass="about-button" text="About EntroPass">
+            <Label text="Curator." textFill="#b4f13b">
                <font>
-                  <Font name="Segoe UI Semibold" size="14.0" />
+                  <Font name="Segoe UI Semibold" size="53.0"/>
                </font>
-               <VBox.margin>
-                  <Insets top="-30.0" />
-               </VBox.margin>
-            </Button>
-         </children>
+            </Label>
+         </TextFlow>
+         <Label prefHeight="59.0" prefWidth="546.0"
+                text="Focus on the essential. Secure, generate, and manage your digital identity with organic simplicity"
+                textAlignment="CENTER" textFill="#e4e4e4" wrapText="true">
+            <font>
+               <Font name="Segoe UI Semibold" size="18.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="20.0" top="-20.0"/>
+            </VBox.margin>
+         </Label>
+         <HBox alignment="CENTER" prefHeight="314.0" prefWidth="893.0" spacing="30.0">
+            <VBox alignment="BOTTOM_LEFT" onMouseClicked="#switchToPasswordBuilder" prefHeight="200.0"
+                  prefWidth="400.0" styleClass="menu-button">
+               <Label alignment="CENTER" prefHeight="63.0" prefWidth="67.0" styleClass="icon" text="🔑"
+                      textAlignment="CENTER">
+                  <font>
+                     <Font size="29.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="55.0"/>
+                  </VBox.margin>
+               </Label>
+               <Label alignment="TOP_LEFT" contentDisplay="TOP" text="Generate Password" textAlignment="CENTER"
+                      textFill="WHITE">
+                  <font>
+                     <Font name="Segoe UI Bold" size="25.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets left="-8.0"/>
+                  </VBox.margin>
+               </Label>
+               <Label text="Create cryptographically secure, unique keys for every new account easily"
+                      textFill="#e4e4e4" wrapText="true">
+                  <font>
+                     <Font name="Segoe UI Semibold" size="13.0"/>
+                  </font>
+               </Label>
+               <Label text="Start generating →" textFill="#b4f13b" wrapText="true">
+                  <font>
+                     <Font name="Segoe UI Semibold" size="18.0"/>
+                  </font>
+               </Label>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" onMouseClicked="#switchToPasswordVault" prefHeight="200.0"
+                  prefWidth="400.0" styleClass="menu-button">
+               <Label alignment="CENTER" prefHeight="63.0" prefWidth="67.0" styleClass="icon" text="🔒"
+                      textAlignment="CENTER">
+                  <font>
+                     <Font size="29.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="55.0"/>
+                  </VBox.margin>
+               </Label>
+               <Label alignment="TOP_LEFT" contentDisplay="CENTER" text="Password Vault" textAlignment="CENTER"
+                      textFill="WHITE">
+                  <font>
+                     <Font name="Segoe UI Bold" size="25.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets left="-8.0"/>
+                  </VBox.margin>
+               </Label>
+               <Label text="Access your end-to-end encrypted database of credentials and secure notes"
+                      textFill="#e4e4e4" wrapText="true">
+                  <font>
+                     <Font name="Segoe UI Semibold" size="13.0"/>
+                  </font>
+               </Label>
+               <Label text="Open vault →" textFill="#b4f13b" wrapText="true">
+                  <font>
+                     <Font name="Segoe UI Semibold" size="18.0"/>
+                  </font>
+               </Label>
+            </VBox>
+         </HBox>
+         <Label alignment="CENTER" prefHeight="59.0" prefWidth="546.0"
+                text="🗹 E2E ENCRYPTED         ·        🗹 ENCRYPTED WITH PBKDF2 AND AES-256 GCM" textAlignment="CENTER"
+                textFill="#797474" wrapText="true">
+            <font>
+               <Font name="Segoe UI Semibold" size="12.0"/>
+            </font>
+         </Label>
+         <Button mnemonicParsing="false" onAction="#openAboutPage" styleClass="about-button"
+                 text="About EntroPass">
+            <font>
+               <Font name="Segoe UI Semibold" size="14.0"/>
+            </font>
+            <VBox.margin>
+               <Insets top="-30.0"/>
+            </VBox.margin>
+         </Button>
       </VBox>
    </center>
 </BorderPane>

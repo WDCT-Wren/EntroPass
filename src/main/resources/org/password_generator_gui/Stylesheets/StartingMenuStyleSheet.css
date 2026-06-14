@@ -6,7 +6,7 @@
 
 .menu-button {
     -fx-border-color: transparent;
-    -fx-background-color: #3c3c3c;
+    -fx-background-color: #1d2024;
     -fx-background-radius: 20;
     -fx-border-radius: 20;
     -fx-padding: 30;
@@ -84,4 +84,117 @@
 .about-separator .line {
     -fx-border-color: #2a2d35;
     -fx-border-width: 1 0 0 0;
+}
+
+/* === TabPane === */
+.tab-pane {
+    -fx-background-color: transparent;
+    -fx-tab-min-height: 10;
+    -fx-open-tab-animation: NONE;
+    -fx-close-tab-animation: NONE;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0;
+}
+
+.tab-pane .tab-header-area .headers-region {
+    -fx-spacing: 6;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #3c3c3c;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-color: transparent;
+    -fx-padding: 8 16 8 16;
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color: #454545;
+    -fx-cursor: hand;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #1a1d24;
+    -fx-border-color: #a3e635 transparent transparent transparent;
+    -fx-border-width: 3 0 0 0;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #c9c9c9;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 13px;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #a3e635;
+}
+
+.tab-pane .tab-content-area {
+    -fx-background-color: #1a1d24;
+    -fx-background-radius: 0 0 10 10;
+    -fx-padding: 0;
+}
+
+/* Removes the default focus-highlight rectangle JavaFX draws around tabs */
+.tab-pane .tab:selected .focus-indicator,
+.tab-pane .tab .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+/* === TextArea === */
+.text-area {
+    -fx-background-color: #1a1d24;
+    -fx-background-radius: 8;
+    -fx-border-color: #3c3c3c;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+}
+
+.text-area .content {
+    -fx-background-color: #1a1d24;
+    -fx-background-radius: 8;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+}
+
+.text-area .scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #3c3c3c;
+    -fx-background-radius: 6;
+}
+
+.text-area .scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #454545;
+}
+
+.text-area .scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .increment-button,
+.text-area .scroll-pane .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
+
+.text-area, .text-area .content, .text-area .text {
+    -fx-fill: #c9c9c9;
+    -fx-text-fill: #c9c9c9;
+    -fx-font-family: "Consolas";
+    -fx-font-size: 12px;
 }

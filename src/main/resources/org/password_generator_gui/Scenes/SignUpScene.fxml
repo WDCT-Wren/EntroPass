@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <VBox fx:id="root" alignment="CENTER" prefHeight="901.0" prefWidth="1230.0" spacing="24.0" stylesheets="@../Stylesheets/AuthStyleSheet.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.SignUpController">
    <children>
@@ -52,11 +53,20 @@
                         <Font name="Segoe UI Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Label prefWidth="373.0" text="This key is your only way into your vault. Please remember and keep the key safe. We cannot recover it in the case of you losing it." textFill="#c2c7d0" wrapText="true">
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0" />
-                     </font>
-                  </Label>
+                        <TextFlow lineSpacing="3.0">
+                           <children>
+                        <Label prefWidth="373.0" text="This key is your only way into your vault. Please remember and keep the key safe." textAlignment="CENTER" textFill="#c2c7d0" wrapText="true">
+                           <font>
+                              <Font name="Segoe UI Bold" size="16.0" />
+                           </font>
+                        </Label>
+                              <Label text=" We cannot recover it in the case of you losing it." textAlignment="CENTER" textFill="#d71515" wrapText="true">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </TextFlow>
                   <VBox prefWidth="373.0" spacing="6.0">
                      <children>
                         <Label text="SET MASTER KEY" textFill="#c2c7d0">
@@ -170,7 +180,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Label fx:id="inputWarning" alignment="CENTER" contentDisplay="CENTER" prefWidth="373.0" text="You already have an account!" textAlignment="CENTER" textFill="#ff0606" wrapText="true">
+                  <Label fx:id="inputWarning" alignment="CENTER" contentDisplay="CENTER" text="You already have an account!" textAlignment="CENTER" textFill="#ff0606" wrapText="true">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>

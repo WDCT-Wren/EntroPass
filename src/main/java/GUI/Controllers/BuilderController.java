@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -52,6 +53,8 @@ public class BuilderController {
     private CheckBox numberCheckBox;
     @FXML
     private Label passwordStrength;
+    @FXML
+    private VBox generatorSettings;
 
     private ChangeListener<String> manualStrengthListener;
     private boolean isManualEntry = false;
@@ -200,6 +203,7 @@ public class BuilderController {
         isManualEntry = !isManualEntry;
         passwordText.setEditable(isManualEntry);
         passwordGenerate.setDisable(isManualEntry);
+        generatorSettings.setDisable(isManualEntry);
 
         if (isManualEntry) {
             strengthIndicator.setProgress(0);

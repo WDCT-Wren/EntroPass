@@ -1,4 +1,4 @@
-# EntroPass
+![EntroPass Banner](src/main/resources/org/Assets/Images/EntroPass_Banner.png)
 
 EntroPass is a JavaFX desktop password manager focused on practical local security: master-password authentication, encrypted vault storage, and a configurable password builder.
 
@@ -134,7 +134,7 @@ Database file location:
 
 Current schema:
 
-```sql
+```sqlite
 CREATE TABLE IF NOT EXISTS master (
   id   INTEGER PRIMARY KEY CHECK (id = 1),
   hash TEXT NOT NULL,
